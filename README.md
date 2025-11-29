@@ -2,9 +2,19 @@
 
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![SPICE](https://img.shields.io/badge/SPICE-Models-blue.svg)](https://en.wikipedia.org/wiki/SPICE)
-[![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](https://github.com/your-username/spice_model_collections/blob/main/CONTRIBUTING.md)
+[![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](https://github.com/SJTU-YONGFU-RESEARCH-GRP/spice_model_collections/blob/main/CONTRIBUTING.md)
 
 A comprehensive collection of open-source and simplified BSIM (Berkeley Short-channel IGFET Model) SPICE models for circuit simulation, benchmarking, and evaluation. This repository provides ready-to-use transistor models across multiple SPICE simulators including NGSPICE, HSPICE, and SPECTRE.
+
+## 📋 Table of Contents
+
+- [🎯 Purpose](#-purpose)
+- [📁 Repository Structure](#-repository-structure)
+- [🚀 Quick Start](#-quick-start)
+- [📚 Available Models](#-available-models)
+- [⚖️ License](#️-license)
+- [📞 Support](#-support)
+- [🙏 Acknowledgments](#-acknowledgments)
 
 ## 🎯 Purpose
 
@@ -26,9 +36,25 @@ spice_model_collections/
 │   ├── nmos_bsim1.spectre        # BSIM1 models for SPECTRE
 │   ├── nmos_bsim2.hspice         # BSIM2 models
 │   └── ...                       # Additional BSIM levels
+├── ptm/                           # Predictive Technology Models
+│   ├── 180nm_bulk.pm             # 180nm bulk CMOS models
+│   ├── 130nm_bulk.pm             # 130nm bulk CMOS models
+│   ├── 90nm_bulk.pm              # 90nm bulk CMOS models
+│   ├── 65nm_bulk.pm              # 65nm bulk CMOS models
+│   ├── 45nm_LP.pm                # 45nm low power models
+│   ├── 32nm_LP.pm                # 32nm low power models
+│   ├── 22nm_LP.pm                # 22nm low power models
+│   ├── 22nm_HP.pm                # 22nm high performance models
+│   ├── 16nfet_HP.pm              # 16nm NFET high performance
+│   ├── 16pfet_HP.pm              # 16nm PFET high performance
+│   ├── 14nfet_HP.pm              # 14nm NFET high performance
+│   ├── 14pfet_HP.pm              # 14nm PFET high performance
+│   ├── 10nfet_HP.pm              # 10nm NFET high performance
+│   ├── 10pfet_HP.pm              # 10nm PFET high performance
+│   ├── 7nfet_HP.pm               # 7nm NFET high performance
+│   └── 7pfet_HP.pm               # 7nm PFET high performance
 ├── MODELS.md                      # Comprehensive parameter reference
-├── README.md                      # This file
-└── examples/                      # Usage examples (planned)
+└── README.md                      # This file
 ```
 
 ## 🚀 Quick Start
@@ -42,18 +68,24 @@ spice_model_collections/
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/spice_model_collections.git
+   git clone https://github.com/SJTU-YONGFU-RESEARCH-GRP/spice_model_collections.git
    cd spice_model_collections
    ```
 
-2. **Choose your simulator and model:**
-   - For NGSPICE: Use `.ngspice` files
-   - For HSPICE: Use `.hspice` files
-   - For SPECTRE: Use `.spectre` files
+2. **Choose your technology and model:**
+   - **BSIM Models**: Use files from `bsim/` directory
+     - NGSPICE: `.ngspice` files
+     - HSPICE: `.hspice` files
+     - SPECTRE: `.spectre` files
+   - **PTM Models**: Use files from `ptm/` directory (compatible with HSPICE/SPECTRE)
 
 3. **Include models in your SPICE deck:**
    ```spice
+   * BSIM4 example
    .include bsim/nmos_bsim4.ngspice
+
+   * PTM 22nm example
+   .include ptm/22nm_LP.pm
    ```
 
 ## 📚 Available Models
@@ -68,101 +100,37 @@ spice_model_collections/
 | **BSIM4** | LEVEL=14 | ✅ Available | Latest BSIM with advanced features |
 | **Level 1-3** | LEVEL=1-3 | ✅ Available | Classic SPICE MOSFET models |
 
+### PTM (Predictive Technology Models)
+
+Predictive Technology Models from ASU provide industry-standard transistor models for academic research and benchmarking across multiple technology nodes.
+
+| Technology Node | Transistor Type | Status | Description |
+|-----------------|-----------------|--------|-------------|
+| **180nm** | Bulk CMOS | ✅ Available | 1.8V supply voltage |
+| **130nm** | Bulk CMOS | ✅ Available | 1.5V supply voltage |
+| **90nm** | Bulk CMOS | ✅ Available | 1.2V supply voltage |
+| **65nm** | Bulk CMOS | ✅ Available | 1.2V supply voltage |
+| **45nm** | Low Power (LP) | ✅ Available | 1.1V supply voltage |
+| **32nm** | Low Power (LP) | ✅ Available | 1.0V supply voltage |
+| **22nm** | Low Power (LP) | ✅ Available | 0.95V supply voltage |
+| **22nm** | High Performance (HP) | ✅ Available | 1.0V supply voltage |
+| **16nm** | NFET/PFET HP | ✅ Available | 0.7V supply voltage |
+| **14nm** | NFET/PFET HP | ✅ Available | 0.8V supply voltage |
+| **10nm** | NFET/PFET HP | ✅ Available | 0.75V supply voltage |
+| **7nm** | NFET/PFET HP | ✅ Available | 0.7V supply voltage |
+
+**PTM Model Features:**
+- BSIM4-based compact models
+- Both NMOS and PMOS transistors
+- Multiple threshold voltage options (HP/LSTP)
+- Validated against ITRS projections
+- Widely used in academic research
+
 ### Supported Simulators
 
 - **NGSPICE**: Open-source SPICE simulator
 - **HSPICE**: Synopsys HSPICE (commercial)
 - **SPECTRE**: Cadence SPECTRE (commercial)
-
-## 📖 Documentation
-
-### Model Parameters
-
-For detailed parameter definitions and cross-simulator compatibility, see [`MODELS.md`](MODELS.md). This comprehensive reference includes:
-
-- Complete parameter tables for each BSIM level
-- Simulator-specific syntax differences
-- Parameter evolution through model generations
-- Usage guidelines and best practices
-
-### Example Usage
-
-```spice
-* Basic inverter simulation with BSIM4
-.include bsim/nmos_bsim4.ngspice
-.include bsim/pmos_bsim4.ngspice  * (when available)
-
-* Circuit definition
-Vdd vdd 0 1.8V
-Vin in 0 PULSE(0 1.8 0 10p 10p 1n 2n)
-
-* MOSFET instances
-M1 out in vdd vdd PMOS W=1u L=45n
-M2 out in 0 0 NMOS W=0.5u L=45n
-
-* Analysis
-.tran 10p 10n
-.measure tpdr trig v(in) val=0.9 rise=1 targ v(out) val=0.9 fall=1
-.measure tpdf trig v(in) val=0.9 fall=1 targ v(out) val=0.9 rise=1
-
-.end
-```
-
-## 🔬 Use Cases
-
-### Academic Research
-- Algorithm validation for circuit optimization
-- Machine learning model training on SPICE data
-- Educational demonstrations of MOSFET physics
-
-### Industry Applications
-- IP block characterization
-- Design rule checking
-- Performance benchmarking
-- Technology node evaluation
-
-### Circuit Design
-- Rapid prototyping with standardized models
-- Cross-technology comparison
-- Design space exploration
-
-## 🤝 Contributing
-
-We welcome contributions from the community! See our [Contributing Guidelines](CONTRIBUTING.md) for details.
-
-### Ways to Contribute
-
-1. **Add New Models**: Implement additional transistor types, passive components, or technology nodes
-2. **Expand Simulator Support**: Add models for LTSPICE, PSpice, or other simulators
-3. **Improve Documentation**: Enhance parameter descriptions or add usage examples
-4. **Validate Models**: Test models against real silicon data
-5. **Bug Reports**: Report inaccuracies or simulation issues
-
-### Model Validation Process
-
-All contributed models undergo:
-- Syntax validation across supported simulators
-- Basic functionality testing
-- Parameter consistency checks
-- Documentation review
-
-## 📊 Model Validation
-
-### Current Validation Status
-
-| Model | NGSPICE | HSPICE | SPECTRE | Notes |
-|-------|---------|--------|---------|-------|
-| BSIM1 NMOS | ✅ | ✅ | ✅ | Basic validation complete |
-| BSIM2 NMOS | ✅ | ✅ | ✅ | Basic validation complete |
-| BSIM3v3 NMOS | ✅ | ✅ | ✅ | Basic validation complete |
-| BSIM4 NMOS | ✅ | ✅ | ✅ | Basic validation complete |
-
-### Validation Metrics
-
-- **DC Characteristics**: ID-VGS, ID-VDS curves
-- **AC Performance**: ft, fmax measurements
-- **Noise Figure**: NF vs frequency
-- **Mismatch Parameters**: Avt, Avt_flk
 
 ## ⚖️ License
 
@@ -178,8 +146,8 @@ This project is licensed under [Creative Commons Attribution 4.0 International (
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/your-username/spice_model_collections/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/your-username/spice_model_collections/discussions)
+- **Issues**: [GitHub Issues](https://github.com/SJTU-YONGFU-RESEARCH-GRP/spice_model_collections/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/SJTU-YONGFU-RESEARCH-GRP/spice_model_collections/discussions)
 - **Documentation**: [MODELS.md](MODELS.md)
 
 ## 🙏 Acknowledgments
@@ -187,17 +155,3 @@ This project is licensed under [Creative Commons Attribution 4.0 International (
 - **BSIM Research Group** at UC Berkeley for developing the BSIM models
 - **SPICE Community** for maintaining open-source simulation tools
 - **Contributors** who help maintain and expand this collection
-
-## 🔄 Future Plans
-
-- [ ] PMOS model implementations
-- [ ] Additional technology nodes (FinFET, Gate-All-Around)
-- [ ] Passive component models (resistors, capacitors, inductors)
-- [ ] Diode and bipolar transistor models
-- [ ] Automated validation test suites
-- [ ] Web-based model parameter explorer
-- [ ] Integration with circuit design automation tools
-
----
-
-**Note**: This is an ongoing project. Models provided here are simplified representations intended for educational and benchmarking purposes. For production use, consult with foundry-provided PDKs and validated model decks.
