@@ -8,23 +8,12 @@ A comprehensive collection of open-source and simplified BSIM (Berkeley Short-ch
 
 ## 📋 Table of Contents
 
-- [🎯 Purpose](#-purpose)
 - [📁 Repository Structure](#-repository-structure)
 - [🚀 Quick Start](#-quick-start)
 - [📚 Available Models](#-available-models)
 - [⚖️ License](#️-license)
 - [📞 Support](#-support)
 - [🙏 Acknowledgments](#-acknowledgments)
-
-## 🎯 Purpose
-
-This project serves the semiconductor and circuit design community by providing:
-
-- **Standardized Model Library**: Consistent, well-documented SPICE models for benchmarking and comparison
-- **Cross-Simulator Compatibility**: Models validated across NGSPICE, HSPICE, and SPECTRE simulators
-- **Educational Resources**: Comprehensive parameter documentation and usage examples
-- **Research Enablement**: Simplified models for academic research and algorithm development
-- **Industry Benchmarks**: Reference implementations for circuit design validation
 
 ## 📁 Repository Structure
 
@@ -41,17 +30,7 @@ spice_model_collections/
 │   ├── 130nm_bulk.pm             # 130nm bulk CMOS models
 │   ├── 90nm_bulk.pm              # 90nm bulk CMOS models
 │   ├── 65nm_bulk.pm              # 65nm bulk CMOS models
-│   ├── 45nm_LP.pm                # 45nm low power models
-│   ├── 32nm_LP.pm                # 32nm low power models
-│   ├── 22nm_LP.pm                # 22nm low power models
-│   ├── 22nm_HP.pm                # 22nm high performance models
-│   ├── 16nfet_HP.pm              # 16nm NFET high performance
-│   ├── 16pfet_HP.pm              # 16nm PFET high performance
-│   ├── 14nfet_HP.pm              # 14nm NFET high performance
-│   ├── 14pfet_HP.pm              # 14nm PFET high performance
-│   ├── 10nfet_HP.pm              # 10nm NFET high performance
-│   ├── 10pfet_HP.pm              # 10nm PFET high performance
-│   ├── 7nfet_HP.pm               # 7nm NFET high performance
+│   └── ...                       # Additional PTM models
 │   └── 7pfet_HP.pm               # 7nm PFET high performance
 ├── MODELS.md                      # Comprehensive parameter reference
 └── README.md                      # This file
