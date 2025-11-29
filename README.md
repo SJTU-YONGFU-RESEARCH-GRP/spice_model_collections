@@ -1,6 +1,6 @@
 # SPICE Model Collections
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![SPICE](https://img.shields.io/badge/SPICE-Models-blue.svg)](https://en.wikipedia.org/wiki/SPICE)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](https://github.com/your-username/spice_model_collections/blob/main/CONTRIBUTING.md)
 
@@ -166,13 +166,15 @@ All contributed models undergo:
 
 ## ⚖️ License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/) - see the [LICENSE](LICENSE) file for details.
 
 ### Model Licensing Notes
 
-- Open-source models are provided under MIT license
+- Models are provided under their respective open source licenses
+- Default license for new contributions is CC BY 4.0
 - Simplified/educational models may have additional usage restrictions
 - Commercial use requires verification of licensing terms
+- Please check individual model files for specific licensing information
 
 ## 📞 Support
 
