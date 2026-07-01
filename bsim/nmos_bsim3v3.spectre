@@ -49,7 +49,7 @@ model nmos_bsim3v3 bsim3 type=n level=8 version=3.3
 + cdscb  = 0.0         ; Body-bias dependence of CDSC (F*m/V^2)
 + cdscd  = 0.0         ; Drain-bias dependence of CDSC (F*m/V^2)
 + nfactor = 1.0        ; Subthreshold swing factor
-+ xj     = 0.0         ; Source/drain junction depth (m)
++ xj     = 0.15e-6     ; Source/drain junction depth (m)
 + vsatcv = 1.0e5       ; Saturation velocity for C-V (cm/s)
 + minv   = 0.05        ; Fitting parameter for moderate inversion
 + minvcv = 0.05        ; Fitting parameter for moderate inversion in C-V
@@ -133,7 +133,7 @@ model nmos_bsim3v3 bsim3 type=n level=8 version=3.3
 + nfin = 1.0           ; Number of fins
 + nbody = 0.0          ; Body doping concentration
 + nsd = 0.0            ; Source/drain doping concentration
-+ ngate = 0.0          ; Gate doping concentration
++ ngate = 1.0e17       ; Gate doping concentration
 + kt1 = -0.11          ; Temperature coefficient for threshold voltage
 + kt2 = 0.022          ; Body-bias coefficient of threshold voltage temperature effect
 + ua1 = 4.31e-9        ; Temperature coefficient for UA

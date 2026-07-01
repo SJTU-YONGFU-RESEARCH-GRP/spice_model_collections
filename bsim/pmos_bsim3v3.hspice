@@ -1,9 +1,9 @@
-* nmos_bsim3v3.spectre — paired BSIM3v3 (NMOS) for HSPICE
+* pmos_bsim3v3.spectre — paired BSIM3v3 (PMOS) for HSPICE
 
-.MODEL nmos_bsim3v3 NMOS LEVEL=8 VERSION=3.3
-+ VTH0=0.4
+.MODEL pmos_bsim3v3 PMOS LEVEL=8 VERSION=3.3
++ VTH0=-0.38
 + TOX=3.0e-9
-+ U0=0.02
++ U0=0.015
 + VSAT=8.0e4
 + K1=0.6
 + K2=0.0
@@ -102,10 +102,10 @@
 + NI0SUB=1.45e16
 + BG0SUB=1.16
 + NC0SUB=2.86e25
-+ PHIG=4.05
++ PHIG=4.8
 + RDSWMIN=0.0
 + CDSCD=0.0
-+ DEVTYPE=1
++ DEVTYPE=0
 + IGCMOD=0
 + IGBMOD=0
 + GIDBMOD=0
