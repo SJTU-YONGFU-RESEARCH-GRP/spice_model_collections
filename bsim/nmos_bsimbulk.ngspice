@@ -1,0 +1,26 @@
+* NGSPICE BSIM-BULK MOSFET Model Card Example
+* BSIM-BULK / BSIM6 (LEVEL=77, VERSION=106) - Modern Surface-Potential Bulk Model (NMOS)
+*
+* Charge-based surface-potential standard successor to BSIM4 for bulk MOSFETs.
+
+.MODEL nmos_bsimbulk NMOS LEVEL=77 VERSION=106
++ TYPE     = 1           ; 1: NFET, -1: PFET
++ TNOM     = 27.0        ; Nominal temperature (C)
++ TOXE     = 1.5e-9      ; Electrical gate oxide thickness (m)
++ TOXP     = 1.4e-9      ; Physical gate oxide thickness (m)
++ VFB      = -1.0        ; Flat-band voltage (V)
++ NDEP     = 4.0e23      ; Channel depletion doping concentration (1/m^3)
++ NSD      = 1.0e26      ; Source/drain doping concentration (1/m^3)
++ NGATE    = 1.0e26      ; Poly/metal gate doping (1/m^3)
++ U0       = 0.040       ; Low-field electron mobility (m^2/V*s)
++ VSAT     = 1.0e5       ; Saturation velocity (m/s)
++ RDSW     = 80.0        ; Source/drain series resistance per width (ohm*um)
++ GEOMOD   = 0           ; Geometry mode
++ RGEOMOD  = 0           ; S/D resistance geometry mode
++ COVMOD   = 1           ; Gate overlap/fringing capacitance model
++ RDSMOD   = 0           ; Resistance model
++ ETA0     = 0.04        ; DIBL coefficient
++ PCLM     = 1.0         ; Channel length modulation
++ CGSO     = 1.5e-10     ; Gate-source overlap capacitance (F/m)
++ CGDO     = 1.5e-10     ; Gate-drain overlap capacitance (F/m)
++ CGBO     = 1.0e-10     ; Gate-bulk overlap capacitance (F/m)

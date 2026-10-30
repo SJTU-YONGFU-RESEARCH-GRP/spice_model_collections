@@ -1,0 +1,34 @@
+* SPECTRE BSIM-CMG Multi-Gate MOSFET Model Card Example
+* BSIM-CMG (level=72, version=108) - Standard for FinFET and GAAFET (PMOS)
+
+model pmos_bsimcmg bsimcmg type=p level=72 version=108
++ devtype  = 0           ; 1: NFET, 0: PFET
++ bulkmod  = 0           ; Substrate configuration (0: SOI/tri-gate, 1: bulk FinFET)
++ geomod   = 1           ; Geometry mode (1: double/triple gate, 2: GAA cylindrical)
++ coremod  = 0           ; Standard core formulation
++ capmod   = 1           ; Quantum-mechanical capacitance correction
++ rdsmod   = 0           ; External resistance model
++ tnom     = 27.0        ; Nominal temperature (C)
++ tfin     = 7.0e-9      ; Fin thickness / nanosheet thickness (m)
++ hfin     = 30.0e-9     ; Fin height / nanosheet width (m)
++ fpitch   = 30.0e-9     ; Fin pitch (m)
++ nfin     = 1           ; Number of fins per finger
++ eot      = 1.0e-9      ; Equivalent oxide thickness (m)
++ phig     = 4.85        ; Gate work function (eV)
++ nbody    = 1.0e22      ; Body doping concentration (1/m^3)
++ nsd      = 2.0e26      ; Source/drain doping concentration (1/m^3)
++ ngate    = 0           ; Metal gate flag (0: metal)
++ u0       = 0.022       ; Low-field hole mobility (m^2/V*s)
++ vsat     = 9.0e4       ; Saturation velocity (m/s)
++ rdsw     = 65.0        ; Source/drain series resistance per width (ohm*um)
++ cdsc     = 0.18        ; Drain/source coupling capacitance
++ cdscd    = 0.05        ; Drain bias sensitivity of CDSC
++ dvt0     = 0.0         ; Short channel threshold voltage parameter
++ dvt1     = 0.6         ; Short channel threshold voltage parameter
++ eta0     = 0.02        ; DIBL coefficient
++ dsub     = 1.0         ; Subthreshold DIBL exponent
++ pclm     = 1.0e-9      ; Channel length modulation
++ pclmg    = 0.0         ; Gate bias sensitivity of PCLM
++ drout    = 1.0         ; DIBL on output resistance
++ cgso     = 1.0e-10     ; Gate-source overlap capacitance (F/m)
++ cgdo     = 1.0e-10     ; Gate-drain overlap capacitance (F/m)

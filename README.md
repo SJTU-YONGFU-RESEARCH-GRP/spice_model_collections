@@ -71,13 +71,17 @@ spice_model_collections/
 
 ### BSIM Models
 
-| Model | Level | Status | Description |
-|-------|-------|--------|-------------|
-| **BSIM1** | LEVEL=4 | ✅ Available | First-generation BSIM model |
-| **BSIM2** | LEVEL=5 | ✅ Available | Improved short-channel effects |
-| **BSIM3v3** | LEVEL=8 | ✅ Available | Industry standard for deep submicron |
-| **BSIM4** | LEVEL=14 | ✅ Available | Latest BSIM with advanced features |
-| **Level 1-3** | LEVEL=1-3 | ✅ Available | Classic SPICE MOSFET models |
+| Model | Level | Status | Transistors | Description |
+|---|---|---|---|---|
+| **Level 1-3** | LEVEL=1-3 | ✅ Available | NMOS & PMOS | Classic SPICE models (Shichman-Hodges, Grove-Frohman, Semi-empirical) |
+| **BSIM1** | LEVEL=4 | ✅ Available | NMOS & PMOS | First-generation Berkeley Short-channel IGFET Model |
+| **BSIM2** | LEVEL=5 | ✅ Available | NMOS & PMOS | Second-generation BSIM with improved subthreshold and mobility |
+| **BSIM3v3** | LEVEL=8 | ✅ Available | NMOS & PMOS | Industry-standard deep submicron threshold voltage and capacitance model |
+| **BSIM4** | LEVEL=14 | ✅ Available | NMOS & PMOS | Standard for planar bulk nanometer MOSFETs down to 22nm |
+| **BSIM-SOI** | LEVEL=70 | ✅ Available | NMOS & PMOS | Standard compact model for PD-SOI and FD-SOI technologies |
+| **BSIM-CMG** | LEVEL=72 | ✅ Available | NMOS & PMOS | Standard compact model for Multi-Gate devices (FinFET, GAAFET, Nanosheet) |
+| **BSIM-IMG** | LEVEL=73 | ✅ Available | NMOS & PMOS | Standard compact model for Independent Multi-Gate / UTBB-FDSOI |
+| **BSIM-BULK** | LEVEL=77 | ✅ Available | NMOS & PMOS | BSIM6 surface-potential and charge-based standard for bulk CMOS |
 
 ### PTM (Predictive Technology Models)
 

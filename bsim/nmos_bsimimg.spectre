@@ -1,0 +1,29 @@
+* SPECTRE BSIM-IMG Independent Multi-Gate MOSFET Model Card Example
+* BSIM-IMG (level=73, version=102) - Standard for UTBB-FDSOI (NMOS)
+
+model nmos_bsimimg bsimimg type=n level=73 version=102
++ devtype  = 1           ; 1: NFET, 0: PFET
++ tnom     = 27.0        ; Nominal temperature (C)
++ eot1     = 1.1e-9      ; Front gate equivalent oxide thickness (m)
++ eot2     = 20.0e-9     ; Back gate / BOX equivalent oxide thickness (m)
++ tsi      = 7.0e-9      ; Silicon channel film thickness (m)
++ phig1    = 4.35        ; Front gate work function (eV)
++ phig2    = 5.00        ; Back gate / substrate work function (eV)
++ nbody    = 1.0e21      ; Body doping concentration (1/m^3)
++ nsd      = 2.0e26      ; Source/drain doping concentration (1/m^3)
++ u0       = 0.080       ; Low-field electron mobility (m^2/V*s)
++ vsat     = 1.0e5       ; Saturation velocity (m/s)
++ rdsw     = 70.0        ; Source/drain resistance per width (ohm*um)
++ rdsmod   = 0           ; Resistance model
++ gidlmod  = 0           ; GIDL current model
++ igmod    = 0           ; Gate dielectric tunneling model
++ kbg0     = 1.765       ; Back-gate coupling parameter
++ kbg1     = 0.0         ; Back-gate coupling parameter
++ dvt0     = 1.0         ; Short channel effect parameter
++ dvt1     = 0.5         ; Short channel effect parameter
++ eta0     = 0.05        ; DIBL coefficient
++ pclm     = 1.2         ; Channel length modulation
++ cgso     = 1.2e-10     ; Front gate-source overlap capacitance (F/m)
++ cgdo     = 1.2e-10     ; Front gate-drain overlap capacitance (F/m)
++ cgso2    = 0.5e-10     ; Back gate-source overlap capacitance (F/m)
++ cgdo2    = 0.5e-10     ; Back gate-drain overlap capacitance (F/m)

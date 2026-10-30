@@ -1,0 +1,25 @@
+* SPECTRE BSIM-SOI MOSFET Model Card Example
+* BSIMSOI (level=70, version=4.5) - Standard for SOI MOSFETs (NMOS)
+
+model nmos_bsimsoi bsimsoi type=n level=70 version=4.5
++ soimod   = 0           ; 0: Partially depleted (PD), 1: Fully depleted (FD)
++ shmod    = 1           ; Self-heating model flag (1: enabled)
++ tnom     = 27.0        ; Nominal temperature (C)
++ tox      = 1.5e-9      ; Gate oxide thickness (m)
++ tbox     = 1.0e-7      ; Buried oxide (BOX) thickness (m)
++ tsi      = 2.0e-8      ; Silicon film thickness (m)
++ vth0     = 0.35        ; Threshold voltage (V)
++ k1       = 0.45        ; First-order body effect coefficient
++ k2       = 0.0         ; Second-order body effect coefficient
++ u0       = 0.035       ; Low-field electron mobility (m^2/V*s)
++ vsat     = 1.0e5       ; Saturation velocity (m/s)
++ rdsw     = 90.0        ; Source/drain series resistance per width (ohm*um)
++ dvt0     = 1.0         ; Short-channel effect coefficient
++ dvt1     = 0.3         ; Short-channel effect coefficient
++ eta0     = 0.05        ; DIBL coefficient
++ pclm     = 1.2         ; Channel length modulation parameter
++ rth0     = 2.0e-5      ; Thermal resistance for self-heating (K*m/W)
++ cth0     = 1.0e-9      ; Thermal capacitance for self-heating (J/K*m)
++ cgso     = 2.0e-10     ; Gate-source overlap capacitance (F/m)
++ cgdo     = 2.0e-10     ; Gate-drain overlap capacitance (F/m)
++ cgbo     = 1.0e-10     ; Gate-bulk overlap capacitance (F/m)

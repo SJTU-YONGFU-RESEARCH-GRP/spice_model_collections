@@ -1,0 +1,36 @@
+* NGSPICE BSIM-CMG Multi-Gate MOSFET Model Card Example
+* BSIM-CMG (LEVEL=72, VERSION=108) - Standard for FinFET and GAAFET (NMOS)
+*
+* Standard surface-potential compact model for common multi-gate architectures.
+
+.MODEL nmos_bsimcmg NMOS LEVEL=72 VERSION=108
++ DEVTYPE  = 1           ; 1: NFET, 0: PFET
++ BULKMOD  = 0           ; Substrate configuration (0: SOI/tri-gate, 1: bulk FinFET)
++ GEOMOD   = 1           ; Geometry mode (1: double/triple gate, 2: GAA cylindrical)
++ COREMOD  = 0           ; Standard core formulation
++ CAPMOD   = 1           ; Quantum-mechanical capacitance correction
++ RDSMOD   = 0           ; External resistance model
++ TNOM     = 27.0        ; Nominal temperature (C)
++ TFIN     = 7.0e-9      ; Fin thickness / nanosheet thickness (m)
++ HFIN     = 30.0e-9     ; Fin height / nanosheet width (m)
++ FPITCH   = 30.0e-9     ; Fin pitch (m)
++ NFIN     = 1           ; Number of fins per finger
++ EOT      = 1.0e-9      ; Equivalent oxide thickness (m)
++ PHIG     = 4.25        ; Gate work function (eV)
++ NBODY    = 1.0e22      ; Body doping concentration (1/m^3)
++ NSD      = 2.0e26      ; Source/drain doping concentration (1/m^3)
++ NGATE    = 0           ; Metal gate flag (0: metal)
++ U0       = 0.055       ; Low-field electron mobility (m^2/V*s)
++ VSAT     = 1.2e5       ; Saturation velocity (m/s)
++ RDSW     = 50.0        ; Source/drain series resistance per width (ohm*um)
++ CDSC     = 0.15        ; Drain/source coupling capacitance
++ CDSCD    = 0.05        ; Drain bias sensitivity of CDSC
++ DVT0     = 0.0         ; Short channel threshold voltage parameter
++ DVT1     = 0.6         ; Short channel threshold voltage parameter
++ ETA0     = 0.02        ; DIBL coefficient
++ DSUB     = 1.0         ; Subthreshold DIBL exponent
++ PCLM     = 1.0e-9      ; Channel length modulation
++ PCLMG    = 0.0         ; Gate bias sensitivity of PCLM
++ DROUT    = 1.0         ; DIBL on output resistance
++ CGSO     = 1.0e-10     ; Gate-source overlap capacitance (F/m)
++ CGDO     = 1.0e-10     ; Gate-drain overlap capacitance (F/m)

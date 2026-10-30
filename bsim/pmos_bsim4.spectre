@@ -1,0 +1,60 @@
+* SPECTRE BSIM4 MOSFET Model Card Example
+* BSIM4 (level=14, version=4) - Advanced model for nanometer technologies (PMOS)
+*
+* BSIM4 provides comprehensive modeling for deep nanometer MOSFETs with
+* advanced physical effects, noise modeling, and statistical analysis capabilities.
+
+model pmos_bsim4 bsim4 type=p level=14 version=4
++ vth0   = -0.35       ; Long-channel threshold voltage (V)
++ tox    = 1.5e-9      ; Gate oxide thickness (m)
++ u0     = 0.010       ; Low-field mobility (cm^2/V*s)
++ vsat   = 8.0e4       ; Saturation velocity (cm/s)
++ k1     = 0.4         ; First-order body effect coefficient (V^0.5)
++ k2     = 0.0         ; Second-order body effect coefficient
++ k3     = 0.0         ; Narrow width effect coefficient
++ w0     = 2.5e-6      ; Narrow width parameter (m)
++ lpe0   = 2.0e-8      ; Zero-bias lateral field parameter (m)
++ lpeb   = 0.0         ; Body-bias dependence of LPE0
++ dvt0   = 1.0         ; Short-channel effect coefficient
++ dvt1   = 0.3         ; Short-channel effect coefficient
++ dvt2   = 0.0         ; Short-channel effect coefficient
++ dvt0w  = 0.0         ; Narrow width effect coefficient
++ dvt1w  = 5.3e6       ; Narrow width effect coefficient
++ dvt2w  = 0.0         ; Narrow width effect coefficient
++ ute    = -1.5        ; Mobility temperature exponent
++ ua     = 1.0e-9      ; Mobility degradation coefficient (m/V)
++ ub     = 1.0e-18     ; Mobility degradation coefficient (m/V)^2
++ uc     = 0.0         ; Mobility degradation coefficient (m/V)^2
++ rdsw   = 120.0       ; Source/drain resistance per width (ohm*um)
++ prwg   = 0.0         ; Gate dependence of RDSW (1/V)
++ prwb   = 0.0         ; Body dependence of RDSW (1/V)
++ wr     = 1.0         ; Width offset for RDSW (um)
++ pclm   = 1.2         ; Channel length modulation parameter
++ pdibl1 = 0.0         ; DIBL effect correction parameter
++ pdibl2 = 0.0         ; DIBL effect correction parameter
++ pdiblb = 0.0         ; Body-bias dependence of DIBL
++ pscbe1 = 4.24e8      ; Substrate current body effect
++ pscbe2 = 1.0e-5      ; Substrate current body effect
++ pvag   = 0.0         ; Early voltage gate dependence
++ delta  = 0.01        ; Vds effect on threshold
++ eta0   = 0.05        ; DIBL coefficient
++ etab   = 0.0         ; Body-bias dependence of eta0
++ dsub   = 0.5         ; DIBL coefficient exponent
++ cit    = 0.0         ; Interface trap capacitance (F/m^2)
++ cdsc   = 2.4e-4      ; Drain/source coupling capacitance (F*m/V)
++ cdscb  = 0.0         ; Body-bias dependence of CDSC
++ cdscd  = 0.0         ; Drain-bias dependence of CDSC
++ nfactor = 1.1        ; Subthreshold swing factor
++ xj     = 1.0e-8      ; Source/drain junction depth (m)
++ vsatcv = 8.0e4       ; Saturation velocity for C-V (cm/s)
++ minv   = 0.05        ; Moderate inversion parameter
++ minvcv = 0.05        ; Moderate inversion for C-V
++ noff   = 1.0         ; C-V parameter
++ voff   = -0.08       ; C-V parameter (V)
++ voffcv = -0.08       ; C-V parameter (V)
++ tnom   = 27.0        ; Nominal temperature (C)
++ cgso   = 4.0e-10     ; Gate-source overlap capacitance (F/m)
++ cgdo   = 4.0e-10     ; Gate-drain overlap capacitance (F/m)
++ cgbo   = 1.0e-10     ; Gate-bulk overlap capacitance (F/m)
++ capmod = 3           ; Capacitance model selector
++ xpart  = 0           ; Charge partitioning flag

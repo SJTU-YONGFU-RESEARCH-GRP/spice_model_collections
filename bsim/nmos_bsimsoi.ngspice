@@ -1,0 +1,27 @@
+* NGSPICE BSIM-SOI MOSFET Model Card Example
+* BSIMSOI (LEVEL=70, VERSION=4.5) - Standard for SOI MOSFETs (NMOS)
+*
+* Standard compact model for partially-depleted and fully-depleted SOI.
+
+.MODEL nmos_bsimsoi NMOS LEVEL=70 VERSION=4.5
++ SOIMOD   = 0           ; 0: Partially depleted (PD), 1: Fully depleted (FD)
++ SHMOD    = 1           ; Self-heating model flag (1: enabled)
++ TNOM     = 27.0        ; Nominal temperature (C)
++ TOX      = 1.5e-9      ; Gate oxide thickness (m)
++ TBOX     = 1.0e-7      ; Buried oxide (BOX) thickness (m)
++ TSI      = 2.0e-8      ; Silicon film thickness (m)
++ VTH0     = 0.35        ; Threshold voltage (V)
++ K1       = 0.45        ; First-order body effect coefficient
++ K2       = 0.0         ; Second-order body effect coefficient
++ U0       = 0.035       ; Low-field electron mobility (m^2/V*s)
++ VSAT     = 1.0e5       ; Saturation velocity (m/s)
++ RDSW     = 90.0        ; Source/drain series resistance per width (ohm*um)
++ DVT0     = 1.0         ; Short-channel effect coefficient
++ DVT1     = 0.3         ; Short-channel effect coefficient
++ ETA0     = 0.05        ; DIBL coefficient
++ PCLM     = 1.2         ; Channel length modulation parameter
++ RTH0     = 2.0e-5      ; Thermal resistance for self-heating (K*m/W)
++ CTH0     = 1.0e-9      ; Thermal capacitance for self-heating (J/K*m)
++ CGSO     = 2.0e-10     ; Gate-source overlap capacitance (F/m)
++ CGDO     = 2.0e-10     ; Gate-drain overlap capacitance (F/m)
++ CGBO     = 1.0e-10     ; Gate-bulk overlap capacitance (F/m)

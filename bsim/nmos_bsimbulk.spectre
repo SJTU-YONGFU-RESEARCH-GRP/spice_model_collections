@@ -1,0 +1,24 @@
+* SPECTRE BSIM-BULK MOSFET Model Card Example
+* BSIM-BULK / BSIM6 (level=77, version=106) - Modern Surface-Potential Bulk Model (NMOS)
+
+model nmos_bsimbulk bsim6 type=n level=77 version=106
++ type     = 1           ; 1: NFET, -1: PFET
++ tnom     = 27.0        ; Nominal temperature (C)
++ toxe     = 1.5e-9      ; Electrical gate oxide thickness (m)
++ toxp     = 1.4e-9      ; Physical gate oxide thickness (m)
++ vfb      = -1.0        ; Flat-band voltage (V)
++ ndep     = 4.0e23      ; Channel depletion doping concentration (1/m^3)
++ nsd      = 1.0e26      ; Source/drain doping concentration (1/m^3)
++ ngate    = 1.0e26      ; Poly/metal gate doping (1/m^3)
++ u0       = 0.040       ; Low-field electron mobility (m^2/V*s)
++ vsat     = 1.0e5       ; Saturation velocity (m/s)
++ rdsw     = 80.0        ; Source/drain series resistance per width (ohm*um)
++ geomod   = 0           ; Geometry mode
++ rgeomod  = 0           ; S/D resistance geometry mode
++ covmod   = 1           ; Gate overlap/fringing capacitance model
++ rdsmod   = 0           ; Resistance model
++ eta0     = 0.04        ; DIBL coefficient
++ pclm     = 1.0         ; Channel length modulation
++ cgso     = 1.5e-10     ; Gate-source overlap capacitance (F/m)
++ cgdo     = 1.5e-10     ; Gate-drain overlap capacitance (F/m)
++ cgbo     = 1.0e-10     ; Gate-bulk overlap capacitance (F/m)

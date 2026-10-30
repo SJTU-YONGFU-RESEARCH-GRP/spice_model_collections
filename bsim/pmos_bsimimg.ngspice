@@ -1,0 +1,31 @@
+* NGSPICE BSIM-IMG Independent Multi-Gate MOSFET Model Card Example
+* BSIM-IMG (LEVEL=73, VERSION=102) - Standard for UTBB-FDSOI (PMOS)
+*
+* Standard surface-potential compact model for independent front and back gates.
+
+.MODEL pmos_bsimimg PMOS LEVEL=73 VERSION=102
++ DEVTYPE  = 0           ; 1: NFET, 0: PFET
++ TNOM     = 27.0        ; Nominal temperature (C)
++ EOT1     = 1.1e-9      ; Front gate equivalent oxide thickness (m)
++ EOT2     = 20.0e-9     ; Back gate / BOX equivalent oxide thickness (m)
++ TSI      = 7.0e-9      ; Silicon channel film thickness (m)
++ PHIG1    = 4.85        ; Front gate work function (eV)
++ PHIG2    = 4.10        ; Back gate / substrate work function (eV)
++ NBODY    = 1.0e21      ; Body doping concentration (1/m^3)
++ NSD      = 2.0e26      ; Source/drain doping concentration (1/m^3)
++ U0       = 0.035       ; Low-field hole mobility (m^2/V*s)
++ VSAT     = 8.0e4       ; Saturation velocity (m/s)
++ RDSW     = 85.0        ; Source/drain resistance per width (ohm*um)
++ RDSMOD   = 0           ; Resistance model
++ GIDLMOD  = 0           ; GIDL current model
++ IGMOD    = 0           ; Gate dielectric tunneling model
++ KBG0     = 1.765       ; Back-gate coupling parameter
++ KBG1     = 0.0         ; Back-gate coupling parameter
++ DVT0     = 1.0         ; Short channel effect parameter
++ DVT1     = 0.5         ; Short channel effect parameter
++ ETA0     = 0.05        ; DIBL coefficient
++ PCLM     = 1.2         ; Channel length modulation
++ CGSO     = 1.2e-10     ; Front gate-source overlap capacitance (F/m)
++ CGDO     = 1.2e-10     ; Front gate-drain overlap capacitance (F/m)
++ CGSO2    = 0.5e-10     ; Back gate-source overlap capacitance (F/m)
++ CGDO2    = 0.5e-10     ; Back gate-drain overlap capacitance (F/m)
