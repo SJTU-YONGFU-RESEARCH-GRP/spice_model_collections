@@ -1,0 +1,90 @@
+{
+  "pdk_ids": [
+    "freepdk3"
+  ],
+  "source_key": "FREEPDK3",
+  "source_subdirectory": "hspice/models",
+  "tree_sha256": "29aaf5a8b18c03fa62509852d4fdd95b536d19e0e4afb564698404c27dc511f0",
+  "profiles": [
+    {
+      "release_id": "1c69703a2ab3f3213c6b557c52b434b934b445a64f49e3ac2c9371faaf22ade1",
+      "release_version": "import-4c18b9f729e9",
+      "pdk_id": "freepdk3",
+      "model_directory": ".",
+      "profile": {
+        "engine": "hspice",
+        "corner": "tt",
+        "loads": [
+          {
+            "path": "fet.mod",
+            "directive": "lib",
+            "section": "nfet_typ"
+          },
+          {
+            "path": "fet.mod",
+            "directive": "lib",
+            "section": "pfet_typ"
+          }
+        ],
+        "dialect": "spice",
+        "cwd": ".",
+        "include_base": "file",
+        "geometry": "fin",
+        "devices": [
+          {
+            "name": "nfet",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "fet.mod",
+            "section": "nfet_typ"
+          },
+          {
+            "name": "pfet",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "fet.mod",
+            "section": "pfet_typ"
+          }
+        ],
+        "entry_evidence": {
+          "source_id": "FREEPDK3-AGILE",
+          "path": "fet.mod",
+          "source_section": "pfet_typ"
+        }
+      }
+    }
+  ],
+  "dependency_findings": [],
+  "opaque_files": [],
+  "notices": [
+    "freepdk3/platform_29aaf5a8b18c/source_notices/236a2d5221bb_LICENSE"
+  ],
+  "validation": "not_run",
+  "availability": "models_present",
+  "public_distribution": {
+    "distribution": "NCSU FreePDK3",
+    "distribution_version": "import-4c18b9f729e9",
+    "license": "BSD-style; see LICENSE"
+  },
+  "schema_version": "spice.source.v1",
+  "files": [
+    {
+      "source_key": "FREEPDK3",
+      "upstream_path": "hspice/models/fet.mod",
+      "sha256": "b6135e87905a218b5c4696323233d064a0dcb6545ff8e412ad0cdd7ae87960b0",
+      "size": 3348,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "fet.mod"
+    },
+    {
+      "source_key": "FREEPDK3",
+      "upstream_path": "LICENSE",
+      "sha256": "236a2d5221bbfdb21ae654cb852ee0d00d0cf1195c0e451f8a93fdd7c184f27b",
+      "size": 1722,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "source_notices/236a2d5221bb_LICENSE"
+    }
+  ]
+}

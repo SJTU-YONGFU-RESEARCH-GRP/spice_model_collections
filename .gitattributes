@@ -1,0 +1,4 @@
+# Preserve original model bytes on every checkout; the manifest is the review
+# surface for large, encrypted, or binary vendor files.
+**/platform_*/** -text -diff
+**/platform_*/SOURCE.json text eol=lf diff

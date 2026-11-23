@@ -1,0 +1,1401 @@
+{
+  "pdk_ids": [
+    "ihp-sg13g2",
+    "ihp-sg13cmos5l"
+  ],
+  "source_key": "IHP-OPEN",
+  "source_subdirectory": ".",
+  "tree_sha256": "07d30c4abd0d1fe86a07bde595b2c4782178a246049cc10090e825101dddd987",
+  "profiles": [
+    {
+      "release_id": "6805c7d6c450f372da372b279306f362eb08ae0aed5f3c0910e7a1b01dff0993",
+      "release_version": "git-e73adb404573",
+      "pdk_id": "ihp-sg13g2",
+      "model_directory": "ihp-sg13g2/libs.tech/ngspice/models",
+      "profile": {
+        "engine": "ngspice",
+        "corner": "tt",
+        "dialect": "spice",
+        "cwd": ".",
+        "include_base": "file",
+        "geometry": "width_length",
+        "dimension_unit_m": 1.0,
+        "loads": [
+          {
+            "path": "cornerMOSlv.lib",
+            "section": "mos_tt",
+            "directive": "lib"
+          }
+        ],
+        "devices": [
+          {
+            "name": "nmoscl_2",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "VDD",
+              "VSS"
+            ],
+            "source_path": "sg13g2_moslv_mod.lib"
+          },
+          {
+            "name": "nmoscl_4",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "VDD",
+              "VSS"
+            ],
+            "source_path": "sg13g2_moslv_mod.lib"
+          },
+          {
+            "name": "nmoscl_psp",
+            "call_kind": "model",
+            "model_type": "psp103va",
+            "source_path": "sg13g2_moslv_parm.lib"
+          },
+          {
+            "name": "nmoscl_psp_rf",
+            "call_kind": "model",
+            "model_type": "pspnqs103va",
+            "source_path": "sg13g2_moslv_parm.lib"
+          },
+          {
+            "name": "sg13_lv_nmos",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sg13g2_moslv_mod.lib"
+          },
+          {
+            "name": "sg13_lv_pmos",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sg13g2_moslv_mod.lib"
+          },
+          {
+            "name": "sg13g2_lv_nmos_psp",
+            "call_kind": "model",
+            "model_type": "psp103va",
+            "source_path": "sg13g2_moslv_parm.lib"
+          },
+          {
+            "name": "sg13g2_lv_nmos_psp_rf",
+            "call_kind": "model",
+            "model_type": "pspnqs103va",
+            "source_path": "sg13g2_moslv_parm.lib"
+          },
+          {
+            "name": "sg13g2_lv_pmos_psp",
+            "call_kind": "model",
+            "model_type": "psp103va",
+            "source_path": "sg13g2_moslv_parm.lib"
+          },
+          {
+            "name": "sg13g2_lv_pmos_psp_rf",
+            "call_kind": "model",
+            "model_type": "pspnqs103va",
+            "source_path": "sg13g2_moslv_parm.lib"
+          }
+        ]
+      }
+    },
+    {
+      "release_id": "6805c7d6c450f372da372b279306f362eb08ae0aed5f3c0910e7a1b01dff0993",
+      "release_version": "git-e73adb404573",
+      "pdk_id": "ihp-sg13g2",
+      "model_directory": "ihp-sg13g2/libs.tech/ngspice/models",
+      "profile": {
+        "engine": "ngspice",
+        "corner": "ff",
+        "dialect": "spice",
+        "cwd": ".",
+        "include_base": "file",
+        "geometry": "width_length",
+        "dimension_unit_m": 1.0,
+        "loads": [
+          {
+            "path": "cornerMOSlv.lib",
+            "section": "mos_ff",
+            "directive": "lib"
+          }
+        ],
+        "devices": [
+          {
+            "name": "nmoscl_2",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "VDD",
+              "VSS"
+            ],
+            "source_path": "sg13g2_moslv_mod.lib"
+          },
+          {
+            "name": "nmoscl_4",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "VDD",
+              "VSS"
+            ],
+            "source_path": "sg13g2_moslv_mod.lib"
+          },
+          {
+            "name": "nmoscl_psp",
+            "call_kind": "model",
+            "model_type": "psp103va",
+            "source_path": "sg13g2_moslv_parm.lib"
+          },
+          {
+            "name": "nmoscl_psp_rf",
+            "call_kind": "model",
+            "model_type": "pspnqs103va",
+            "source_path": "sg13g2_moslv_parm.lib"
+          },
+          {
+            "name": "sg13_lv_nmos",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sg13g2_moslv_mod.lib"
+          },
+          {
+            "name": "sg13_lv_pmos",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sg13g2_moslv_mod.lib"
+          },
+          {
+            "name": "sg13g2_lv_nmos_psp",
+            "call_kind": "model",
+            "model_type": "psp103va",
+            "source_path": "sg13g2_moslv_parm.lib"
+          },
+          {
+            "name": "sg13g2_lv_nmos_psp_rf",
+            "call_kind": "model",
+            "model_type": "pspnqs103va",
+            "source_path": "sg13g2_moslv_parm.lib"
+          },
+          {
+            "name": "sg13g2_lv_pmos_psp",
+            "call_kind": "model",
+            "model_type": "psp103va",
+            "source_path": "sg13g2_moslv_parm.lib"
+          },
+          {
+            "name": "sg13g2_lv_pmos_psp_rf",
+            "call_kind": "model",
+            "model_type": "pspnqs103va",
+            "source_path": "sg13g2_moslv_parm.lib"
+          }
+        ]
+      }
+    },
+    {
+      "release_id": "6805c7d6c450f372da372b279306f362eb08ae0aed5f3c0910e7a1b01dff0993",
+      "release_version": "git-e73adb404573",
+      "pdk_id": "ihp-sg13g2",
+      "model_directory": "ihp-sg13g2/libs.tech/ngspice/models",
+      "profile": {
+        "engine": "ngspice",
+        "corner": "ss",
+        "dialect": "spice",
+        "cwd": ".",
+        "include_base": "file",
+        "geometry": "width_length",
+        "dimension_unit_m": 1.0,
+        "loads": [
+          {
+            "path": "cornerMOSlv.lib",
+            "section": "mos_ss",
+            "directive": "lib"
+          }
+        ],
+        "devices": [
+          {
+            "name": "nmoscl_2",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "VDD",
+              "VSS"
+            ],
+            "source_path": "sg13g2_moslv_mod.lib"
+          },
+          {
+            "name": "nmoscl_4",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "VDD",
+              "VSS"
+            ],
+            "source_path": "sg13g2_moslv_mod.lib"
+          },
+          {
+            "name": "nmoscl_psp",
+            "call_kind": "model",
+            "model_type": "psp103va",
+            "source_path": "sg13g2_moslv_parm.lib"
+          },
+          {
+            "name": "nmoscl_psp_rf",
+            "call_kind": "model",
+            "model_type": "pspnqs103va",
+            "source_path": "sg13g2_moslv_parm.lib"
+          },
+          {
+            "name": "sg13_lv_nmos",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sg13g2_moslv_mod.lib"
+          },
+          {
+            "name": "sg13_lv_pmos",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sg13g2_moslv_mod.lib"
+          },
+          {
+            "name": "sg13g2_lv_nmos_psp",
+            "call_kind": "model",
+            "model_type": "psp103va",
+            "source_path": "sg13g2_moslv_parm.lib"
+          },
+          {
+            "name": "sg13g2_lv_nmos_psp_rf",
+            "call_kind": "model",
+            "model_type": "pspnqs103va",
+            "source_path": "sg13g2_moslv_parm.lib"
+          },
+          {
+            "name": "sg13g2_lv_pmos_psp",
+            "call_kind": "model",
+            "model_type": "psp103va",
+            "source_path": "sg13g2_moslv_parm.lib"
+          },
+          {
+            "name": "sg13g2_lv_pmos_psp_rf",
+            "call_kind": "model",
+            "model_type": "pspnqs103va",
+            "source_path": "sg13g2_moslv_parm.lib"
+          }
+        ]
+      }
+    }
+  ],
+  "dependency_findings": [
+    {
+      "file": "ihp-sg13cmos5l/libs.tech/verilog-a/cap_cmomf/cap_cmomf.va",
+      "reference": "constants.vams",
+      "kind": "tool_header"
+    },
+    {
+      "file": "ihp-sg13cmos5l/libs.tech/verilog-a/cap_cmomf/cap_cmomf.va",
+      "reference": "disciplines.vams",
+      "kind": "tool_header"
+    },
+    {
+      "file": "ihp-sg13cmos5l/libs.tech/verilog-a/cap_cmomi/cap_cmomi.va",
+      "reference": "constants.vams",
+      "kind": "tool_header"
+    },
+    {
+      "file": "ihp-sg13cmos5l/libs.tech/verilog-a/cap_cmomi/cap_cmomi.va",
+      "reference": "disciplines.vams",
+      "kind": "tool_header"
+    },
+    {
+      "file": "ihp-sg13g2/libs.tech/verilog-a/cap_cmomf/cap_cmomf.va",
+      "reference": "constants.vams",
+      "kind": "tool_header"
+    },
+    {
+      "file": "ihp-sg13g2/libs.tech/verilog-a/cap_cmomf/cap_cmomf.va",
+      "reference": "disciplines.vams",
+      "kind": "tool_header"
+    },
+    {
+      "file": "ihp-sg13g2/libs.tech/verilog-a/cap_cmomi/cap_cmomi.va",
+      "reference": "constants.vams",
+      "kind": "tool_header"
+    },
+    {
+      "file": "ihp-sg13g2/libs.tech/verilog-a/cap_cmomi/cap_cmomi.va",
+      "reference": "disciplines.vams",
+      "kind": "tool_header"
+    },
+    {
+      "file": "ihp-sg13g2/libs.tech/verilog-a/mosvar/mosvar.va",
+      "reference": "discipline.h",
+      "kind": "tool_header"
+    },
+    {
+      "file": "ihp-sg13g2/libs.tech/verilog-a/psp103/juncap200.va",
+      "reference": "discipline.h",
+      "kind": "tool_header"
+    },
+    {
+      "file": "ihp-sg13g2/libs.tech/verilog-a/psp103/psp103.va",
+      "reference": "discipline.h",
+      "kind": "tool_header"
+    },
+    {
+      "file": "ihp-sg13g2/libs.tech/verilog-a/psp103/psp103_nqs.va",
+      "reference": "discipline.h",
+      "kind": "tool_header"
+    },
+    {
+      "file": "ihp-sg13g2/libs.tech/verilog-a/psp103/psp103t.va",
+      "reference": "discipline.h",
+      "kind": "tool_header"
+    },
+    {
+      "file": "ihp-sg13g2/libs.tech/verilog-a/r3_cmc/r3_cmc.va",
+      "reference": "discipline.h",
+      "kind": "tool_header"
+    },
+    {
+      "file": "ihp-sg13g2/libs.tech/verilog-a/vbic_1p3/vbic_1p3.va",
+      "reference": "disciplines.vams",
+      "kind": "tool_header"
+    }
+  ],
+  "opaque_files": [],
+  "notices": [
+    "ihp/platform_07d30c4abd0d/source_notices/c71d239df917_LICENSE"
+  ],
+  "validation": "sg13cmos5l_typ_pnp_smoke_only",
+  "availability": "models_present",
+  "public_distribution": {
+    "repository": "https://github.com/IHP-GmbH/IHP-Open-PDK",
+    "commit": "e73adb4045731ddec21634146d536380057f6a26",
+    "license": "Apache-2.0"
+  },
+  "schema_version": "spice.source.v1",
+  "files": [
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/cap_cmomf.lib",
+      "sha256": "4704625f619ad55a0728ccd0b7c902155a974805833d1874901bd2262c642a5e",
+      "size": 3244,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/cap_cmomf.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/cap_cmomi.lib",
+      "sha256": "ea8e1e2b2efcb072c0b516138f4ef1900691d217b7f1d8a7e810efe2de5d5e9a",
+      "size": 4070,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/cap_cmomi.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib",
+      "sha256": "6813c423f6669bf03f0e7fddda5f032ba6ec7e94b6ed1c4bf117311ed0cdb1d1",
+      "size": 3025,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/cornerDIO.lib",
+      "sha256": "52556bd7acaf9c004540747b6e2bcd94c4bb2fb54ad59d2a42953902412eda5e",
+      "size": 736,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/cornerDIO.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSCAP.lib",
+      "sha256": "68f3fc5450d6185cc45360662a0ca9d2640a31db3a082bc2af7ec589d2bfd807",
+      "size": 6665,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSCAP.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOShv.lib",
+      "sha256": "5a1f862dc304fdfe2fb9758b15d54809a688d83c3ce981dad2e8473b3e93481a",
+      "size": 24384,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOShv.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib",
+      "sha256": "03d505847c880d233b341be115a1e5460edf4d8e9b3e8a7df791a52fa4455d67",
+      "size": 21645,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/cornerPNP.lib",
+      "sha256": "c47c8ae5550bab99885ec179c6e583bfcbd1853be788a2fc7cbc822a3e02e9d4",
+      "size": 1732,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/cornerPNP.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib",
+      "sha256": "e0432415be26b0e530ea1acea44000c42d65904b406955464e4a7f97e95bfa2c",
+      "size": 7886,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/diodes.lib",
+      "sha256": "1674bd548fb948f066b9ee16d524e67e132ecaa2a6ad070859880b3b17068d54",
+      "size": 3927,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/diodes.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/resistors_mod.lib",
+      "sha256": "b79812f31c7b757013a872fe419ad8c1cea3416f77f82826ac3ba34a4506e60d",
+      "size": 4968,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/resistors_mod.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/resistors_stat.lib",
+      "sha256": "15b87c1af76d3a010ec28bf56f9a6f2f0c2874f95bc8f42dafba91f580380b02",
+      "size": 2041,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/resistors_stat.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13cmos5l_pnpMPA_mod.lib",
+      "sha256": "0283ad85c094dd1e1be635c5b405c4d4c96ac053423781f25e702bdfbcadaeaa",
+      "size": 2245,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13cmos5l_pnpMPA_mod.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13cmos5l_pnpMPA_stat.lib",
+      "sha256": "f8ec3f58c793d065028823248f2fee95cec2d69aceca1fb7dae0203bdc0680ad",
+      "size": 1551,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13cmos5l_pnpMPA_stat.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_bondpad.lib",
+      "sha256": "19b3edd62d507bfaf03633b3dc3e89b4ab4d43187a309e8fc665cc5af28a0a4f",
+      "size": 919,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_bondpad.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_esd.lib",
+      "sha256": "4a4fb26a87f64bc6ed807f161cc7b3afaeb8d5ca7230b08ebba728e805caa925",
+      "size": 3460,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_esd.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moscap_mismatch.lib",
+      "sha256": "347786491f820dc1b74720f543dea2ec2d84ee0c3c8bafd8bb334563bd4487da",
+      "size": 1103,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moscap_mismatch.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moscap_mod.lib",
+      "sha256": "4873c91eb09fbd167d3239683535d7cb72c6a66ff7419a08ef2817e80c4d2f8d",
+      "size": 2202,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moscap_mod.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moscap_mod_mismatch.lib",
+      "sha256": "a8f5c79bb5327569e6fb7fdc3c4e64995f817fbdbc00931f4e3b19151d0cf112",
+      "size": 2740,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moscap_mod_mismatch.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moscap_parm.lib",
+      "sha256": "52e62c52e7097b3da032ba44127dd478821ee5263b065621f5cf45fc7ffc0490",
+      "size": 32352,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moscap_parm.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moscap_stat.lib",
+      "sha256": "38bb882ac751c3e33da6deeb55d00a7526f2057ad3baab9b4f91945361dff817",
+      "size": 6213,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moscap_stat.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moshv_mismatch.lib",
+      "sha256": "2e9612bdb8252c281f422511039dc9b3ea983892aec89f8ef3361592e68fed09",
+      "size": 1167,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moshv_mismatch.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moshv_mod.lib",
+      "sha256": "58ce3084c253f2d3753c3b95386e8f4b81dcadfed4f4503dce56862a556c3328",
+      "size": 9279,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moshv_mod.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moshv_mod_mismatch.lib",
+      "sha256": "75c30f6975aad4cfe95af7c80fcea142ab0df6c9d7667c09120c7d0c9b814801",
+      "size": 12375,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moshv_mod_mismatch.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moshv_parm.lib",
+      "sha256": "eea5bbed39184cb1e2654ae29425a9ed6ee2f2341d6cb76c472591c75237bd35",
+      "size": 64329,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moshv_parm.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moshv_stat.lib",
+      "sha256": "cd30f22637e41fdbbaba506ebe0f17746b8438027e4651a7a87b241a39d68903",
+      "size": 7399,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moshv_stat.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moslv_mismatch.lib",
+      "sha256": "2d3251e2d42eadb0f8af152a4915fdc60a68bceb95a2d17a52f90cfb34b7e63e",
+      "size": 1088,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moslv_mismatch.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moslv_mod.lib",
+      "sha256": "84ec57080b9dd4666417f05db6f7b34c8dd3f12118929f9b308018613bece16e",
+      "size": 10452,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moslv_mod.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moslv_mod_mismatch.lib",
+      "sha256": "fac66b4344da4e31dece9a95c32d7af5aac7b40a60b4e029201e1904fb4e8acd",
+      "size": 13455,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moslv_mod_mismatch.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moslv_parm.lib",
+      "sha256": "cbf10b8453a18bb70b8ad0d6e40faa0937338e699b5460947a94900db6c92a6e",
+      "size": 94408,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moslv_parm.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moslv_stat.lib",
+      "sha256": "8d807e0ae41be381e655bf51f0eecf72269c8eaa022a2da59a1c90b0772e229a",
+      "size": 6077,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_moslv_stat.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_svaricaphv_mod.lib",
+      "sha256": "b6ae39c7334c75c222ecdee9d6b04c9be48657e91351429aebac47d1192a9abb",
+      "size": 5179,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_svaricaphv_mod.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_svaricaphv_mod_mismatch.lib",
+      "sha256": "064e1c751508149f2674914c1791c418195c55fff7d82236d20c2c79f49030fe",
+      "size": 5409,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/ngspice/models/sg13g2_svaricaphv_mod_mismatch.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/verilog-a/cap_cmomf/cap_cmomf.va",
+      "sha256": "6b39225c5e4ff875f8e9e552995d369f7edd5595d22fd472fc4e5351eb729513",
+      "size": 7222,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/verilog-a/cap_cmomf/cap_cmomf.va"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/verilog-a/cap_cmomi/cap_cmomi.va",
+      "sha256": "5d107c82f363d5812a1314f326391597c8da988556802b310a782c9188e0db2d",
+      "size": 25481,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/verilog-a/cap_cmomi/cap_cmomi.va"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13cmos5l/libs.tech/verilog-a/openvaf-compile-va.sh",
+      "sha256": "d505c4e8f47f27d5ca31c65fa1fc7409136757c521c0fa8fc5e16dc321e20d0f",
+      "size": 2029,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "ihp-sg13cmos5l/libs.tech/verilog-a/openvaf-compile-va.sh"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/cap_cmomf.lib",
+      "sha256": "410001def252a236f221442efcea6353874d1614db593db4142ea3b8a499a207",
+      "size": 3382,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/cap_cmomf.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/cap_cmomi.lib",
+      "sha256": "ae6270ea4abf6ad409065d6d24df2a9aa5b121cba3d6facbc14d6a3ceb7b424f",
+      "size": 3361,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/cap_cmomi.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/capacitors_mod.lib",
+      "sha256": "ff9eb4cc9fdccc0645d9db0bd37e25e9fee2a633765910a7f55ac2084c49695f",
+      "size": 5325,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/capacitors_mod.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/capacitors_mod_mismatch.lib",
+      "sha256": "6c550362c762362e276f0ed0a4f875616ab6a9de853f1a8f6851b52676ea6f77",
+      "size": 6006,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/capacitors_mod_mismatch.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/capacitors_stat.lib",
+      "sha256": "68d2ef41174bcfae5997b355c4fd3dbe4f2b8ec4be30ff79d474052b3be1715a",
+      "size": 1048,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/capacitors_stat.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/cornerCAP.lib",
+      "sha256": "4fc4a0f17ca2aef66ca38c2d2e7cead3307b69508d304ed073129565ec1c3e56",
+      "size": 1949,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/cornerCAP.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/cornerDIO.lib",
+      "sha256": "28e747e8f7437a3f539c5cc36f50c9d17c57c03ed463a4c9ee8f0a93a823fe0b",
+      "size": 2584,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/cornerDIO.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/cornerHBT.lib",
+      "sha256": "b907e1b9681d4ca389e511525dda0babe4193e9893d1ba07fad5751e6a08eddd",
+      "size": 5770,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/cornerHBT.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/cornerMOSCAP.lib",
+      "sha256": "68f3fc5450d6185cc45360662a0ca9d2640a31db3a082bc2af7ec589d2bfd807",
+      "size": 6665,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/cornerMOSCAP.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/cornerMOShv.lib",
+      "sha256": "5a1f862dc304fdfe2fb9758b15d54809a688d83c3ce981dad2e8473b3e93481a",
+      "size": 24384,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/cornerMOShv.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/cornerMOSlv.lib",
+      "sha256": "03d505847c880d233b341be115a1e5460edf4d8e9b3e8a7df791a52fa4455d67",
+      "size": 21645,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/cornerMOSlv.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/cornerRES.lib",
+      "sha256": "e0432415be26b0e530ea1acea44000c42d65904b406955464e4a7f97e95bfa2c",
+      "size": 7886,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/cornerRES.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/diodes.lib",
+      "sha256": "e6211bd0318122fbeb707498ede893223c332098cbb21c441b28b9d8c365e83d",
+      "size": 9812,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/diodes.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/resistors_mod.lib",
+      "sha256": "b79812f31c7b757013a872fe419ad8c1cea3416f77f82826ac3ba34a4506e60d",
+      "size": 4968,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/resistors_mod.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/resistors_stat.lib",
+      "sha256": "15b87c1af76d3a010ec28bf56f9a6f2f0c2874f95bc8f42dafba91f580380b02",
+      "size": 2041,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/resistors_stat.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_bondpad.lib",
+      "sha256": "19b3edd62d507bfaf03633b3dc3e89b4ab4d43187a309e8fc665cc5af28a0a4f",
+      "size": 919,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_bondpad.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_dschottky_nbl1_mod.lib",
+      "sha256": "c3552c165acd21524043ff9a9b3938c71565722466e9568cf6b109408d5ff6da",
+      "size": 2523,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_dschottky_nbl1_mod.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_dschottky_nbl1_stat.lib",
+      "sha256": "730c857bbaabb0c7876eb21b9b60a6882955db388956d082615763559c61d262",
+      "size": 1108,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_dschottky_nbl1_stat.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_esd.lib",
+      "sha256": "4a4fb26a87f64bc6ed807f161cc7b3afaeb8d5ca7230b08ebba728e805caa925",
+      "size": 3460,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_esd.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_hbt_mod.lib",
+      "sha256": "370f15b1a125a58cc44964cc7291f7d018e7b74c6731bd332a00fab53f94503d",
+      "size": 27813,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_hbt_mod.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_hbt_stat.lib",
+      "sha256": "badafaca780a89ab2a7a2ebb4b3e04d0f482e0f52f6c6677f29c419fd99fccc2",
+      "size": 2461,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_hbt_stat.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moscap_mismatch.lib",
+      "sha256": "347786491f820dc1b74720f543dea2ec2d84ee0c3c8bafd8bb334563bd4487da",
+      "size": 1103,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moscap_mismatch.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moscap_mod.lib",
+      "sha256": "4873c91eb09fbd167d3239683535d7cb72c6a66ff7419a08ef2817e80c4d2f8d",
+      "size": 2202,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moscap_mod.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moscap_mod_mismatch.lib",
+      "sha256": "a8f5c79bb5327569e6fb7fdc3c4e64995f817fbdbc00931f4e3b19151d0cf112",
+      "size": 2740,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moscap_mod_mismatch.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moscap_parm.lib",
+      "sha256": "52e62c52e7097b3da032ba44127dd478821ee5263b065621f5cf45fc7ffc0490",
+      "size": 32352,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moscap_parm.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moscap_stat.lib",
+      "sha256": "38bb882ac751c3e33da6deeb55d00a7526f2057ad3baab9b4f91945361dff817",
+      "size": 6213,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moscap_stat.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moshv_mismatch.lib",
+      "sha256": "2e9612bdb8252c281f422511039dc9b3ea983892aec89f8ef3361592e68fed09",
+      "size": 1167,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moshv_mismatch.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moshv_mod.lib",
+      "sha256": "58ce3084c253f2d3753c3b95386e8f4b81dcadfed4f4503dce56862a556c3328",
+      "size": 9279,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moshv_mod.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moshv_mod_mismatch.lib",
+      "sha256": "75c30f6975aad4cfe95af7c80fcea142ab0df6c9d7667c09120c7d0c9b814801",
+      "size": 12375,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moshv_mod_mismatch.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moshv_parm.lib",
+      "sha256": "eea5bbed39184cb1e2654ae29425a9ed6ee2f2341d6cb76c472591c75237bd35",
+      "size": 64329,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moshv_parm.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moshv_stat.lib",
+      "sha256": "cd30f22637e41fdbbaba506ebe0f17746b8438027e4651a7a87b241a39d68903",
+      "size": 7399,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moshv_stat.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moslv_mismatch.lib",
+      "sha256": "2d3251e2d42eadb0f8af152a4915fdc60a68bceb95a2d17a52f90cfb34b7e63e",
+      "size": 1088,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moslv_mismatch.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moslv_mod.lib",
+      "sha256": "84ec57080b9dd4666417f05db6f7b34c8dd3f12118929f9b308018613bece16e",
+      "size": 10452,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moslv_mod.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moslv_mod_mismatch.lib",
+      "sha256": "fac66b4344da4e31dece9a95c32d7af5aac7b40a60b4e029201e1904fb4e8acd",
+      "size": 13455,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moslv_mod_mismatch.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moslv_parm.lib",
+      "sha256": "cbf10b8453a18bb70b8ad0d6e40faa0937338e699b5460947a94900db6c92a6e",
+      "size": 94408,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moslv_parm.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moslv_stat.lib",
+      "sha256": "8d807e0ae41be381e655bf51f0eecf72269c8eaa022a2da59a1c90b0772e229a",
+      "size": 6077,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_moslv_stat.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_svaricaphv_mod.lib",
+      "sha256": "b6ae39c7334c75c222ecdee9d6b04c9be48657e91351429aebac47d1192a9abb",
+      "size": 5179,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_svaricaphv_mod.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_svaricaphv_mod_mismatch.lib",
+      "sha256": "064e1c751508149f2674914c1791c418195c55fff7d82236d20c2c79f49030fe",
+      "size": 5409,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/ngspice/models/sg13g2_svaricaphv_mod_mismatch.lib"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/README.md",
+      "sha256": "af6eb22034cb0e84a18279fd9eaf660f4ee730e5e844ace8417f90a81b138fab",
+      "size": 852,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/README.md"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/adms-compile-va.sh",
+      "sha256": "ebe323036d68786dd4f56024eae2a2c729b7727428afc4ed2e6f35abfe8fa602",
+      "size": 613,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/adms-compile-va.sh"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/cap_cmomf/cap_cmomf.va",
+      "sha256": "f0f8c3c3c31a6b553c365f36ec04e6f1a5870d3ff06b6eba90ddefbc2f48cc6e",
+      "size": 7766,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/cap_cmomf/cap_cmomf.va"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/cap_cmomi/cap_cmomi.va",
+      "sha256": "f8618465b9aa74d596983ded0e10780a9bccba3103b3a2daf58a44243ab5c210",
+      "size": 23637,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/cap_cmomi/cap_cmomi.va"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/mosvar/Changelog",
+      "sha256": "6fad40a4f10a5e41ac761973ab47afa316dd057e37d7f802986132c70547526f",
+      "size": 283,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/mosvar/Changelog"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/mosvar/discipline.h",
+      "sha256": "c57d71f2da4fe1dcd8212259cdfed8d5ec9846db93b9cc83ab3f5ca64cfda330",
+      "size": 5340,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/mosvar/discipline.h"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/mosvar/macrosAndDefines_cmc.va",
+      "sha256": "dda168152714f25ec1c92f75166f22627ff568a3aebe73581c95cef3caaf655a",
+      "size": 10298,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/mosvar/macrosAndDefines_cmc.va"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/mosvar/mosvar.va",
+      "sha256": "146eec0c2a9c3c437c53109f8ec42af68f75bd9d341e79797d2feda0340a19f6",
+      "size": 35538,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/mosvar/mosvar.va"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/mosvar/mosvarpspMacros.va",
+      "sha256": "c981ee834d00424c43fef2638b6e924d412f29115d2c8f40f8854efafe154cf5",
+      "size": 14453,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/mosvar/mosvarpspMacros.va"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/openvaf-compile-va.sh",
+      "sha256": "1894fdbc65393ecde6b9e192c885472076a059c02fd16b94dc5a6739371ac45e",
+      "size": 1538,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/openvaf-compile-va.sh"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/Changelog",
+      "sha256": "620be89aca4d27fd8e6f62bd43b7cbddfe4344dec88edf88217c76d3046bf2f7",
+      "size": 806,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/Changelog"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/Common103_macrodefs.include",
+      "sha256": "14fb6781da0b440a7627aa605c3c59fbf9f755c8eca2b641765bb8d6248029e7",
+      "size": 11124,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/Common103_macrodefs.include"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/JUNCAP200_InitModel.include",
+      "sha256": "335c2b2e8d1ffc9a9c7d820cbe82308e4a91894455f6bbae0e62cdfa9049c690",
+      "size": 16417,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/JUNCAP200_InitModel.include"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/JUNCAP200_macrodefs.include",
+      "sha256": "00d5153fe0a5f1da6523e67354e05c1ae08db2196bf711534fe44b65fb907b65",
+      "size": 29837,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/JUNCAP200_macrodefs.include"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/JUNCAP200_parlist.include",
+      "sha256": "d4350de852c966098f74adbd24f70b3e2ed8fec87c7f7d3569ee18168ece5901",
+      "size": 24507,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/JUNCAP200_parlist.include"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/JUNCAP200_varlist.include",
+      "sha256": "ee30317a2f4a03bfb6bdca471d72feacfa02d5f7cce664fe6ede99482fed37e7",
+      "size": 5960,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/JUNCAP200_varlist.include"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/PSP103_macrodefs.include",
+      "sha256": "fcb3d0830353c28710645cd28c9caf7610ebc0a05ed1ef89e0ef3e0799581d2b",
+      "size": 37047,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/PSP103_macrodefs.include"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/PSP103_module.include",
+      "sha256": "1a37803aea033a823a472d13c9a4fcd98fd8c0e069d8b95474e01a49647cc069",
+      "size": 128004,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/PSP103_module.include"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/PSP103_nqs_macrodefs.include",
+      "sha256": "d4e44d3c8634ce08502f9b25b4f6a56fbe75ce5b8a7d7be987af535b83f16746",
+      "size": 27023,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/PSP103_nqs_macrodefs.include"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/PSP103_parlist.include",
+      "sha256": "7adbc8e7010fdc6b9c906dace441f2a443c4079693733387dad0d3e3a737ec6f",
+      "size": 101591,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/PSP103_parlist.include"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/PSP103_scaling.include",
+      "sha256": "1a560ceffd722940f3aa67d64bcfc8f7925d4aa55a0c2caf0c933cf7a47dd54b",
+      "size": 33128,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/PSP103_scaling.include"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/README.md",
+      "sha256": "b5301fb60c1f92250c4f1a08c637e25b5ecf6c08ba9647aea3d773cb24c7cf39",
+      "size": 198,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/README.md"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/juncap200.va",
+      "sha256": "4833ba0c95cd9922d2277fe41ba7aa81028866b1850357273c4f62cd635d96e0",
+      "size": 18506,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/juncap200.va"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/psp103.va",
+      "sha256": "9bab5086f8e203a820043538ede898d0812d07371b1aa6f081d806aaad95cd50",
+      "size": 2007,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/psp103.va"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/psp103_nqs.va",
+      "sha256": "084ca6b4932a7db2717e7143345c9a9ff1bd62a1fb0db9af3100f7428aba91dd",
+      "size": 2019,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/psp103_nqs.va"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/psp103t.va",
+      "sha256": "856166de39aaa247204763e8e347c912fde8f27312f6a34e4cac975389810fd2",
+      "size": 1980,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/psp103t.va"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/releasenotesPSP103.8.2.txt",
+      "sha256": "64cd7bc8090e4a2aaa495918f8f9ae44424205934edfd96dde96683135a872be",
+      "size": 11098,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/psp103/releasenotesPSP103.8.2.txt"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/r3_cmc/Changelog",
+      "sha256": "14e460005858ebdbdd21f83d9c7a3176e761825e86bfb82723a9bcd8d0e3bbf3",
+      "size": 164,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/r3_cmc/Changelog"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/r3_cmc/LICENSE.txt",
+      "sha256": "60436a82eb1cff9e3e7fb4ba8c913b8adf72ff8578836d5134e376088a2bc698",
+      "size": 583,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/r3_cmc/LICENSE.txt"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/r3_cmc/NOTICE.txt",
+      "sha256": "fa3dc18885dd09baaffbf02fda561438df81787d1dd255f6218bcc2764f34132",
+      "size": 273,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/r3_cmc/NOTICE.txt"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/r3_cmc/r3_cmc.va",
+      "sha256": "398746f45048a9e075913e85a982258b929c9042257339bf1fc47d7e25303551",
+      "size": 37892,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/r3_cmc/r3_cmc.va"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/r3_cmc/r3_cmc_macros.include",
+      "sha256": "66e1bf0b43495a9c17454a1ac203171db5488edc7e19563f4f645389ba7eebb4",
+      "size": 36457,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/r3_cmc/r3_cmc_macros.include"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/vbic_1p3/LICENSE.txt",
+      "sha256": "f8303e68f99ec4056b4833dd3626ea661adf443bf0b8fbbebea0856898230db4",
+      "size": 11112,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/vbic_1p3/LICENSE.txt"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/vbic_1p3/cmcGeneralMacrosAndDefines.va",
+      "sha256": "b920ece34e29e4df75fa164dd65a551f47d007e26fd8da46892e20a40db26db0",
+      "size": 14454,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/vbic_1p3/cmcGeneralMacrosAndDefines.va"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/vbic_1p3/cmcStandardModelMacros.va",
+      "sha256": "878a04c899234ea0075f1875048ba0c59292f8a5f1bb698f1ef2f637e5b6c72f",
+      "size": 15473,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/vbic_1p3/cmcStandardModelMacros.va"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "ihp-sg13g2/libs.tech/verilog-a/vbic_1p3/vbic_1p3.va",
+      "sha256": "93f2e9a73e74e89a30445fa43e11e34351c51c5e6898e0e8e3efb4bd25f96121",
+      "size": 52584,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ihp-sg13g2/libs.tech/verilog-a/vbic_1p3/vbic_1p3.va"
+    },
+    {
+      "source_key": "IHP-OPEN",
+      "upstream_path": "LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "size": 11357,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "source_notices/c71d239df917_LICENSE"
+    }
+  ]
+}

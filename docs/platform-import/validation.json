@@ -1,0 +1,152 @@
+{
+  "schema_version": "spice.import-validation.v1",
+  "recorded_at": "2026-11-23T15:04:21.717937+00:00",
+  "base_commit": "4a641982d35b5f997459914ea9e6624e3fd17419",
+  "manifest_sha256": "ccd0062ce73ee3f775462b0258f4bdaca85300bcad39fc3d8e5531eaed9cd58a",
+  "source_verification": {
+    "bytes": 54818911,
+    "command": "verify",
+    "files": 1356,
+    "new": 0,
+    "status": "passed",
+    "unchanged": 1356
+  },
+  "identical_replay": {
+    "bytes": 54818911,
+    "command": "apply",
+    "files": 1356,
+    "new": 0,
+    "status": "passed",
+    "unchanged": 1356
+  },
+  "import_safety_tests": {
+    "status": "passed",
+    "tests": 10,
+    "command": "python3 -m unittest discover -s scripts -p test_import_platform_models.py -v"
+  },
+  "git_index": {
+    "status": "passed",
+    "vendor_files": 1356,
+    "lfs_objects": [],
+    "existing_tree_entries_preserved": 99
+  },
+  "documentation_links": {
+    "status": "passed",
+    "links_checked": 26
+  },
+  "audit_findings": {
+    "tool_header": 15,
+    "missing_include": 1
+  },
+  "static_audit_limits": "Exact source hashes cover all bytes. Includes were audited as readable literal references, not by interpreting all conditionals. Encrypted/binary/large files require real engine validation; large model scans inspect a readable prefix. README placeholders are documentation examples.",
+  "electrical_scope": {
+    "status": "passed",
+    "recorded_at": "2026-11-23T14:56:19.169486+00:00",
+    "ngspice": "******\n** ngspice-46+ : Circuit level simulation program\n** Compiled with KLU Direct Linear Solver\n** The U. C. Berkeley CAD Group\n** Copyright 1985-1994, Regents of the University of California.\n** Copyright 2001-2025, The ngspice team.\n** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html\n** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html\n** Creation Date: Wed Apr  8 07:34:31 UTC 2026\n******",
+    "manifest_sha256": "ccd0062ce73ee3f775462b0258f4bdaca85300bcad39fc3d8e5531eaed9cd58a",
+    "scope": "GF180 typical 3.3/6 V pairs; SKY130 core TT 1.8 V; IHP CMOS5L typ PNP; two rejection controls",
+    "checks": [
+      {
+        "case": "gf180_3p3",
+        "status": "passed",
+        "points": 11,
+        "currents": {
+          "Vn": {
+            "first_A": -1.07813678e-12,
+            "last_A": -0.00289349194
+          },
+          "Vp": {
+            "first_A": 0.00100572194,
+            "last_A": 1.01216371e-12
+          }
+        },
+        "returncode": 0,
+        "deck_sha256": "4d0359030a7d025e682ce0c5fd69ef3f7e7de96ce4de8f771305e839e0380152",
+        "data_sha256": "ad7546b8baf46d591456fffb2390bb24f663db6d3b125faa3310431394e24d1b",
+        "log_sha256": "732b2984e1423f7ca9c6d66ca576e842e2e150887b19d3590b385f97590f01c1"
+      },
+      {
+        "case": "missing_model",
+        "status": "passed",
+        "expected_failure": true,
+        "returncode": 0,
+        "deck_sha256": "42a1f5ced6c9bb5b1534bc151011a8a6a4ba418fe12db3583907c6daec52282a",
+        "log_sha256": "bd5053b30e5f16048ad6c59785a189d39df196a55bfd91eab6b295eca9034273"
+      },
+      {
+        "case": "missing_section",
+        "status": "passed",
+        "expected_failure": true,
+        "returncode": 1,
+        "deck_sha256": "0abcbde996d9ac24f6b41c418bc4bf92ff10680ceb56a5c27112d9dba26b1b74",
+        "log_sha256": "9dc4f233fdc76a751cf5d5a294abe9318f4ed95413184b4b977c6c20156284ff"
+      },
+      {
+        "case": "gf180_6p0",
+        "status": "passed",
+        "points": 11,
+        "currents": {
+          "Vn": {
+            "first_A": -1.05489816e-12,
+            "last_A": -0.00324160038
+          },
+          "Vp": {
+            "first_A": 0.000928761947,
+            "last_A": 1.16555792e-12
+          }
+        },
+        "returncode": 0,
+        "deck_sha256": "8d984987992ad7df7c7f26893175740ea5de0fddd2ea4c87cd55e595a9d61bf3",
+        "data_sha256": "bfc8540101a35d09c691b0c6960b1acb758a12d58cd38a58822f123aecb4e63c",
+        "log_sha256": "732b2984e1423f7ca9c6d66ca576e842e2e150887b19d3590b385f97590f01c1"
+      },
+      {
+        "case": "sky130_core_tt",
+        "status": "passed",
+        "points": 11,
+        "currents": {
+          "Vn": {
+            "first_A": -1.0032628e-12,
+            "last_A": -0.000448964896
+          },
+          "Vp": {
+            "first_A": 0.000316147299,
+            "last_A": 4.33705234e-11
+          }
+        },
+        "returncode": 0,
+        "deck_sha256": "1f929afb95c511bd0d416b25534de4a9824dd336febd4e66b69061d88709a4ca",
+        "data_sha256": "fc73065e8b099fab1c7157612f012dd27454d073d70d5578082b736342240a28",
+        "log_sha256": "2428eb38970584ed461499bcd9e99e0440739b3a6f480a0f3934f5ea0b5c9611"
+      },
+      {
+        "case": "ihp_cmos5l_pnp_typ",
+        "status": "passed",
+        "points": 11,
+        "currents": {
+          "Vc": {
+            "first_A": 1.20442728e-12,
+            "last_A": 1.26028046e-07
+          }
+        },
+        "returncode": 0,
+        "deck_sha256": "0758ada47b76b3fa75000b113d6153a424333391910eb6316b1149c0640a7627",
+        "data_sha256": "2bfcea09291048d7c9fc39c9af4263b3fc73266334dc0c634db544ca3f7851b1",
+        "log_sha256": "5bcdb202ba1d13b6dc4ba8f8a98d0252fd2a9d4793c464837d0721aebb072016"
+      }
+    ],
+    "command": "python3 checks/platform_smoke.py --output <unused-external-directory>"
+  },
+  "not_validated": [
+    "HSPICE execution",
+    "Spectre execution",
+    "all devices/corners/temperatures",
+    "IHP MOS/OSDI compilation",
+    "vendor binary model ABI/tool compatibility"
+  ],
+  "openvaf_probe": {
+    "status": "blocked",
+    "exit_code": 127,
+    "reason": "libLLVM.so.20.1: cannot open shared object file; EDA/toolchain environment not modified"
+  }
+}

@@ -1,0 +1,2677 @@
+{
+  "pdk_ids": [
+    "gf180mcu"
+  ],
+  "source_key": "GF180-FD-PR",
+  "source_subdirectory": "models",
+  "tree_sha256": "b52e784fe1b9d6554a3c0a00721a7186c1372aab262db99d7493c44f7750ba50",
+  "profiles": [
+    {
+      "release_id": "35c9e1a784a6a50a70972630619739f618568dfb10db72c3d0d16b26721f4e87",
+      "release_version": "git-de3240d7529a",
+      "pdk_id": "gf180mcu",
+      "model_directory": "ngspice",
+      "profile": {
+        "engine": "ngspice",
+        "corner": "tt",
+        "loads": [
+          {
+            "path": "design.ngspice",
+            "directive": "include"
+          },
+          {
+            "path": "sm141064.ngspice",
+            "directive": "lib",
+            "section": "typical"
+          }
+        ],
+        "dialect": "spice",
+        "cwd": ".",
+        "include_base": "file",
+        "geometry": "width_length",
+        "dimension_unit_m": 1.0,
+        "devices": [
+          {
+            "name": "nmos_3p3",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "nmos_3p3.0",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.1",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.10",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.11",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.12",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.13",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.14",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.15",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.2",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.3",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.4",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.5",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.6",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.7",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.8",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.9",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_6p0",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "nmos_6p0.0",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "nmos_6p0.1",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "nmos_6p0_nat",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_nat_t"
+          },
+          {
+            "name": "nmos_6p0_nat.0",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_nat_t"
+          },
+          {
+            "name": "nmos_6p0_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "nplus_u_m1",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nplus_u_m2",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "pmos_3p3",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "pmos_3p3.0",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.1",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.10",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.11",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.12",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.13",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.14",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.15",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.2",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.3",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.4",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.5",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.6",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.7",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.8",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.9",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_6p0",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "pmos_6p0.0",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_6p0_t"
+          },
+          {
+            "name": "pmos_6p0_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_6p0_t"
+          },
+          {
+            "name": "pplus_u_m1",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pplus_u_m2",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_6p0_t"
+          }
+        ]
+      }
+    },
+    {
+      "release_id": "35c9e1a784a6a50a70972630619739f618568dfb10db72c3d0d16b26721f4e87",
+      "release_version": "git-de3240d7529a",
+      "pdk_id": "gf180mcu",
+      "model_directory": "ngspice",
+      "profile": {
+        "engine": "ngspice",
+        "corner": "ff",
+        "loads": [
+          {
+            "path": "design.ngspice",
+            "directive": "include"
+          },
+          {
+            "path": "sm141064.ngspice",
+            "directive": "lib",
+            "section": "ff"
+          }
+        ],
+        "dialect": "spice",
+        "cwd": ".",
+        "include_base": "file",
+        "geometry": "width_length",
+        "dimension_unit_m": 1.0,
+        "devices": [
+          {
+            "name": "nmos_3p3",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "nmos_3p3.0",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.1",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.10",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.11",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.12",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.13",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.14",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.15",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.2",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.3",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.4",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.5",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.6",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.7",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.8",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.9",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_6p0",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "nmos_6p0.0",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "nmos_6p0.1",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "nmos_6p0_nat",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_nat_t"
+          },
+          {
+            "name": "nmos_6p0_nat.0",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_nat_t"
+          },
+          {
+            "name": "nmos_6p0_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "nplus_u_m1",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nplus_u_m2",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "pmos_3p3",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "pmos_3p3.0",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.1",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.10",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.11",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.12",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.13",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.14",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.15",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.2",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.3",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.4",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.5",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.6",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.7",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.8",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.9",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_6p0",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "pmos_6p0.0",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_6p0_t"
+          },
+          {
+            "name": "pmos_6p0_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_6p0_t"
+          },
+          {
+            "name": "pplus_u_m1",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pplus_u_m2",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_6p0_t"
+          }
+        ]
+      }
+    },
+    {
+      "release_id": "35c9e1a784a6a50a70972630619739f618568dfb10db72c3d0d16b26721f4e87",
+      "release_version": "git-de3240d7529a",
+      "pdk_id": "gf180mcu",
+      "model_directory": "ngspice",
+      "profile": {
+        "engine": "ngspice",
+        "corner": "ss",
+        "loads": [
+          {
+            "path": "design.ngspice",
+            "directive": "include"
+          },
+          {
+            "path": "sm141064.ngspice",
+            "directive": "lib",
+            "section": "ss"
+          }
+        ],
+        "dialect": "spice",
+        "cwd": ".",
+        "include_base": "file",
+        "geometry": "width_length",
+        "dimension_unit_m": 1.0,
+        "devices": [
+          {
+            "name": "nmos_3p3",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "nmos_3p3.0",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.1",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.10",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.11",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.12",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.13",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.14",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.15",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.2",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.3",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.4",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.5",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.6",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.7",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.8",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.9",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_6p0",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "nmos_6p0.0",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "nmos_6p0.1",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "nmos_6p0_nat",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_nat_t"
+          },
+          {
+            "name": "nmos_6p0_nat.0",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_nat_t"
+          },
+          {
+            "name": "nmos_6p0_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "nplus_u_m1",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nplus_u_m2",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "pmos_3p3",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "pmos_3p3.0",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.1",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.10",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.11",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.12",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.13",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.14",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.15",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.2",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.3",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.4",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.5",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.6",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.7",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.8",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.9",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_6p0",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "pmos_6p0.0",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_6p0_t"
+          },
+          {
+            "name": "pmos_6p0_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_6p0_t"
+          },
+          {
+            "name": "pplus_u_m1",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pplus_u_m2",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_6p0_t"
+          }
+        ]
+      }
+    },
+    {
+      "release_id": "3ba5977de770fe8fcd286b186aec669cc5c3e8eeaa4d86313dd2649dc0acc760",
+      "release_version": "git-de3240d7529a",
+      "pdk_id": "gf180mcu",
+      "model_directory": "ngspice",
+      "profile": {
+        "engine": "ngspice",
+        "corner": "tt",
+        "loads": [
+          {
+            "path": "sm141064.ngspice",
+            "directive": "lib",
+            "section": "typical"
+          }
+        ],
+        "dialect": "spice",
+        "cwd": ".",
+        "include_base": "file",
+        "geometry": "width_length",
+        "dimension_unit_m": 1.0,
+        "devices": [
+          {
+            "name": "nmos_3p3",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "nmos_3p3.0",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.1",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.10",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.11",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.12",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.13",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.14",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.15",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.2",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.3",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.4",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.5",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.6",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.7",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.8",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3.9",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_3p3_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nmos_6p0",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "nmos_6p0.0",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "nmos_6p0.1",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "nmos_6p0_nat",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_nat_t"
+          },
+          {
+            "name": "nmos_6p0_nat.0",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_nat_t"
+          },
+          {
+            "name": "nmos_6p0_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "nplus_u_m1",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_t"
+          },
+          {
+            "name": "nplus_u_m2",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "pmos_3p3",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "pmos_3p3.0",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.1",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.10",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.11",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.12",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.13",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.14",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.15",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.2",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.3",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.4",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.5",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.6",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.7",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.8",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3.9",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_3p3_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pmos_6p0",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "pmos_6p0.0",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_6p0_t"
+          },
+          {
+            "name": "pmos_6p0_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_6p0_t"
+          },
+          {
+            "name": "pplus_u_m1",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_t"
+          },
+          {
+            "name": "pplus_u_m2",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_6p0_t"
+          }
+        ]
+      }
+    },
+    {
+      "release_id": "3ba5977de770fe8fcd286b186aec669cc5c3e8eeaa4d86313dd2649dc0acc760",
+      "release_version": "git-de3240d7529a",
+      "pdk_id": "gf180mcu",
+      "model_directory": "ngspice",
+      "profile": {
+        "engine": "ngspice",
+        "corner": "ff",
+        "loads": [
+          {
+            "path": "sm141064.ngspice",
+            "directive": "lib",
+            "section": "ff"
+          }
+        ],
+        "dialect": "spice",
+        "cwd": ".",
+        "include_base": "file",
+        "geometry": "width_length",
+        "dimension_unit_m": 1.0,
+        "devices": [
+          {
+            "name": "nmos_3p3",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "nmos_3p3.0",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.1",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.10",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.11",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.12",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.13",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.14",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.15",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.2",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.3",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.4",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.5",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.6",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.7",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.8",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3.9",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_3p3_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nmos_6p0",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "nmos_6p0.0",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "nmos_6p0.1",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "nmos_6p0_nat",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_nat_t"
+          },
+          {
+            "name": "nmos_6p0_nat.0",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_nat_t"
+          },
+          {
+            "name": "nmos_6p0_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "nplus_u_m1",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_f"
+          },
+          {
+            "name": "nplus_u_m2",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "pmos_3p3",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "pmos_3p3.0",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.1",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.10",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.11",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.12",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.13",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.14",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.15",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.2",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.3",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.4",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.5",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.6",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.7",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.8",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3.9",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_3p3_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pmos_6p0",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "pmos_6p0.0",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_6p0_t"
+          },
+          {
+            "name": "pmos_6p0_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_6p0_t"
+          },
+          {
+            "name": "pplus_u_m1",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_f"
+          },
+          {
+            "name": "pplus_u_m2",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_6p0_t"
+          }
+        ]
+      }
+    },
+    {
+      "release_id": "3ba5977de770fe8fcd286b186aec669cc5c3e8eeaa4d86313dd2649dc0acc760",
+      "release_version": "git-de3240d7529a",
+      "pdk_id": "gf180mcu",
+      "model_directory": "ngspice",
+      "profile": {
+        "engine": "ngspice",
+        "corner": "ss",
+        "loads": [
+          {
+            "path": "sm141064.ngspice",
+            "directive": "lib",
+            "section": "ss"
+          }
+        ],
+        "dialect": "spice",
+        "cwd": ".",
+        "include_base": "file",
+        "geometry": "width_length",
+        "dimension_unit_m": 1.0,
+        "devices": [
+          {
+            "name": "nmos_3p3",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "nmos_3p3.0",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.1",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.10",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.11",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.12",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.13",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.14",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.15",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.2",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.3",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.4",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.5",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.6",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.7",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.8",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3.9",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_3p3_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nmos_6p0",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "nmos_6p0.0",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "nmos_6p0.1",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "nmos_6p0_nat",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_nat_t"
+          },
+          {
+            "name": "nmos_6p0_nat.0",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_nat_t"
+          },
+          {
+            "name": "nmos_6p0_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "nplus_u_m1",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_3p3_s"
+          },
+          {
+            "name": "nplus_u_m2",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "nmos_6p0_t"
+          },
+          {
+            "name": "pmos_3p3",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "pmos_3p3.0",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.1",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.10",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.11",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.12",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.13",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.14",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.15",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.2",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.3",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.4",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.5",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.6",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.7",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.8",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3.9",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_3p3_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pmos_6p0",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "fets_mm"
+          },
+          {
+            "name": "pmos_6p0.0",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_6p0_t"
+          },
+          {
+            "name": "pmos_6p0_sab",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "d",
+              "g",
+              "s",
+              "b"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_6p0_t"
+          },
+          {
+            "name": "pplus_u_m1",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_3p3_s"
+          },
+          {
+            "name": "pplus_u_m2",
+            "call_kind": "subcircuit",
+            "terminals": [
+              "1",
+              "2",
+              "3"
+            ],
+            "source_path": "sm141064.ngspice",
+            "section": "pmos_6p0_t"
+          }
+        ]
+      }
+    }
+  ],
+  "dependency_findings": [],
+  "opaque_files": [],
+  "notices": [
+    "gf180mcu/platform_b52e784fe1b9/source_notices/cfc7749b96f6_LICENSE"
+  ],
+  "validation": "typical_3p3_6p0_pair_smoke",
+  "availability": "models_present",
+  "public_distribution": {
+    "repository": "https://github.com/google/globalfoundries-pdk-libs-gf180mcu_fd_pr",
+    "commit": "9f992d5a9186d1f7820c58f039c484ad35b2edea",
+    "license": "Apache-2.0"
+  },
+  "schema_version": "spice.source.v1",
+  "files": [
+    {
+      "source_key": "GF180-FD-PR",
+      "upstream_path": "models/README.rst",
+      "sha256": "9bd79909a9d9cf612d4bf23475720fa90c07e0368c2c08d4a4402024db726435",
+      "size": 663,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "README.rst"
+    },
+    {
+      "source_key": "GF180-FD-PR",
+      "upstream_path": "models/ngspice/design.ngspice",
+      "sha256": "8d9721a5bf8f079d3fddbd03339af9a0c84d4feb06db8e06465fbd02c7500508",
+      "size": 3249,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ngspice/design.ngspice"
+    },
+    {
+      "source_key": "GF180-FD-PR",
+      "upstream_path": "models/ngspice/sm141064.ngspice",
+      "sha256": "73fc67d38747d95ce03f3c2ba5f0a25c98f56a293363a9df4c971a3a28a3dcda",
+      "size": 1348553,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ngspice/sm141064.ngspice"
+    },
+    {
+      "source_key": "GF180-FD-PR",
+      "upstream_path": "models/ngspice/smbb000149.ngspice",
+      "sha256": "3b0995ba269b6cbc468f34fe977c4d21b0faa2935e02f4b2a5d24f58ea66affe",
+      "size": 31347,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "ngspice/smbb000149.ngspice"
+    },
+    {
+      "source_key": "GF180-FD-PR",
+      "upstream_path": "LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "size": 11358,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "source_notices/cfc7749b96f6_LICENSE"
+    },
+    {
+      "source_key": "GF180-FD-PR",
+      "upstream_path": "models/xyce/design.xyce",
+      "sha256": "6ad79826d1d2ff35e997b13accfa2f85b9939eef814637191d141bb0446c80b3",
+      "size": 3122,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "xyce/design.xyce"
+    },
+    {
+      "source_key": "GF180-FD-PR",
+      "upstream_path": "models/xyce/sm141064.xyce",
+      "sha256": "2c7b01504f895f3470a5717bb8b1ed9b33dc432eb13472439cc01b9ff6e72b47",
+      "size": 728004,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "xyce/sm141064.xyce"
+    },
+    {
+      "source_key": "GF180-FD-PR",
+      "upstream_path": "models/xyce/smbb000149.xyce",
+      "sha256": "39c7dc1f434d46ab28cb14b646dc9b5da5cab63dd14561363bba5eabf640141c",
+      "size": 20848,
+      "mode": "0644",
+      "storage": "git",
+      "local_path": "xyce/smbb000149.xyce"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "schema_version": "spice.availability.v1",
+  "repository": "https://github.com/openecos-projects/icsprout55-pdk",
+  "release": "v1.10.103",
+  "commit": "2d72857e14a6d479339c073070df78547b852eb7",
+  "spice_device_models_available": false,
+  "simulation_validated": false,
+  "files": [],
+  "reference_note": "The source supplies CDL connectivity netlists, not transistor model cards; use the upstream release for those references."
+}

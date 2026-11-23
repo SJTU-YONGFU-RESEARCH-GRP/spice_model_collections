@@ -1,0 +1,7 @@
+{
+  "FREEPDK15": "/absolute/path/to/original-freepdk15",
+  "FREEPDK3": "/absolute/path/to/original-freepdk3",
+  "GF180-FD-PR": "/absolute/path/to/original-gf180-fd-pr",
+  "IHP-OPEN": "/absolute/path/to/original-ihp-open",
+  "SKY130-FD-PR": "/absolute/path/to/original-sky130-fd-pr"
+}

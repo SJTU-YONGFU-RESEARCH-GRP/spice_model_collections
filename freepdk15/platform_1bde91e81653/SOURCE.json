@@ -1,0 +1,85 @@
+{
+  "pdk_ids": [
+    "freepdk15"
+  ],
+  "source_key": "FREEPDK15",
+  "source_subdirectory": "hspice/models",
+  "tree_sha256": "1bde91e816530ce8ddb711e580541c2ea4dcac90a03e9d2284ff47f7f519a22d",
+  "profiles": [
+    {
+      "release_id": "66e67861ec72298d180c5cd03ac7f1981ac89fc929106089c8c4dac9c372957e",
+      "release_version": "import-e356e9cc6a34",
+      "pdk_id": "freepdk15",
+      "model_directory": ".",
+      "profile": {
+        "engine": "hspice",
+        "corner": "tt",
+        "loads": [
+          {
+            "path": "fet.inc",
+            "directive": "lib",
+            "section": "CMG"
+          }
+        ],
+        "dialect": "spice",
+        "cwd": ".",
+        "include_base": "file",
+        "geometry": "fin",
+        "devices": [
+          {
+            "name": "nfet",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "fet.inc",
+            "section": "cmg"
+          },
+          {
+            "name": "pfet",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "fet.inc",
+            "section": "cmg"
+          }
+        ],
+        "entry_evidence": {
+          "source_id": "FREEPDK15-AGILE",
+          "path": "fet.inc",
+          "source_section": "CMG"
+        }
+      }
+    }
+  ],
+  "dependency_findings": [],
+  "opaque_files": [],
+  "notices": [
+    "freepdk15/platform_1bde91e81653/source_notices/f4df004102f1_LICENSE"
+  ],
+  "validation": "not_run",
+  "availability": "models_present",
+  "public_distribution": {
+    "distribution": "NCSU FreePDK15",
+    "distribution_version": "import-e356e9cc6a34",
+    "license": "BSD-style; see LICENSE"
+  },
+  "schema_version": "spice.source.v1",
+  "files": [
+    {
+      "source_key": "FREEPDK15",
+      "upstream_path": "hspice/models/fet.inc",
+      "sha256": "38366783a3bbff0610f1a7238f25fb8582926c9e7969b20f498caa990b152d3b",
+      "size": 4725,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "fet.inc"
+    },
+    {
+      "source_key": "FREEPDK15",
+      "upstream_path": "LICENSE",
+      "sha256": "f4df004102f19d7d04eddfb363470f24552c4c955f1fcff87ffe5dbb27a6165d",
+      "size": 1705,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "source_notices/f4df004102f1_LICENSE"
+    }
+  ]
+}
