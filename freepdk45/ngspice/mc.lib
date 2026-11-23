@@ -1,0 +1,12 @@
+
+.include './tran_models/models_nom/NMOS_VTG.inc'
+.include './tran_models/models_nom/PMOS_VTG.inc'
+
+.include './tran_models/models_nom/NMOS_VTL.inc'
+.include './tran_models/models_nom/PMOS_VTL.inc'
+
+.include './tran_models/models_nom/NMOS_VTH.inc'
+.include './tran_models/models_nom/PMOS_VTH.inc'
+
+.include './tran_models/models_nom/NMOS_THKOX.inc'
+.include './tran_models/models_nom/PMOS_THKOX.inc'

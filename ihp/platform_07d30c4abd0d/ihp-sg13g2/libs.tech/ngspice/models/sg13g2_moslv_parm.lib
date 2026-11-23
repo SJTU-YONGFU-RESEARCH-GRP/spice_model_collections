@@ -58,7 +58,7 @@
 *
 *******************************************************************************
 
-.model sg13g2_lv_nmos_psp psp103va             type          =  +1
+.model sg13g2_lv_nmos_psp pspnqs103va             type          =  +1
 + level         =  103.60                      tr            =  27.0                        dta           =  0.0
 + swgeo         =  1.0                         swigate       =  1.0                         swimpact      =  1.0
 + swgidl        =  1.0                         swjuncap      =  3.0                         swjunasym     =  0.0
@@ -339,7 +339,7 @@
 * - change parameter rint from 1.3323e-26 to 1e-12
 *******************************************************************************
 
-.model sg13g2_lv_pmos_psp psp103va             type          =  -1
+.model sg13g2_lv_pmos_psp pspnqs103va             type          =  -1
 + level         =  103.60                      tr            =  27.0                        dta           =  0.0
 + swgeo         =  1.0                         swigate       =  1.0                         swimpact      =  1.0
 + swgidl        =  1.0                         swjuncap      =  3.0                         swjunasym     =  0.0
@@ -600,7 +600,7 @@
 + VGS_MAX = 1.6 VGD_MAX = 1.6 VGB_MAX = 1.6
 + VDS_MAX = 1.6 VDB_MAX = 1.6 VSB_MAX = 1.6
                 
-.model nmoscl_psp psp103va                     type          =  +1
+.model nmoscl_psp pspnqs103va                     type          =  +1
 + tr            =  27.0                        dta           =  0.0
 + swgeo         =  1.0                         swigate       =  1.0                         swimpact      =  1.0
 + swgidl        =  1.0                         swjuncap      =  3.0                         swjunasym     =  0.0

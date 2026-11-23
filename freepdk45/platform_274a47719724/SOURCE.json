@@ -1,0 +1,610 @@
+{
+  "pdk_ids": [
+    "freepdk45"
+  ],
+  "source_key": "PDK-ORIGINALS",
+  "source_subdirectory": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models",
+  "tree_sha256": "274a47719724cb0a37b45ddb3d6bc012ed5fa14ea30ec5df4952ce058bd9a83f",
+  "profiles": [
+    {
+      "release_id": "771d82a5927b5dd768644cfc883e929868211609cceb9c2d05a36540c8e1a1f4",
+      "release_version": "import-2b8ac837fe0f",
+      "pdk_id": "freepdk45",
+      "model_directory": "hspice",
+      "profile": {
+        "engine": "hspice",
+        "corner": "tt",
+        "loads": [
+          {
+            "path": "tran_models/models_nom/NMOS_VTG.inc",
+            "directive": "include"
+          },
+          {
+            "path": "tran_models/models_nom/PMOS_VTG.inc",
+            "directive": "include"
+          },
+          {
+            "path": "tran_models/models_nom/NMOS_VTL.inc",
+            "directive": "include"
+          },
+          {
+            "path": "tran_models/models_nom/PMOS_VTL.inc",
+            "directive": "include"
+          },
+          {
+            "path": "tran_models/models_nom/NMOS_VTH.inc",
+            "directive": "include"
+          },
+          {
+            "path": "tran_models/models_nom/PMOS_VTH.inc",
+            "directive": "include"
+          },
+          {
+            "path": "tran_models/models_nom/NMOS_THKOX.inc",
+            "directive": "include"
+          },
+          {
+            "path": "tran_models/models_nom/PMOS_THKOX.inc",
+            "directive": "include"
+          }
+        ],
+        "dialect": "spice",
+        "cwd": ".",
+        "include_base": "file",
+        "geometry": "width_length",
+        "dimension_unit_m": 1.0,
+        "entry_evidence": {
+          "path": "hspice_nom.include",
+          "sha256": "ef87bf2f5c1ed39ab12c2be6df9a1c8f5cd9546413cab04614b8da28bd4fe406"
+        },
+        "devices": [
+          {
+            "name": "NMOS_THKOX",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "tran_models/models_nom/NMOS_THKOX.inc"
+          },
+          {
+            "name": "NMOS_VTG",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "tran_models/models_nom/NMOS_VTG.inc"
+          },
+          {
+            "name": "NMOS_VTH",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "tran_models/models_nom/NMOS_VTH.inc"
+          },
+          {
+            "name": "NMOS_VTL",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "tran_models/models_nom/NMOS_VTL.inc"
+          },
+          {
+            "name": "PMOS_THKOX",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "tran_models/models_nom/PMOS_THKOX.inc"
+          },
+          {
+            "name": "PMOS_VTG",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "tran_models/models_nom/PMOS_VTG.inc"
+          },
+          {
+            "name": "PMOS_VTH",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "tran_models/models_nom/PMOS_VTH.inc"
+          },
+          {
+            "name": "PMOS_VTL",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "tran_models/models_nom/PMOS_VTL.inc"
+          }
+        ]
+      }
+    },
+    {
+      "release_id": "771d82a5927b5dd768644cfc883e929868211609cceb9c2d05a36540c8e1a1f4",
+      "release_version": "import-2b8ac837fe0f",
+      "pdk_id": "freepdk45",
+      "model_directory": "hspice",
+      "profile": {
+        "engine": "hspice",
+        "corner": "ff",
+        "loads": [
+          {
+            "path": "tran_models/models_ff/NMOS_VTG.inc",
+            "directive": "include"
+          },
+          {
+            "path": "tran_models/models_ff/PMOS_VTG.inc",
+            "directive": "include"
+          },
+          {
+            "path": "tran_models/models_ff/NMOS_VTL.inc",
+            "directive": "include"
+          },
+          {
+            "path": "tran_models/models_ff/PMOS_VTL.inc",
+            "directive": "include"
+          },
+          {
+            "path": "tran_models/models_ff/NMOS_VTH.inc",
+            "directive": "include"
+          },
+          {
+            "path": "tran_models/models_ff/PMOS_VTH.inc",
+            "directive": "include"
+          },
+          {
+            "path": "tran_models/models_ff/NMOS_THKOX.inc",
+            "directive": "include"
+          },
+          {
+            "path": "tran_models/models_ff/PMOS_THKOX.inc",
+            "directive": "include"
+          }
+        ],
+        "dialect": "spice",
+        "cwd": ".",
+        "include_base": "file",
+        "geometry": "width_length",
+        "dimension_unit_m": 1.0,
+        "entry_evidence": {
+          "path": "hspice_ff.include",
+          "sha256": "a1a123eeab6eed08efef51f33e8894c0dc4cdf02e0279957ae26b8332e40b30e"
+        },
+        "devices": [
+          {
+            "name": "NMOS_THKOX",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "tran_models/models_ff/NMOS_THKOX.inc"
+          },
+          {
+            "name": "NMOS_VTG",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "tran_models/models_ff/NMOS_VTG.inc"
+          },
+          {
+            "name": "NMOS_VTH",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "tran_models/models_ff/NMOS_VTH.inc"
+          },
+          {
+            "name": "NMOS_VTL",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "tran_models/models_ff/NMOS_VTL.inc"
+          },
+          {
+            "name": "PMOS_THKOX",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "tran_models/models_ff/PMOS_THKOX.inc"
+          },
+          {
+            "name": "PMOS_VTG",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "tran_models/models_ff/PMOS_VTG.inc"
+          },
+          {
+            "name": "PMOS_VTH",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "tran_models/models_ff/PMOS_VTH.inc"
+          },
+          {
+            "name": "PMOS_VTL",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "tran_models/models_ff/PMOS_VTL.inc"
+          }
+        ]
+      }
+    },
+    {
+      "release_id": "771d82a5927b5dd768644cfc883e929868211609cceb9c2d05a36540c8e1a1f4",
+      "release_version": "import-2b8ac837fe0f",
+      "pdk_id": "freepdk45",
+      "model_directory": "hspice",
+      "profile": {
+        "engine": "hspice",
+        "corner": "ss",
+        "loads": [
+          {
+            "path": "tran_models/models_ss/NMOS_VTG.inc",
+            "directive": "include"
+          },
+          {
+            "path": "tran_models/models_ss/PMOS_VTG.inc",
+            "directive": "include"
+          },
+          {
+            "path": "tran_models/models_ss/NMOS_VTL.inc",
+            "directive": "include"
+          },
+          {
+            "path": "tran_models/models_ss/PMOS_VTL.inc",
+            "directive": "include"
+          },
+          {
+            "path": "tran_models/models_ss/NMOS_VTH.inc",
+            "directive": "include"
+          },
+          {
+            "path": "tran_models/models_ss/PMOS_VTH.inc",
+            "directive": "include"
+          },
+          {
+            "path": "tran_models/models_ss/NMOS_THKOX.inc",
+            "directive": "include"
+          },
+          {
+            "path": "tran_models/models_ss/PMOS_THKOX.inc",
+            "directive": "include"
+          }
+        ],
+        "dialect": "spice",
+        "cwd": ".",
+        "include_base": "file",
+        "geometry": "width_length",
+        "dimension_unit_m": 1.0,
+        "entry_evidence": {
+          "path": "hspice_ss.include",
+          "sha256": "0652e8fc75ee5c53844f6a4769a194873ec4151981ce3db8d335f331c577a6b0"
+        },
+        "devices": [
+          {
+            "name": "NMOS_THKOX",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "tran_models/models_ss/NMOS_THKOX.inc"
+          },
+          {
+            "name": "NMOS_VTG",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "tran_models/models_ss/NMOS_VTG.inc"
+          },
+          {
+            "name": "NMOS_VTH",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "tran_models/models_ss/NMOS_VTH.inc"
+          },
+          {
+            "name": "NMOS_VTL",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "tran_models/models_ss/NMOS_VTL.inc"
+          },
+          {
+            "name": "PMOS_THKOX",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "tran_models/models_ss/PMOS_THKOX.inc"
+          },
+          {
+            "name": "PMOS_VTG",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "tran_models/models_ss/PMOS_VTG.inc"
+          },
+          {
+            "name": "PMOS_VTH",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "tran_models/models_ss/PMOS_VTH.inc"
+          },
+          {
+            "name": "PMOS_VTL",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "tran_models/models_ss/PMOS_VTL.inc"
+          }
+        ]
+      }
+    }
+  ],
+  "dependency_findings": [],
+  "opaque_files": [
+    "hspice/ptm/genptm.pl"
+  ],
+  "notices": [],
+  "validation": "not_run",
+  "availability": "models_present",
+  "public_distribution": null,
+  "source_aliases": [],
+  "schema_version": "spice.source.v1",
+  "files": [
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/hspice_ff.include",
+      "sha256": "a1a123eeab6eed08efef51f33e8894c0dc4cdf02e0279957ae26b8332e40b30e",
+      "size": 624,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/hspice_ff.include"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/hspice_nom.include",
+      "sha256": "ef87bf2f5c1ed39ab12c2be6df9a1c8f5cd9546413cab04614b8da28bd4fe406",
+      "size": 632,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/hspice_nom.include"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/hspice_ss.include",
+      "sha256": "0652e8fc75ee5c53844f6a4769a194873ec4151981ce3db8d335f331c577a6b0",
+      "size": 624,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/hspice_ss.include"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/ptm/NMOS_last",
+      "sha256": "cad6f4f45800d504c5ebe7fe68dd80efc2cf70604a405a4cfe266f81791cdef7",
+      "size": 4114,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/ptm/NMOS_last"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/ptm/PMOS_last",
+      "sha256": "ddb69539adf44cac458dfbf62e62ebc70ed48eb0b373aee1db294cad8a72f256",
+      "size": 4093,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/ptm/PMOS_last"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/ptm/README",
+      "sha256": "1da43901da0a533a8909d8fd5a6a708cc996a295a5c5645695feaf9646491b29",
+      "size": 336,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/ptm/README"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/ptm/genptm.pl",
+      "sha256": "c9c17cc07470376c79baaa8dc4c0fc15a460de8bbb2908f6e0bbbe95056c62ef",
+      "size": 18475,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/ptm/genptm.pl"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_ff/NMOS_THKOX.inc",
+      "sha256": "14acfceacc1e1c75989b2e6cabec60ce5f1808e2f06317b18f12ca9a512ead89",
+      "size": 4832,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_ff/NMOS_THKOX.inc"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_ff/NMOS_VTG.inc",
+      "sha256": "da493d23d096fda91bea155a4403e80770a245df22c41bb50d4bda9ebcfd9139",
+      "size": 5502,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_ff/NMOS_VTG.inc"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_ff/NMOS_VTH.inc",
+      "sha256": "cea60eef21e7faab48bd72f0d6e75f0a0f8d8626f6c91b53a6519eccf36c8e9b",
+      "size": 5554,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_ff/NMOS_VTH.inc"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_ff/NMOS_VTL.inc",
+      "sha256": "4bdad4e91ce9898bb4aeab8f39aa7f92dc62ca7d6ab540cf3144ba33bb2faf5a",
+      "size": 5501,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_ff/NMOS_VTL.inc"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_ff/PMOS_THKOX.inc",
+      "sha256": "5a955cce2814b9f1a2c35e3e28162459dcd8d23b4af28f12e77ea97b0b069463",
+      "size": 4811,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_ff/PMOS_THKOX.inc"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_ff/PMOS_VTG.inc",
+      "sha256": "3f0f6adf64860db926d44b37d2f2701a6bfbe7785740b0800c39371d4290da1c",
+      "size": 5632,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_ff/PMOS_VTG.inc"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_ff/PMOS_VTH.inc",
+      "sha256": "a06602490c2e8815aad46247d23e66d7546f04691561a7e276926dfb823e5b62",
+      "size": 5595,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_ff/PMOS_VTH.inc"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_ff/PMOS_VTL.inc",
+      "sha256": "7c71abe3f3b5c4f51fba464badfd4fc0ce09080ab49ea384962e86b1a751534b",
+      "size": 5666,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_ff/PMOS_VTL.inc"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_nom/NMOS_THKOX.inc",
+      "sha256": "302d7e4d88a72840ebd88077a12186a67028478c4d842d8294f1d67860c4d75f",
+      "size": 4835,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_nom/NMOS_THKOX.inc"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_nom/NMOS_VTG.inc",
+      "sha256": "3cb730470427d99b6d22ab4d029493fa949daa1040d2ed51179118263682a14c",
+      "size": 5507,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_nom/NMOS_VTG.inc"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_nom/NMOS_VTH.inc",
+      "sha256": "f869d191bd3d173491dec6d8b5d31c0a35a60b6e75a86e9644515a8efa92566f",
+      "size": 5551,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_nom/NMOS_VTH.inc"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_nom/NMOS_VTL.inc",
+      "sha256": "e5a86b413e3c58c0d4f1fc6e3e0388e49d0ad040ba72f4593d2364a177786ad6",
+      "size": 5506,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_nom/NMOS_VTL.inc"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_nom/PMOS_THKOX.inc",
+      "sha256": "fdaee8972a4fdce1d3e29d397adea973d3a840df099cc360d7115bbe5d532b22",
+      "size": 4816,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_nom/PMOS_THKOX.inc"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_nom/PMOS_VTG.inc",
+      "sha256": "a7d95a2631897134d2f52a9fa8469aef4e7c6dd2a2b5a499fc08645da3465d4a",
+      "size": 5628,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_nom/PMOS_VTG.inc"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_nom/PMOS_VTH.inc",
+      "sha256": "3cf2067bdbe27fb574bba97292e254c7769e9d706e7bfd9692e951f505b2c19a",
+      "size": 5586,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_nom/PMOS_VTH.inc"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_nom/PMOS_VTL.inc",
+      "sha256": "97fc614d8e96884ed31ea9c25509919edecd80fec06270ec17b661e6dfdbb8eb",
+      "size": 5662,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_nom/PMOS_VTL.inc"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_ss/NMOS_THKOX.inc",
+      "sha256": "de564f35dd0cf0f76310b28c05fb200bee4d57d70ecae66f7697a0a60f9ace83",
+      "size": 4832,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_ss/NMOS_THKOX.inc"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_ss/NMOS_VTG.inc",
+      "sha256": "8a1c18b90c489562b1f82b62c3695b98d4e89cb5196cb663c20535adee4a4fc5",
+      "size": 5507,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_ss/NMOS_VTG.inc"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_ss/NMOS_VTH.inc",
+      "sha256": "04dce03977dd3ed128e361b99bf2b3fb6d3baa9c6c80ae9093c24ac7d92dc573",
+      "size": 5554,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_ss/NMOS_VTH.inc"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_ss/NMOS_VTL.inc",
+      "sha256": "0cc32745dedd31b7aa3926074e354f9ebea0e2265f9d62c0d57b3b3a20076615",
+      "size": 5506,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_ss/NMOS_VTL.inc"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_ss/PMOS_THKOX.inc",
+      "sha256": "a2baeecb6ac95f93ac17f8e709d66da91dfc16b6ffafea1dda04f2af66035034",
+      "size": 4811,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_ss/PMOS_THKOX.inc"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_ss/PMOS_VTG.inc",
+      "sha256": "ac491ad6f58c07458145b72eddd2f2781dd1754d5836ec29b96430a66a1f2f20",
+      "size": 5627,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_ss/PMOS_VTG.inc"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_ss/PMOS_VTH.inc",
+      "sha256": "59f10b188e38679ab393fa604a2ef9757a6cdad038ffedc149b7bf640983477c",
+      "size": 5592,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_ss/PMOS_VTH.inc"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/ncsu/freepdk45-cdk-suite/import-2b8ac837fe0f/native/freepdk45/models/hspice/tran_models/models_ss/PMOS_VTL.inc",
+      "sha256": "f1a18cd409391b409cdba4daebc1b9bd4a0c019e5deeb4d9ae837dbc249abbe7",
+      "size": 5661,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/tran_models/models_ss/PMOS_VTL.inc"
+    }
+  ]
+}

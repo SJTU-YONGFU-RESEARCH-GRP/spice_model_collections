@@ -1,0 +1,2786 @@
+//*********************************************************************//
+//*                 PKU PHIMO-Fusion Model - Verilog-A                *//
+//*********************************************************************//
+//
+//  Copyright 2025 Peking University, ShenZhen. All rights reserved
+//
+//  Project Directors : Prof. Lining Zhang, Prof. Ru Huang
+//  Authors           : Baokang Peng, Guoyao Cheng, Wu Dai,
+//                      Fangxing Zhang, Yu Li, Honglin Wu
+//
+//  Notes:
+//    - GAA global model (Lg: 16-100 nm; WGAA: 10-40 nm).
+//    - Current and capacitance merged.
+//    - Derived from BSIM-CMG ver.111.2.1 with the fusion modeling
+//      technique [B. Peng et al., "PHIMO-NN: Compact Modeling by
+//      Fusing Device Physics and Neural Networks for One-Shot
+//      Parameterization," IEEE TCAD].
+//    - The Verilog-A code corresponds to the model's Python
+//      implementation used for training and adopts a re-organized
+//      structure for clarity.
+//
+/**********************************************************************/
+`include "constants.vams"
+`include "disciplines.vams"
+
+(* instance_parameter_list = {L, W, NF} *)
+module pmos_lvt(D, G, S, B);
+   inout D, G, S, B;
+   electrical D, G, S, B;
+
+parameter real L=1.6e-8;
+parameter real W=3.5e-8;
+parameter real NF=1;
+
+parameter real U0 = 3.0e-2;
+parameter real XL=1.2e-8;		
+parameter real DVTSHIFT=0.0;		//###########1111
+parameter real DeltaWGAA = 0;
+parameter real DeltaTGAA = 0;
+parameter real EOT_0 = 1.1e-9;				//###########1111
+
+
+//*****network normalization factors******//
+   real tgaamax = 5.0e-9;
+   real tgaamin = 5.0e-9;
+   real wgaamax = 4.0e-8;
+   real wgaamin = 1.0e-8;
+   real lgaamax = 1e-7;
+   real lgaamin = 1.6e-8;
+	 real netmax  = 1.0; 
+	 real netmin  = -1.0; 
+
+
+
+
+//*****input weight matrix******//
+//******nnwa_b_c********************************************************************************************//
+//******a means the number of hidden layers*****************************************************************//
+//******b means the b th neurons of the a layer*************************************************************//
+//******c measns the weight between the b th neurons of the a layer and the c of the previous layer ********//
+
+
+   //*********  NN Model 1: SCE   *************//
+	//***** 1st hidden layer weight matrix******//
+	real nnscew1_1_1 = 0.0014857358875570157;
+	real nnscew1_1_2 = 0.5252676909824828;
+	real nnscew1_2_1 = -1.9950762227309058;
+	real nnscew1_2_2 = 0.6644105466471993;
+	
+	//***** 2nd hidden layer weight matrix******//
+	real nnscew2_1_1 = 2.664102537581752;
+	real nnscew2_1_2 = 0.9434211670091825;
+	real nnscew2_2_1 = 4.730918495963207;
+	real nnscew2_2_2 = 2.152690129947179;
+	
+	//***** Output layer weight matrix******//
+	real nnscew3_1_1 = -2.6433338010830747;
+	real nnscew3_1_2 = -1.9281100976860597;
+	real nnscew3_2_1 = 0.4224379899650969;
+	real nnscew3_2_2 = 3.1699962680048013;
+	real nnscew3_3_1 = -3.484760391338359;
+	real nnscew3_3_2 = -4.7922352248731785;
+	real nnscew3_4_1 = -4.315798527567225;
+	real nnscew3_4_2 = -9.736410790770114;
+	real nnscew3_5_1 = -4.167476278047186;
+	real nnscew3_5_2 = -5.754770878745639;
+	
+	//***** 1st hidden layer threshold matrix******//
+	real nnsceb1_1 = 0.2964484756831076;
+	real nnsceb1_2 = -3.50432765547049;
+	
+	//***** 2nd hidden layer threshold matrix******//
+	real nnsceb2_1 = 0.028386015129248637;
+	real nnsceb2_2 = -1.3805871301645651;
+	
+	//***** Output layer layer threshold matrix******//
+	real nnsceb3_1 = -1.603120062941233;
+	real nnsceb3_2 = -4.795939707192698;
+	real nnsceb3_3 = -4.34903716187244;
+	real nnsceb3_4 = -0.2860777703221522;
+	real nnsceb3_5 = -3.816866579704103;
+
+//*********  NN Model 2: CLM Verlocity Saturation   *************//
+	//***** 1st hidden layer weight matrix******//
+	real nnclmw1_1_1 = 1.6940102199645803;
+	real nnclmw1_1_2 = 9.55593054812081;
+	real nnclmw1_2_1 = 14.062016328653815;
+	real nnclmw1_2_2 = 3.6086924912702627;
+	real nnclmw1_3_1 = -7.03396028609729;
+	real nnclmw1_3_2 = 1.5295901818671498;
+	real nnclmw1_4_1 = 3.8522866178919952;
+	real nnclmw1_4_2 = -13.180509078996883;
+	
+	//***** 2nd hidden layer weight matrix******//
+	real nnclmw2_1_1 = -13.25590853728978;
+	real nnclmw2_1_2 = -3.0589528261064314;
+	real nnclmw2_1_3 = -6.297397327186141;
+	real nnclmw2_1_4 = 3.4833498087297303;
+	real nnclmw2_2_1 = -3.5563968087883535;
+	real nnclmw2_2_2 = 0.8027044884104344;
+	real nnclmw2_2_3 = -0.7095597300849605;
+	real nnclmw2_2_4 = 2.5749478098113565;
+	real nnclmw2_3_1 = 2.80997039061629;
+	real nnclmw2_3_2 = -0.8399915875968202;
+	real nnclmw2_3_3 = -0.2072970116763635;
+	real nnclmw2_3_4 = -2.3705534394801173;
+	real nnclmw2_4_1 = 24.484588720627233;
+	real nnclmw2_4_2 = -0.32680735418726936;
+	real nnclmw2_4_3 = 10.097027515937926;
+	real nnclmw2_4_4 = -6.438465655734191;
+	
+	//***** Output layer weight matrix******//
+	real nnclmw3_1_1 = -2.972629442776191;
+	real nnclmw3_1_2 = -2.5239193003565683;
+	real nnclmw3_1_3 = -4.167772135352551;
+	real nnclmw3_1_4 = -2.2100762286070994;
+	real nnclmw3_2_1 = -0.899036741029115;
+	real nnclmw3_2_2 = 8.400726372498545;
+	real nnclmw3_2_3 = 3.2406542648986707;
+	real nnclmw3_2_4 = -4.8949050287499585;
+	real nnclmw3_3_1 = -0.13507265817325464;
+	real nnclmw3_3_2 = 3.1365811346314425;
+	real nnclmw3_3_3 = 0.8369738733604888;
+	real nnclmw3_3_4 = 0.8989812496341852;
+	real nnclmw3_4_1 = -7.152844250494805;
+	real nnclmw3_4_2 = 1.498873774484382;
+	real nnclmw3_4_3 = -0.8796556210356261;
+	real nnclmw3_4_4 = -1.31297497685718;
+	real nnclmw3_5_1 = -0.30819392057412975;
+	real nnclmw3_5_2 = -3.3975428442886244;
+	real nnclmw3_5_3 = -2.319572098434283;
+	real nnclmw3_5_4 = -1.9448802645357373;
+	real nnclmw3_6_1 = 5.429593873777468;
+	real nnclmw3_6_2 = 2.206580327552372;
+	real nnclmw3_6_3 = 2.669759430437913;
+	real nnclmw3_6_4 = 1.5860377164489705;
+	real nnclmw3_7_1 = -0.3633327916825909;
+	real nnclmw3_7_2 = 0.8039703307012777;
+	real nnclmw3_7_3 = 1.8780729756801322;
+	real nnclmw3_7_4 = -0.47109151674648964;
+	real nnclmw3_8_1 = 2.3755843644287418;
+	real nnclmw3_8_2 = -1.112609594327762;
+	real nnclmw3_8_3 = 1.9290943612856928;
+	real nnclmw3_8_4 = 0.3448498518037137;
+	real nnclmw3_9_1 = -3.4692751236171384;
+	real nnclmw3_9_2 = -0.11295132272441916;
+	real nnclmw3_9_3 = -1.3691359491670256;
+	real nnclmw3_9_4 = -1.3290608052793371;
+	real nnclmw3_10_1 = 0.1835635807221722;
+	real nnclmw3_10_2 = -0.7087349384061205;
+	real nnclmw3_10_3 = 0.5884747365606899;
+	real nnclmw3_10_4 = 1.4760345569727515;
+	real nnclmw3_11_1 = -0.22151076104003287;
+	real nnclmw3_11_2 = 3.6636629456181353;
+	real nnclmw3_11_3 = 1.560999488720607;
+	real nnclmw3_11_4 = 0.7303064386599524;
+	real nnclmw3_12_1 = -0.6097753713856868;
+	real nnclmw3_12_2 = 0.719245832728055;
+	real nnclmw3_12_3 = 2.165877736068092;
+	real nnclmw3_12_4 = -1.6275445030183922;
+	real nnclmw3_13_1 = 2.571735524021161;
+	real nnclmw3_13_2 = -3.4618042782024054;
+	real nnclmw3_13_3 = -1.9206611486106668;
+	real nnclmw3_13_4 = 0.06727562917059823;
+	
+	//***** 1st hidden layer threshold matrix******//
+	real nnclmb1_1 = 8.105402793234767;
+	real nnclmb1_2 = 4.875840740591559;
+	real nnclmb1_3 = 1.012656996459405;
+	real nnclmb1_4 = 8.348360417079105;
+	
+	//***** 2nd hidden layer threshold matrix******//
+	real nnclmb2_1 = 2.4105160457819257;
+	real nnclmb2_2 = 0.3084425569783737;
+	real nnclmb2_3 = -0.09085138107013344;
+	real nnclmb2_4 = -4.734218068264059;
+	
+	//***** Output layer layer threshold matrix******//
+	real nnclmb3_1 = 0.07383709185763729;
+	real nnclmb3_2 = 0.24347733602875676;
+	real nnclmb3_3 = 3.0772661159909944;
+	real nnclmb3_4 = 0.6777721992239121;
+	real nnclmb3_5 = -4.49441474096972;
+	real nnclmb3_6 = -6.432897447452695;
+	real nnclmb3_7 = -1.674830342647582;
+	real nnclmb3_8 = -1.8970775428804938;
+	real nnclmb3_9 = -0.7064283252096478;
+	real nnclmb3_10 = -1.2294698761957747;
+	real nnclmb3_11 = -3.564219689928103;
+	real nnclmb3_12 = 1.0394469700666276;
+	real nnclmb3_13 = -2.249122142167604;
+
+//*********  NN Model 3: Quantum   *************//
+	//***** 1st hidden layer weight matrix******//
+	real nnquaw1_1_1 = 0.31329358461320145;
+	real nnquaw1_1_2 = -0.13329765777942806;
+	real nnquaw1_2_1 = 0.3707762226342403;
+	real nnquaw1_2_2 = -0.13622276414426746;
+	real nnquaw1_3_1 = 0.39666401792797745;
+	real nnquaw1_3_2 = -0.14162647134482956;
+	
+	//***** 2nd hidden layer weight matrix******//
+	real nnquaw2_1_1 = 0.8108667089735171;
+	real nnquaw2_1_2 = 0.9381502996908445;
+	real nnquaw2_1_3 = 0.9084962882058404;
+	real nnquaw2_2_1 = 0.7065269422251224;
+	real nnquaw2_2_2 = 0.9221090711816637;
+	real nnquaw2_2_3 = 1.1497668785872184;
+	real nnquaw2_3_1 = 0.7638127808640311;
+	real nnquaw2_3_2 = 0.8823909248577547;
+	real nnquaw2_3_3 = 0.9547310657322949;
+	
+	//***** Output layer weight matrix******//
+	real nnquaw3_1_1 = -1.373978765481541;
+	real nnquaw3_1_2 = -2.6076378895269317;
+	real nnquaw3_1_3 = -1.761583716533078;
+	real nnquaw3_2_1 = -2.2562527051006058e-182;
+	real nnquaw3_2_2 = -1.4960580467999038e-182;
+	real nnquaw3_2_3 = 1.9798706125801798e-182;
+	real nnquaw3_3_1 = -5.685463652827688e-181;
+	real nnquaw3_3_2 = -2.4919436718499093e-180;
+	real nnquaw3_3_3 = 8.818478604068869e-181;
+	real nnquaw3_4_1 = 0.7531153590489583;
+	real nnquaw3_4_2 = 0.7585654367387021;
+	real nnquaw3_4_3 = 0.7554875636035157;
+	real nnquaw3_5_1 = -4.085043152991933;
+	real nnquaw3_5_2 = -4.1178731059144695;
+	real nnquaw3_5_3 = -4.098092864569675;
+	real nnquaw3_6_1 = 1.2276578485480297e-179;
+	real nnquaw3_6_2 = -8.278604991615602e-180;
+	real nnquaw3_6_3 = -1.0730186233761645e-181;
+	real nnquaw3_7_1 = -4.2884911157654073e-181;
+	real nnquaw3_7_2 = -3.292802960313824e-183;
+	real nnquaw3_7_3 = -2.4471016760094354e-184;
+	
+	//***** 1st hidden layer threshold matrix******//
+	real nnquab1_1 = 0.5427128703938479;
+	real nnquab1_2 = 0.6923925175139233;
+	real nnquab1_3 = 0.7442485629164914;
+	
+	//***** 2nd hidden layer threshold matrix******//
+	real nnquab2_1 = 0.911711851710844;
+	real nnquab2_2 = 0.9594349728538033;
+	real nnquab2_3 = 1.0070247859267811;
+	
+	//***** Output layer layer threshold matrix******//
+	real nnquab3_1 = -1.537763378109324;
+	real nnquab3_2 = 1.771670487507956e-179;
+	real nnquab3_3 = 2.4200771199363917e-179;
+	real nnquab3_4 = 0.7975582681536214;
+	real nnquab3_5 = -4.328658130107358;
+	real nnquab3_6 = 2.46948100874468e-181;
+	real nnquab3_7 = -1.5982752454756485e-180;
+
+//*********  NN Model 4: Mobility   *************//
+	//***** 1st hidden layer weight matrix******//
+	real nnmobw1_1_1 = -0.18745685431882472;
+	real nnmobw1_1_2 = -0.12786726499677048;
+	real nnmobw1_1_3 = 0.6825181565811299;
+	real nnmobw1_2_1 = 6.369721149032817;
+	real nnmobw1_2_2 = -0.09685515108109916;
+	real nnmobw1_2_3 = 14.2192136727281;
+	
+	//***** 2nd hidden layer weight matrix******//
+	real nnmobw2_1_1 = 1.7311729282688446;
+	real nnmobw2_1_2 = -4.277113103200384;
+	real nnmobw2_2_1 = 5.93975638231739;
+	real nnmobw2_2_2 = 2.3600419913933104;
+	
+	//***** Output layer weight matrix******//
+	real nnmobw3_1_1 = 0.789786909124033;
+	real nnmobw3_1_2 = 3.8238671193427387;
+	real nnmobw3_2_1 = -1.542474996122896;
+	real nnmobw3_2_2 = -1.9236302404449075;
+	real nnmobw3_3_1 = -2.9759585110431277;
+	real nnmobw3_3_2 = 0.9339897456778035;
+	real nnmobw3_4_1 = 6.059617198588688;
+	real nnmobw3_4_2 = -5.873558229840406;
+	real nnmobw3_5_1 = -1.216320812853569;
+	real nnmobw3_5_2 = 3.297408615555089;
+	
+	//***** 1st hidden layer threshold matrix******//
+	real nnmobb1_1 = -0.0048227180336510925;
+	real nnmobb1_2 = 6.89797614374926;
+	
+	//***** 2nd hidden layer threshold matrix******//
+	real nnmobb2_1 = -0.7072121556524142;
+	real nnmobb2_2 = -4.341632493354505;
+	
+	//***** Output layer layer threshold matrix******//
+	real nnmobb3_1 = 0.28356000304315165;
+	real nnmobb3_2 = -0.8564649602345511;
+	real nnmobb3_3 = -2.417873970156994;
+	real nnmobb3_4 = 3.076740008928258;
+	real nnmobb3_5 = -2.402123451735668;
+
+//*********  NN Model 5: CV   *************//
+	//***** 1st hidden layer weight matrix******//
+	real nncvw1_1_1 = -2.192082390003327;
+	real nncvw1_1_2 = 11.2720195923837;
+	real nncvw1_1_3 = -7.875720120965873;
+	real nncvw1_2_1 = 0.13103798453795926;
+	real nncvw1_2_2 = 10.429049778751994;
+	real nncvw1_2_3 = -0.2630659554392779;
+	real nncvw1_3_1 = -3.754932824191303;
+	real nncvw1_3_2 = 4.443316158104288;
+	real nncvw1_3_3 = -4.009928639457556;
+	real nncvw1_4_1 = -1.0995904092570745;
+	real nncvw1_4_2 = -0.5976230961443542;
+	real nncvw1_4_3 = -3.749698033674616;
+	
+	//***** 2nd hidden layer weight matrix******//
+	real nncvw2_1_1 = -1.102539445941067;
+	real nncvw2_1_2 = 1.8522830538245174;
+	real nncvw2_1_3 = -0.2697745238838364;
+	real nncvw2_1_4 = 0.23815882183290626;
+	real nncvw2_2_1 = -0.5964353105676772;
+	real nncvw2_2_2 = -1.0463916480572313;
+	real nncvw2_2_3 = 1.5228080678260671;
+	real nncvw2_2_4 = 1.2968003903971723;
+	real nncvw2_3_1 = 3.7280900059203264;
+	real nncvw2_3_2 = -1.8112243643942152;
+	real nncvw2_3_3 = 3.5958084158063808;
+	real nncvw2_3_4 = -1.3517782107423728;
+	real nncvw2_4_1 = 1.3310980984306071;
+	real nncvw2_4_2 = -1.8683864940159263;
+	real nncvw2_4_3 = 1.8625163023215567;
+	real nncvw2_4_4 = -0.5000485676274238;
+	
+	//***** Output layer weight matrix******//
+	real nncvw3_1_1 = -2.3548671753025348e-181;
+	real nncvw3_1_2 = 2.2522170878240096e-181;
+	real nncvw3_1_3 = -1.3568294220069297e-180;
+	real nncvw3_1_4 = 7.225907023329477e-182;
+	real nncvw3_2_1 = -1.2547452640086798e-183;
+	real nncvw3_2_2 = 1.390369095157512e-184;
+	real nncvw3_2_3 = -4.00761095223477e-183;
+	real nncvw3_2_4 = -2.6966706886638683e-181;
+	real nncvw3_3_1 = 2.949925071035259e-180;
+	real nncvw3_3_2 = -4.5664537832668855e-180;
+	real nncvw3_3_3 = -1.1961003627242666e-184;
+	real nncvw3_3_4 = -4.868289671274928e-181;
+	real nncvw3_4_1 = -4.972468335830769e-180;
+	real nncvw3_4_2 = -2.8151990480934584e-181;
+	real nncvw3_4_3 = 3.9535469040477045e-180;
+	real nncvw3_4_4 = -1.2865955875924346e-181;
+	real nncvw3_5_1 = 1.428277647342755e-180;
+	real nncvw3_5_2 = -3.2471840031807857e-183;
+	real nncvw3_5_3 = -5.355424123358115e-181;
+	real nncvw3_5_4 = 4.332944747717956e-183;
+	real nncvw3_6_1 = -2.4923181303239535e-181;
+	real nncvw3_6_2 = 1.993817811046564e-183;
+	real nncvw3_6_3 = 1.9876981426625987e-180;
+	real nncvw3_6_4 = 1.4352957235500158e-182;
+	real nncvw3_7_1 = 5.264379045840576e-181;
+	real nncvw3_7_2 = -5.334522657696204e-182;
+	real nncvw3_7_3 = 6.16701268114463e-183;
+	real nncvw3_7_4 = 2.638012466298761e-181;
+	real nncvw3_8_1 = 7.736171438782805e-185;
+	real nncvw3_8_2 = -2.0159676277699608e-182;
+	real nncvw3_8_3 = 9.71824445376309e-182;
+	real nncvw3_8_4 = 3.517506197504477e-183;
+	real nncvw3_9_1 = -1.2401568302124463e-183;
+	real nncvw3_9_2 = -1.0910571491526735e-184;
+	real nncvw3_9_3 = -5.541613197331748e-184;
+	real nncvw3_9_4 = -3.191225503540056e-184;
+	real nncvw3_10_1 = 6.03767885774934e-182;
+	real nncvw3_10_2 = -1.8128258505084522e-183;
+	real nncvw3_10_3 = -3.4893392326013677e-183;
+	real nncvw3_10_4 = 2.3783119780987064e-184;
+	real nncvw3_11_1 = -1.2995095260532213e-181;
+	real nncvw3_11_2 = 5.613277326339859e-182;
+	real nncvw3_11_3 = 5.0323850202858015e-182;
+	real nncvw3_11_4 = 1.2173425092833524e-181;
+	real nncvw3_12_1 = -3.03658562239314e-182;
+	real nncvw3_12_2 = 3.201243489360531e-184;
+	real nncvw3_12_3 = 1.4176898123171969e-183;
+	real nncvw3_12_4 = -1.226914852964285e-181;
+	real nncvw3_13_1 = -2.4072035839159537e-184;
+	real nncvw3_13_2 = -4.1898387913778366e-182;
+	real nncvw3_13_3 = -6.543471224268645e-183;
+	real nncvw3_13_4 = -1.9775116784587927e-182;
+	real nncvw3_14_1 = -1.813294570221413;
+	real nncvw3_14_2 = -1.877782316443883;
+	real nncvw3_14_3 = -2.0866435393737945;
+	real nncvw3_14_4 = -1.4901375673802126;
+	real nncvw3_15_1 = 1.0176121059716196e-181;
+	real nncvw3_15_2 = 1.3129494058892847e-182;
+	real nncvw3_15_3 = -3.3419012092716406e-181;
+	real nncvw3_15_4 = -4.1938480964750855e-180;
+	
+	//***** 1st hidden layer threshold matrix******//
+	real nncvb1_1 = -1.9229726236170384;
+	real nncvb1_2 = 0.4368713941104487;
+	real nncvb1_3 = -3.6324952931343715;
+	real nncvb1_4 = -0.6891489632424993;
+	
+	//***** 2nd hidden layer threshold matrix******//
+	real nncvb2_1 = -0.39659039757987796;
+	real nncvb2_2 = -0.1317632544924587;
+	real nncvb2_3 = -1.9838322857125106;
+	real nncvb2_4 = -1.4337966322623967;
+	
+	//***** Output layer layer threshold matrix******//
+	real nncvb3_1 = 1.933131183067367e-184;
+	real nncvb3_2 = -2.2320208916919872e-183;
+	real nncvb3_3 = -1.7634452732912084e-181;
+	real nncvb3_4 = 1.0892610348485764e-184;
+	real nncvb3_5 = 2.210073469110912e-180;
+	real nncvb3_6 = -2.0224181158915785e-183;
+	real nncvb3_7 = 1.1146916547071081e-182;
+	real nncvb3_8 = 3.1034153965411734e-180;
+	real nncvb3_9 = -1.2625551565386796e-182;
+	real nncvb3_10 = -9.688122549548783e-182;
+	real nncvb3_11 = -1.240875266036776e-181;
+	real nncvb3_12 = -1.5582248348568972e-184;
+	real nncvb3_13 = -1.7601077879619717e-182;
+	real nncvb3_14 = -1.1611174876831172;
+	real nncvb3_15 = -3.6052020326881913e-180;
+
+//************************************ cv end ****************************************************//
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+	real TGAA=5.0e-9;                          //###########1111
+	real WGAA=W;			//###########1111
+
+
+  // real L = 1.0e-8; // Uncomment and set the range as needed (10n-20n)
+  real TFIN = 6.0e-9;
+  real HFIN = 3.3e-8;
+  real NFIN = 1.0;
+
+  real TOXP = 1.07464e-9;
+  real DevTemp = 300;
+  // real WGAA = 45.0e-9; // Uncomment and set the range as needed (10n-30n)
+  // real TGAA = 5.0e-9; // Uncomment and set the range as needed (4n-10n)
+  real NGAA = 3.0; // Set the range as needed (1-6)			//###########1111
+  real TOXG = 1.46e-9;	
+	real type = -1.0; // 1 denotes nmos, -1 denotes pmos
+
+
+
+	real mode; // S and D symmetry
+  // Binning
+	real Inv_L, Inv_NFIN, Inv_LNFIN, Inv_W, Inv_WL;	
+	
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+  real q = 1.60219e-19;
+  real KboQ = 8.617087e-5;
+  real pi = 3.1415926;
+  real HBAR = 1.05457e-34;
+  real DELTA_1 = 0.02;
+
+//************************************ Quantum ****************************************************//
+  real MEL = 9.11e-31;
+  real mx = 0.916 * MEL;
+  real mxprime = 0.190 * MEL;
+  real md = 0.190 * MEL;
+  real mdprime = 0.417 * MEL;
+  real gprime = 4.0;
+  real gfactor = 2.0;
+
+  real WDIM0 = 9.5e-9;
+  real WDIMR = 0.1;
+  real WSSP0 = 9.5e-9;
+  real WSSPR = 0.1;
+
+  real DIM1H = 3.0;
+  real DIMENSION1_i = 2.0;
+  real DIM2H = 3.0;
+  real DIMENSION2_i = 2.6;
+  real DIM3H = 3.0;
+  real DIMENSION3_i = 2.6;
+  real DSSP1 = 2.0;
+  real DSSP2 = 0.0;
+  real DSSP3 = 0.0;
+  real SSP1_i = 14.0;
+  real SSP2_i = 24.0;
+  real SSP3_i = 24.0;
+
+  real TSRE2 = 1.8;
+  real TDWSE2 = 1.0;
+  real TSRE3 = 0.67;
+  real TDWSE3 = 0.23;
+
+  real TSRQ1 = 1.1;
+  real TDWSQ1 = 2.4;
+  real TSRQ2 = 2.0;
+  real TDWSQ2 = 2.0;
+  real TSRQ3 = 6.0;
+  real TDWSQ3 = 2.4;
+
+  real WGAANOM = 8.0e-9;
+  real WSFE2 = 1.0;
+  real WSFE3 = 1.0;
+
+  real E2NOM_i = 0.139;
+  real E3NOM_i = 2.0;
+
+  real MFE2 = 1.0;
+  real MFE3 = 1.0;
+
+  real MFQ1 = 1.0;
+  real MFQ2 = 1.0;
+  real MFQ3 = 1.0;
+
+  real WSFQ1 = 1.0;
+  real WSFQ2 = 1.0;
+  real WSFQ3 = 1.0;
+
+  real MFQ1NOM_i = 11.2;
+  real MFQ2NOM_i = 8.02;
+  real MFQ3NOM_i = 6.18;
+
+  real QMFACTOR_i = 2.5;
+
+  real QMTCENCV_i = 0.0;
+
+  real AQMTCEN = 0.0;
+  real BQMTCEN = 1.2e-8;
+  real QM0 = 1.0e-3;
+  real PQM = 0.66;
+
+//************************************ Mobility ****************************************************//
+  real ETAMOBTHIN = 2.0;
+  real ETAMOB = 2.0;
+  real ETAMOBTNI = 7.5e-9;
+  real ETAMOBIR = 0.1;
+  real UA = 0.3;
+  real UATHIN = 0.3;
+  real UATSAT = 9.0e-9;
+  real UARTSC = 0.09;
+  real UATNI = 6.4e-9;
+  real UAIR = 0.2;
+  real EUTHIN = 2.6;
+  real EU = 2.5;
+  real EUPTSC = 3.5;
+  real EUTNI = 6.0e-9;
+  real EUIR = 0.2;
+  real U0ETAWSC = 1.5;
+  real EGBULK = 1.1;
+  real U0EMSM1 = 26.6;
+  real U0EMSM2 = 4.0;
+
+  //real u0 = 3.0e-2;  // default 3e-2
+  real UDTHIN = 0.6;
+  real UD = 0.5;
+  real UDTSAT = 8.1e-9;
+  real UDPTSC = 1.3;
+  real UCS_t = 1.0;
+  real DMOBCLAMP = 0.01;
+  real U0MULT = 1.0;
+
+//************************************ Velocity  Saturation ****************************************************//
+  real VSAT1 = 8.5e4;
+  real PSAT_i = 1.0;  
+  real PSATCV_i = 2.0;
+  real DELTAVSAT_i = 1.0;
+  real DELTAVSATCV_i = 1.0;
+  real PTWG_a = 0.5;
+  real A1_t = 0.0;
+  real A2_t = 0.0;
+  real DVSATCLAMP = 0.01;
+
+//****************************************************************************************//
+ real NBODY = 1.0e23;			//###########1111
+ real NSD = 2.0e26;				//###########1111
+  real EPSROX = 3.9;
+  real EPS0 = 8.8542e-12;
+  real NC0SUB = 2.86e25;
+  real EPSRSUB = 11.9;
+  real epsratio = EPSRSUB / EPSROX;
+  real QMFACTORCVfinal = 0.0;
+  real EASUB = 4.05;
+ real PHIG = 4.47;
+  real ALPHA_UFCM = 0.5556;
+  real VSAT = 8.5e4;
+  real VSATCV_t = 8.5e4;
+  real KSATIV = 1.0;
+  real MEXP = 4.0;
+  real DROUT = 1.06;
+  real PVAG = 1.0;
+  real PDIBL1 = 1.3;
+  real PDIBL2 = 2.0e-4;
+  real devsign = 1.0; // 1 denotes nmos -1 denotes pmos
+
+  real PCLMG = 0.0;
+  real NI0SUB = 1.1e16;
+  real BG0SUB = 1.12;
+  real PHIN_i = 0.05;
+
+  real PCLM = 1.3e-2;
+  real LPCLM = 5.0e-4;
+  real NPCLM = 1.0e-4;
+  real PPCLM = 1.0e-4;
+  real WPCLM = 5.0e-5;
+  real P2PCLM = 5.0e-5;
+
+  real PCLMCV_i = 1.3e-2;
+
+  real DVT1 = 0.475;
+  real LDVT1 = 0.0;
+  real NDVT1 = 0.0;
+  real PDVT1 = 0.0;
+  real WDVT1 = 0.0;
+  real P2DVT1 = 0.0;
+
+  real DVT1SS = 0.6;
+  real LDVT1SS = 0.0;
+  real NDVT1SS = 0.0;
+  real PDVT1SS = 0.0;
+  real WDVT1SS = 0.0;
+  real P2DVT1SS = 0.0;
+
+  real DSUB = 0.35;
+  real LDSUB = 0.0;
+  real NDSUB = 0.0;
+  real PDSUB = 0.0;
+  real WDSUB = 0.0;
+  real P2DSUB = 0.0;
+
+  real LPE0 = 0.0;
+  real LLPE0 = 0.0;
+  real NLPE0 = 0.0;
+  real PLPE0 = 0.0;
+  real WLPE0 = 0.0;
+  real P2LPE0 = 0.0;
+
+  real CDSC = 0.01;
+  real LCDSC = 0.0;
+  real NCDSC = 0.0;
+  real PCDSC = 0.0;
+  real WCDSC = 0.0;
+  real P2CDSC = 0.0;
+
+  real CDSCD = 0.01;
+  real LCDSCD = 0.0;
+  real NCDSCD = 0.0;
+  real PCDSCD = 0.0;
+  real WCDSCD = 0.0;
+  real P2CDSCD = 0.0;
+
+  real CIT = 0.0;
+  real LCIT = 0.0;
+  real NCIT = 0.0;
+  real PCIT = 0.0;
+  real WCIT = 0.0;
+  real P2CIT = 0.0;
+
+  real DVT0 = 0.05;
+  real LDVT0 = 0.0;
+  real NDVT0 = 0.0;
+  real PDVT0 = 0.0;
+  real WDVT0 = 0.0;
+  real P2DVT0 = 0.0;
+
+  real ETA0 = 0.068;
+  real LETA0 = 0.0;
+  real NETA0 = 0.0;
+  real PETA0 = 0.0;
+  real WETA0 = 0.0;
+  real P2ETA0 = 0.0;
+
+  real DVTP0 = 0.0;
+  real LDVTP0 = 0.0;
+  real NDVTP0 = 0.0;
+  real PDVTP0 = 0.0;
+  real WDVTP0 = 0.0;
+  real P2DVTP0 = 0.0;
+
+  real DVTP1 = 0.0;
+  real LDVTP1 = 0.0;
+  real NDVTP1 = 0.0;
+  real PDVTP1 = 0.0;
+  real WDVTP1 = 0.0;
+  real P2DVTP1 = 0.0;
+
+  real K1RSCE = 0.0;
+  real LK1RSCE = 0.0;
+  real NK1RSCE = 0.0;
+  real PK1RSCE = 0.0;
+  real WK1RSCE = 0.0;
+  real P2K1RSCE = 0.0;
+
+//************************************ Fringe capacitance ****************************************************//
+ real CFS_i = 2.5e-10;
+ real CFD_i = 2.5e-10;
+  real vfbsdcv = 0.0;
+  real CGSL_i = 1.0e-10;
+  real CKAPPAS_i = 0.6;
+
+
+
+
+
+//*****input weight matrix******//
+//******nnwa_b_c********************************************************************************************//
+//******a means the number of hidden layers*****************************************************************//
+//******b means the b th neurons of the a layer*************************************************************//
+//******c measns the weight between the b th neurons of the a layer and the c of the previous layer ********//
+
+
+   //*********  NN Model 1: SCE   *************//
+	//***** 1st hidden layer weight matrix******//
+	real nnscew1_1_1_cap = 0.06647248950633561;
+	real nnscew1_1_2_cap = 2.023801993084678;
+	real nnscew1_2_1_cap = -0.30964621959933053;
+	real nnscew1_2_2_cap = 1.0699490379711811;
+
+	//***** 2nd hidden layer weight matrix******//
+	real nnscew2_1_1_cap = 3.86050436607518;
+	real nnscew2_1_2_cap = 1.221858161552308;
+	real nnscew2_2_1_cap = 1.2331883328875353;
+	real nnscew2_2_2_cap = 2.1226776775016396;
+
+	//***** Output layer weight matrix******//
+	real nnscew3_1_1_cap = -2.825583269944887;
+	real nnscew3_1_2_cap = -3.0858077872153697;
+	real nnscew3_2_1_cap = 0.2530293990915865;
+	real nnscew3_2_2_cap = 1.3427608423993171;
+	real nnscew3_3_1_cap = -4.512106412367632;
+	real nnscew3_3_2_cap = -3.095689164201631;
+	real nnscew3_4_1_cap = -2.6543339725714956;
+	real nnscew3_4_2_cap = 1.9461572529892497;
+	real nnscew3_5_1_cap = -0.9200918062645649;
+	real nnscew3_5_2_cap = -3.0511565963287612;
+
+	//***** 1st hidden layer threshold matrix******//
+	real nnsceb1_1_cap = 2.5078614835419786;
+	real nnsceb1_2_cap = -1.736093553897767;
+
+	//***** 2nd hidden layer threshold matrix******//
+	real nnsceb2_1_cap = -0.3144357733735234;
+	real nnsceb2_2_cap = -0.8774251368611752;
+
+	//***** Output layer layer threshold matrix******//
+	real nnsceb3_1_cap = -0.8574448883473926;
+	real nnsceb3_2_cap = -3.4364016127262578;
+	real nnsceb3_3_cap = -4.70627459416381;
+	real nnsceb3_4_cap = -5.5887390444367515;
+	real nnsceb3_5_cap = -2.2155796164537964;
+
+//*********  NN Model 2: CLM Verlocity Saturation   *************//
+	//***** 1st hidden layer weight matrix******//
+	real nnclmw1_1_1_cap = 0.6959589757038319;
+	real nnclmw1_1_2_cap = -4.039055139450716;
+	real nnclmw1_2_1_cap = -2.2661643513018688;
+	real nnclmw1_2_2_cap = 1.620365352240279;
+	real nnclmw1_3_1_cap = 1.3416234442809851;
+	real nnclmw1_3_2_cap = -2.246013509332474;
+	real nnclmw1_4_1_cap = -0.7299440253216649;
+	real nnclmw1_4_2_cap = 1.5869576132763916;
+
+	//***** 2nd hidden layer weight matrix******//
+	real nnclmw2_1_1_cap = -0.12890393164049566;
+	real nnclmw2_1_2_cap = 1.043045488979218;
+	real nnclmw2_1_3_cap = -3.0029801037124724;
+	real nnclmw2_1_4_cap = 0.4468838396541703;
+	real nnclmw2_2_1_cap = -0.649722757502884;
+	real nnclmw2_2_2_cap = 0.5814247472022956;
+	real nnclmw2_2_3_cap = -3.981570467058749;
+	real nnclmw2_2_4_cap = 0.712525743531481;
+	real nnclmw2_3_1_cap = 0.7880789250254623;
+	real nnclmw2_3_2_cap = -1.7996041252828237;
+	real nnclmw2_3_3_cap = -0.7764234818588883;
+	real nnclmw2_3_4_cap = 2.1806160392896485;
+	real nnclmw2_4_1_cap = -2.398181187340404;
+	real nnclmw2_4_2_cap = 0.9360536623710426;
+	real nnclmw2_4_3_cap = -0.40833585201481426;
+	real nnclmw2_4_4_cap = 1.0631639262451085;
+
+	//***** Output layer weight matrix******//
+	real nnclmw3_1_1_cap = 2.5151483099711998e-86;
+	real nnclmw3_1_2_cap = -1.9932386289360206e-90;
+	real nnclmw3_1_3_cap = -1.647859071238571e-86;
+	real nnclmw3_1_4_cap = -8.715789581585593e-86;
+	real nnclmw3_2_1_cap = -5.173190462730811e-87;
+	real nnclmw3_2_2_cap = -1.0077877548046912e-89;
+	real nnclmw3_2_3_cap = 2.6498779076639693e-88;
+	real nnclmw3_2_4_cap = -2.0697355878461365e-87;
+	real nnclmw3_3_1_cap = -2.4939216667111248e-86;
+	real nnclmw3_3_2_cap = 1.2295992499731947e-87;
+	real nnclmw3_3_3_cap = -3.312807800855962e-88;
+	real nnclmw3_3_4_cap = -9.898935852065824e-86;
+	real nnclmw3_4_1_cap = -4.670745694574615e-87;
+	real nnclmw3_4_2_cap = -2.9616515847592845e-87;
+	real nnclmw3_4_3_cap = 2.3529351375806268e-85;
+	real nnclmw3_4_4_cap = 1.6232901999683222e-87;
+	real nnclmw3_5_1_cap = -8.188214434891251e-86;
+	real nnclmw3_5_2_cap = 5.905746737676947e-89;
+	real nnclmw3_5_3_cap = -2.384226923261424e-86;
+	real nnclmw3_5_4_cap = -1.2219749205811858e-86;
+	real nnclmw3_6_1_cap = -0.259856096637954;
+	real nnclmw3_6_2_cap = -0.8793941836146725;
+	real nnclmw3_6_3_cap = -3.0227562621160584;
+	real nnclmw3_6_4_cap = 0.9430792855155875;
+	real nnclmw3_7_1_cap = -2.3605291152244674;
+	real nnclmw3_7_2_cap = -2.2264162278719195;
+	real nnclmw3_7_3_cap = 2.8026453997182483;
+	real nnclmw3_7_4_cap = -0.25899205067452663;
+	real nnclmw3_8_1_cap = 0.009969006725525446;
+	real nnclmw3_8_2_cap = 0.04705016765772339;
+	real nnclmw3_8_3_cap = 0.5429571099129987;
+	real nnclmw3_8_4_cap = 3.744197924695445;
+	real nnclmw3_9_1_cap = -4.179784472045197e-88;
+	real nnclmw3_9_2_cap = -9.056315227593855e-87;
+	real nnclmw3_9_3_cap = 9.344394864451675e-88;
+	real nnclmw3_9_4_cap = -1.1211915679487097e-89;
+	real nnclmw3_10_1_cap = -7.404519752363366e-88;
+	real nnclmw3_10_2_cap = -2.981314579473381e-88;
+	real nnclmw3_10_3_cap = 8.045324979508534e-88;
+	real nnclmw3_10_4_cap = -1.1346053313628359e-85;
+	real nnclmw3_11_1_cap = -5.511455178178007e-85;
+	real nnclmw3_11_2_cap = -6.886276906791103e-89;
+	real nnclmw3_11_3_cap = -1.3110367816163037e-85;
+	real nnclmw3_11_4_cap = 3.4038573199245945e-88;
+	real nnclmw3_12_1_cap = 1.6134600188161013e-86;
+	real nnclmw3_12_2_cap = 3.21471139501657e-89;
+	real nnclmw3_12_3_cap = -8.668070021344796e-89;
+	real nnclmw3_12_4_cap = -8.924182918414685e-89;
+	real nnclmw3_13_1_cap = 3.136286482221903e-87;
+	real nnclmw3_13_2_cap = 1.2606112503577581e-86;
+	real nnclmw3_13_3_cap = 1.625811957813974e-85;
+	real nnclmw3_13_4_cap = -3.9554316831606236e-87;
+
+	//***** 1st hidden layer threshold matrix******//
+	real nnclmb1_1_cap = -2.4064951146992763;
+	real nnclmb1_2_cap = -2.9183450645044866;
+	real nnclmb1_3_cap = 1.9209638989136415;
+	real nnclmb1_4_cap = 1.7796272242433027;
+
+	//***** 2nd hidden layer threshold matrix******//
+	real nnclmb2_1_cap = -0.07945212102166388;
+	real nnclmb2_2_cap = 0.26769464354784206;
+	real nnclmb2_3_cap = -0.09079488411132944;
+	real nnclmb2_4_cap = -0.15370170804256808;
+
+	//***** Output layer layer threshold matrix******//
+	real nnclmb3_1_cap = -1.3847989193128265e-87;
+	real nnclmb3_2_cap = -1.7885778097736683e-86;
+	real nnclmb3_3_cap = 3.018009435368031e-88;
+	real nnclmb3_4_cap = 2.8686664202232112e-86;
+	real nnclmb3_5_cap = 5.217804560051189e-86;
+	real nnclmb3_6_cap = -0.9728269536406426;
+	real nnclmb3_7_cap = 2.701009957976653;
+	real nnclmb3_8_cap = -2.2790232069930356;
+	real nnclmb3_9_cap = 5.780138570538425e-86;
+	real nnclmb3_10_cap = 2.3278238534563043e-87;
+	real nnclmb3_11_cap = 2.906304953529888e-87;
+	real nnclmb3_12_cap = -3.855595121704241e-86;
+	real nnclmb3_13_cap = -2.2693266077011816e-87;
+
+//*********  NN Model 3: Quantum   *************//
+	//***** 1st hidden layer weight matrix******//
+	real nnquaw1_1_1_cap = -0.47882776899060014;
+	real nnquaw1_1_2_cap = -0.20251825428532336;
+	real nnquaw1_2_1_cap = -0.013597366336889719;
+	real nnquaw1_2_2_cap = -10.574192694704124;
+	real nnquaw1_3_1_cap = -3.8500375728102174;
+	real nnquaw1_3_2_cap = 0.04741098783089355;
+
+	//***** 2nd hidden layer weight matrix******//
+	real nnquaw2_1_1_cap = -1.1213258939014634;
+	real nnquaw2_1_2_cap = -2.7021380306008016;
+	real nnquaw2_1_3_cap = -3.474486932190297;
+	real nnquaw2_2_1_cap = -0.8701948349986217;
+	real nnquaw2_2_2_cap = 0.37774272079657845;
+	real nnquaw2_2_3_cap = -2.140797531958563;
+	real nnquaw2_3_1_cap = -1.6983365751779256;
+	real nnquaw2_3_2_cap = -0.27260432528916223;
+	real nnquaw2_3_3_cap = -1.8718257638616462;
+
+	//***** Output layer weight matrix******//
+	real nnquaw3_1_1_cap = -0.4605039633275727;
+	real nnquaw3_1_2_cap = -1.7941353055658702;
+	real nnquaw3_1_3_cap = -1.3039186462012868;
+	real nnquaw3_2_1_cap = -1.069794593182042;
+	real nnquaw3_2_2_cap = -0.9896608702104382;
+	real nnquaw3_2_3_cap = -0.9035077904500843;
+	real nnquaw3_3_1_cap = 2.2648488557819144;
+	real nnquaw3_3_2_cap = 1.9500040307418662;
+	real nnquaw3_3_3_cap = 1.6350669392858574;
+	real nnquaw3_4_1_cap = 3.771022830711147e-86;
+	real nnquaw3_4_2_cap = -8.553754093964352e-87;
+	real nnquaw3_4_3_cap = -1.087225810220098e-87;
+	real nnquaw3_5_1_cap = -1.514611655945201e-85;
+	real nnquaw3_5_2_cap = -1.6114363900710866e-87;
+	real nnquaw3_5_3_cap = 1.6422328672058483e-89;
+	real nnquaw3_6_1_cap = -3.1640177360397295e-88;
+	real nnquaw3_6_2_cap = -5.1421670370780616e-86;
+	real nnquaw3_6_3_cap = 6.1512185017408814e-86;
+	real nnquaw3_7_1_cap = 1.0099644337681807e-85;
+	real nnquaw3_7_2_cap = 3.5877184329820994e-86;
+	real nnquaw3_7_3_cap = -1.6835319237230116e-84;
+
+	//***** 1st hidden layer threshold matrix******//
+	real nnquab1_1_cap = 0.42093560778641187;
+	real nnquab1_2_cap = -11.471339666775716;
+	real nnquab1_3_cap = -4.727235774061975;
+
+	//***** 2nd hidden layer threshold matrix******//
+	real nnquab2_1_cap = 1.1353693716884639;
+	real nnquab2_2_cap = 0.6235726277917507;
+	real nnquab2_3_cap = 0.6969339870896327;
+
+	//***** Output layer layer threshold matrix******//
+	real nnquab3_1_cap = -1.7939676123120418;
+	real nnquab3_2_cap = -0.3599804432008386;
+	real nnquab3_3_cap = 3.383846381561112;
+	real nnquab3_4_cap = 9.410013328041261e-87;
+	real nnquab3_5_cap = -7.430919276360874e-87;
+	real nnquab3_6_cap = 1.4433448576031844e-85;
+	real nnquab3_7_cap = 3.076006937826582e-86;
+
+//*********  NN Model 4: Mobility   *************//
+	//***** 1st hidden layer weight matrix******//
+	real nnmobw1_1_1_cap = 0.6694226660560826;
+	real nnmobw1_1_2_cap = -0.43709355095606706;
+	real nnmobw1_1_3_cap = 3.1987681417923555;
+	real nnmobw1_2_1_cap = -2.8515449786252662;
+	real nnmobw1_2_2_cap = 0.003733725405827522;
+	real nnmobw1_2_3_cap = 8.067076823054965;
+
+	//***** 2nd hidden layer weight matrix******//
+	real nnmobw2_1_1_cap = 4.964444851502111;
+	real nnmobw2_1_2_cap = 0.35147887109074133;
+	real nnmobw2_2_1_cap = -0.09043376785229928;
+	real nnmobw2_2_2_cap = -8.557621672620828;
+
+	//***** Output layer weight matrix******//
+	real nnmobw3_1_1_cap = 0.23241917147934618;
+	real nnmobw3_1_2_cap = 0.22825709879268155;
+	real nnmobw3_2_1_cap = -0.6070311541060106;
+	real nnmobw3_2_2_cap = -0.10097355437401201;
+	real nnmobw3_3_1_cap = 3.084545778595712;
+	real nnmobw3_3_2_cap = 0.518819792318987;
+	real nnmobw3_4_1_cap = 1.705437191036196;
+	real nnmobw3_4_2_cap = 8.511626434718963;
+	real nnmobw3_5_1_cap = 2.105829205774863;
+	real nnmobw3_5_2_cap = 1.1077873723468024;
+
+	//***** 1st hidden layer threshold matrix******//
+	real nnmobb1_1_cap = -0.19344582344500733;
+	real nnmobb1_2_cap = 2.8141862313964046;
+
+	//***** 2nd hidden layer threshold matrix******//
+	real nnmobb2_1_cap = -3.037659664397463;
+	real nnmobb2_2_cap = 4.361196867291285;
+
+	//***** Output layer layer threshold matrix******//
+	real nnmobb3_1_cap = -0.5991800172893217;
+	real nnmobb3_2_cap = -0.7409847493558384;
+	real nnmobb3_3_cap = -2.2176442656053603;
+	real nnmobb3_4_cap = -2.501459197235745;
+	real nnmobb3_5_cap = -3.4422724878814717;
+
+//*********  NN Model 5: CV   *************//
+	//***** 1st hidden layer weight matrix******//
+	real nncvw1_1_1_cap = -2.7695016568075697;
+	real nncvw1_1_2_cap = -1.7420041174917429;
+	real nncvw1_1_3_cap = 3.1859720613617064;
+	real nncvw1_2_1_cap = 0.560800533101198;
+	real nncvw1_2_2_cap = 1.1022178512779786;
+	real nncvw1_2_3_cap = -0.14977174375207725;
+	real nncvw1_3_1_cap = -1.4783033057181938;
+	real nncvw1_3_2_cap = 2.292575915325027;
+	real nncvw1_3_3_cap = -0.2730188105671486;
+	real nncvw1_4_1_cap = 0.28966659581294135;
+	real nncvw1_4_2_cap = 0.7527510714473254;
+	real nncvw1_4_3_cap = -1.9068201154473552;
+
+	//***** 2nd hidden layer weight matrix******//
+	real nncvw2_1_1_cap = -1.8438468390619513;
+	real nncvw2_1_2_cap = 0.5949042525854233;
+	real nncvw2_1_3_cap = 3.4280006844731497;
+	real nncvw2_1_4_cap = -1.0090502628434317;
+	real nncvw2_2_1_cap = -1.949407250087227;
+	real nncvw2_2_2_cap = 0.2795983654499326;
+	real nncvw2_2_3_cap = 2.068013342767872;
+	real nncvw2_2_4_cap = 1.5032328263876336;
+	real nncvw2_3_1_cap = 1.6595073995612353;
+	real nncvw2_3_2_cap = -1.581071361144412;
+	real nncvw2_3_3_cap = -1.758732812810793;
+	real nncvw2_3_4_cap = -0.8721192524084843;
+	real nncvw2_4_1_cap = -1.9208656150118257;
+	real nncvw2_4_2_cap = -1.1941914969600729;
+	real nncvw2_4_3_cap = 0.1845960974166082;
+	real nncvw2_4_4_cap = 3.465667744864111;
+
+	//***** Output layer weight matrix******//
+	real nncvw3_1_1_cap = 0.7958746678357799;
+	real nncvw3_1_2_cap = -1.2137630247529394;
+	real nncvw3_1_3_cap = 0.8469546219643069;
+	real nncvw3_1_4_cap = -5.624038239299603;
+	real nncvw3_2_1_cap = -1.5723389174777442;
+	real nncvw3_2_2_cap = -0.8970690130414164;
+	real nncvw3_2_3_cap = -0.723909080468675;
+	real nncvw3_2_4_cap = 1.1442836782241925;
+	real nncvw3_3_1_cap = 0.5420968672924028;
+	real nncvw3_3_2_cap = -1.0429256198832948;
+	real nncvw3_3_3_cap = 1.3360641513786784;
+	real nncvw3_3_4_cap = -2.6321187787063454;
+	real nncvw3_4_1_cap = 1.6915004455232685;
+	real nncvw3_4_2_cap = 1.2563565551625362;
+	real nncvw3_4_3_cap = 0.811950540266916;
+	real nncvw3_4_4_cap = 0.5577147091010616;
+	real nncvw3_5_1_cap = 0.5160863707421885;
+	real nncvw3_5_2_cap = 1.1601413792943203;
+	real nncvw3_5_3_cap = -4.629867092977543;
+	real nncvw3_5_4_cap = 0.03754307886200473;
+	real nncvw3_6_1_cap = -1.2443598663592959;
+	real nncvw3_6_2_cap = -1.560047523005003;
+	real nncvw3_6_3_cap = 2.028935677599169;
+	real nncvw3_6_4_cap = -0.18280529941112605;
+	real nncvw3_7_1_cap = -1.0255518003479307e-87;
+	real nncvw3_7_2_cap = 2.262050141393383e-85;
+	real nncvw3_7_3_cap = -3.5350936706177084e-90;
+	real nncvw3_7_4_cap = -3.6248851277691967e-88;
+	real nncvw3_8_1_cap = -3.042819994986848;
+	real nncvw3_8_2_cap = -2.3220791198815656;
+	real nncvw3_8_3_cap = 0.5790175156216908;
+	real nncvw3_8_4_cap = -0.8714956022187617;
+	real nncvw3_9_1_cap = 0.5782103382028912;
+	real nncvw3_9_2_cap = 0.3917566425109758;
+	real nncvw3_9_3_cap = 0.3537645531284992;
+	real nncvw3_9_4_cap = 0.15099231158403975;
+	real nncvw3_10_1_cap = -1.8143740535348554;
+	real nncvw3_10_2_cap = -2.2939829537345986;
+	real nncvw3_10_3_cap = 0.4540297100345179;
+	real nncvw3_10_4_cap = -0.4585338221845333;
+	real nncvw3_11_1_cap = -2.1057874222103465;
+	real nncvw3_11_2_cap = -0.9380426327074155;
+	real nncvw3_11_3_cap = -0.9191249224270138;
+	real nncvw3_11_4_cap = 2.9271241246271615;
+	real nncvw3_12_1_cap = -2.6242392997020114;
+	real nncvw3_12_2_cap = -2.0209009092015546;
+	real nncvw3_12_3_cap = -1.2353344466316287;
+	real nncvw3_12_4_cap = -1.5519440610295536;
+	real nncvw3_13_1_cap = -1.85484161508806;
+	real nncvw3_13_2_cap = -2.0241032582206695;
+	real nncvw3_13_3_cap = 0.566564094597534;
+	real nncvw3_13_4_cap = -0.8616037999370837;
+	real nncvw3_14_1_cap = -1.043525965535609;
+	real nncvw3_14_2_cap = -0.3934417569473578;
+	real nncvw3_14_3_cap = -2.152776956730957;
+	real nncvw3_14_4_cap = -1.8539237686641152;
+	real nncvw3_15_1_cap = 2.639121458976712e-87;
+	real nncvw3_15_2_cap = -2.2121804252303463e-86;
+	real nncvw3_15_3_cap = -5.344077148782771e-86;
+	real nncvw3_15_4_cap = -3.892148780366356e-85;
+
+	//***** 1st hidden layer threshold matrix******//
+	real nncvb1_1_cap = 2.0980377455157813;
+	real nncvb1_2_cap = -0.09849400634497907;
+	real nncvb1_3_cap = 1.2697214179123804;
+	real nncvb1_4_cap = -0.20123340958233527;
+
+	//***** 2nd hidden layer threshold matrix******//
+	real nncvb2_1_cap = 0.2543611360918789;
+	real nncvb2_2_cap = -0.17707144731750601;
+	real nncvb2_3_cap = 0.5651902485974258;
+	real nncvb2_4_cap = -0.08323124819658147;
+
+	//***** Output layer layer threshold matrix******//
+	real nncvb3_1_cap = -0.32696693816379385;
+	real nncvb3_2_cap = -2.2710171261839927;
+	real nncvb3_3_cap = 0.855247729945396;
+	real nncvb3_4_cap = 1.8906557014574359;
+	real nncvb3_5_cap = -1.788176531530425;
+	real nncvb3_6_cap = 0.31600249780899775;
+	real nncvb3_7_cap = 2.7095087553834027e-88;
+	real nncvb3_8_cap = -1.4762478520892022;
+	real nncvb3_9_cap = 0.7292111440030682;
+	real nncvb3_10_cap = -0.7910678027449712;
+	real nncvb3_11_cap = -1.1546322388642856;
+	real nncvb3_12_cap = -2.6286369590719905;
+	real nncvb3_13_cap = -0.7184091677926657;
+	real nncvb3_14_cap = -1.173400897871357;
+	real nncvb3_15_cap = 9.240383685753228e-88;
+
+
+   //****** Intermediate reals ******//
+   real tgaa_nor, w_nor, l_nor;
+
+
+   //****** model reals ******//
+	 real neuronsce1_1_in, neuronsce1_1_out;
+	 real neuronsce1_2_in, neuronsce1_2_out;
+	 real neuronsce2_1_in, neuronsce2_1_out;
+	 real neuronsce2_2_in, neuronsce2_2_out;
+	 real neuronsce3_1_in, neuronsce3_1_out;
+	 real neuronsce3_2_in, neuronsce3_2_out;
+	 real neuronsce3_3_in, neuronsce3_3_out;
+	 real neuronsce3_4_in, neuronsce3_4_out;
+	 real neuronsce3_5_in, neuronsce3_5_out;
+	 real sce_output1, sce_output2, sce_output3, sce_output4, sce_output5;
+
+	 real neuronclm1_1_in, neuronclm1_1_out;
+	 real neuronclm1_2_in, neuronclm1_2_out;
+	 real neuronclm1_3_in, neuronclm1_3_out;
+	 real neuronclm1_4_in, neuronclm1_4_out;
+	 real neuronclm2_1_in, neuronclm2_1_out;
+	 real neuronclm2_2_in, neuronclm2_2_out;
+	 real neuronclm2_3_in, neuronclm2_3_out;
+	 real neuronclm2_4_in, neuronclm2_4_out;
+	 real neuronclm3_1_in, neuronclm3_1_out;
+	 real neuronclm3_2_in, neuronclm3_2_out;
+	 real neuronclm3_3_in, neuronclm3_3_out;
+	 real neuronclm3_4_in, neuronclm3_4_out;
+	 real neuronclm3_5_in, neuronclm3_5_out;
+	 real neuronclm3_6_in, neuronclm3_6_out;
+	 real neuronclm3_7_in, neuronclm3_7_out;
+	 real neuronclm3_8_in, neuronclm3_8_out;
+	 real neuronclm3_9_in, neuronclm3_9_out;
+	 real neuronclm3_10_in, neuronclm3_10_out;
+	 real neuronclm3_11_in, neuronclm3_11_out;
+	 real neuronclm3_12_in, neuronclm3_12_out;
+	 real neuronclm3_13_in, neuronclm3_13_out;
+	 real clm_output1, clm_output2, clm_output3, clm_output4, clm_output5, clm_output6, clm_output7, clm_output8, clm_output9, clm_output10, clm_output11, clm_output12, clm_output13;
+
+	 real neuronqua1_1_in, neuronqua1_1_out;
+	 real neuronqua1_2_in, neuronqua1_2_out;
+	 real neuronqua1_3_in, neuronqua1_3_out;
+	 real neuronqua2_1_in, neuronqua2_1_out;
+	 real neuronqua2_2_in, neuronqua2_2_out;
+	 real neuronqua2_3_in, neuronqua2_3_out;
+	 real neuronqua3_1_in, neuronqua3_1_out;
+	 real neuronqua3_2_in, neuronqua3_2_out;
+	 real neuronqua3_3_in, neuronqua3_3_out;
+	 real neuronqua3_4_in, neuronqua3_4_out;
+	 real neuronqua3_5_in, neuronqua3_5_out;
+	 real neuronqua3_6_in, neuronqua3_6_out;
+	 real neuronqua3_7_in, neuronqua3_7_out;
+	 real qua_output1, qua_output2, qua_output3, gidl_output4, gidl_output5, gidl_output6, gidl_output7;
+
+	 real neuronmob1_1_in, neuronmob1_1_out;
+	 real neuronmob1_2_in, neuronmob1_2_out;
+	 real neuronmob2_1_in, neuronmob2_1_out;
+	 real neuronmob2_2_in, neuronmob2_2_out;
+	 real neuronmob3_1_in, neuronmob3_1_out;
+	 real neuronmob3_2_in, neuronmob3_2_out;
+	 real neuronmob3_3_in, neuronmob3_3_out;
+	 real neuronmob3_4_in, neuronmob3_4_out;
+	 real neuronmob3_5_in, neuronmob3_5_out;
+	 real mob_output1, mob_output2, mob_output3, mob_output4, mob_output5;
+
+	 real neuroncv1_1_in, neuroncv1_1_out;
+	 real neuroncv1_2_in, neuroncv1_2_out;
+	 real neuroncv1_3_in, neuroncv1_3_out;
+	 real neuroncv1_4_in, neuroncv1_4_out;
+	 real neuroncv2_1_in, neuroncv2_1_out;
+	 real neuroncv2_2_in, neuroncv2_2_out;
+	 real neuroncv2_3_in, neuroncv2_3_out;
+	 real neuroncv2_4_in, neuroncv2_4_out;
+	 real neuroncv3_1_in, neuroncv3_1_out;
+	 real neuroncv3_2_in, neuroncv3_2_out;
+	 real neuroncv3_3_in, neuroncv3_3_out;
+	 real neuroncv3_4_in, neuroncv3_4_out;
+	 real neuroncv3_5_in, neuroncv3_5_out;
+	 real neuroncv3_6_in, neuroncv3_6_out;
+	 real neuroncv3_7_in, neuroncv3_7_out;
+	 real neuroncv3_8_in, neuroncv3_8_out;
+	 real neuroncv3_9_in, neuroncv3_9_out;
+	 real neuroncv3_10_in, neuroncv3_10_out;
+	 real neuroncv3_11_in, neuroncv3_11_out;
+	 real neuroncv3_12_in, neuroncv3_12_out;
+	 real neuroncv3_13_in, neuroncv3_13_out;
+	 real neuroncv3_14_in, neuroncv3_14_out;
+	 real neuroncv3_15_in, neuroncv3_15_out;
+	 real cv_output1, cv_output2, cv_output3, cv_output4, cv_output5, cv_output6, cv_output7, cv_output8, cv_output9, cv_output10, cv_output11, cv_output12, cv_output13, cv_output14, cv_output15;
+
+   real CGG, CGD, CGS, CDG, CDD, CDS, CSG, CSD, CSS;
+	
+	 real tmp1_pku, tmp2_pku, tmp3_pku, tmp4_pku, tmp5_pku, NBODY_CV, NSD_CV, PHIG_CV, CFS_i_CV, CFD_i_CV;
+
+	real Lg, nnquaw3_1_4, nnquaw3_2_4, nnquaw3_3_4, nnquaw3_4_4, nnquaw3_5_4, nnquaw3_6_4, nnquaw3_7_4, neuronqua2_4_out, vgs, vds;
+	real WGAAeff, Weff1, Weff_UFCM;
+real vfbsd1,vgs_a,vgd_a,Ach1,Ach,Weff2,Weff3,Weff4,Weff5,Weff6,Ach2,Ach3,Ach4,Ach5,Ach6,WeffB,Cins,MTcen,Tcen0,T0,Weff0,WeffCV0;
+
+
+
+real d1,d2,d3,p1,p2,p3,Tp1,Tp2,Tp3,Wp1,Wp2,Wp3;
+
+real VnD1, qndnf1, VnD2, qndnf2, VnD3, qndnf3,
+     nc3d0, nc3d, ncq,
+     QT0, QT1, ne2h, pe2h, ne3h, pe3h,
+     nc1l0, pnc1l, nc2l0, pnc2l, nc3l0, pnc3l,
+     qe2n, qe3n, qe2, qe3,
+     nc1l, nc1ln, nc1, nc2l, nc2ln, nc2, nc3l, nc3ln, nc3,
+     qnd10, qnd20, qnd30;
+
+real T1,T2,T3,T4,T5,T7,T8,T11; 
+real GM,GDS;
+real qndd1,qndd2,qndd3;
+
+real Vtm, nVtm, Nc, epssub, rc, cox, qbs, Qdep_ov_Cins, qdep,
+     vth_fixed_factor_SI, vth_fixed_factor_Sub, q0, scl, Eg, ni, phib, vbi,
+     Theta_SCE, Theta_SW, Theta_DIBL, Theta_RSCE, ThetaSS, phist,vdsx,
+     cdsc, kT,  E0, E0prime, E1, E1prime, gam0, gam1,  
+     dvth_vtroll, dvth_dibl, dvth_rsce, dvth_all, deltaPhi, vgsfb, vgsfbeff,
+      qm, qm_ln, e0, e1, e2,
+     QT2, QT3, QT4, qnds1, QT5, QT6, QT7, qnds2, QT8, QT9, QT10, qnds3,
+     eta_mu, eta_mu_cv, EeffFactor, Eeffs, qb0,  Dmobs, Esat,
+     EsatL,  T6, Vdsat, Vdseff, qia, dqi, ids0_ov_dqi,
+     ids0, Leff, LeffCV, tmp, DIBLfactor,
+     PVAGfactor, diffVds, Vgst2Vtm,  VaDIBL, Moc, Mclm, 
+     Tcen, coxeff, beta, qia2, Eeffm,  Dmob, ueff, Eeffm_cv,
+     Dmob_cv, Esat1, Esat1L, Dvsat,
+     Nsat, EsatCV, EsatCVL, DvsatCV, Ta,MclmCV, 
+     igidl, ids, TOXG1, igtemp, Tox_ratio, T0_g, igc, igs, igd, ig,vgd,
+     qg, qd, qs,  CGSO_i, CGDO_i, vgs_overlap, qgs_ov,
+     vgd_overlap, qgd_ov, qgs_fr, qgd_fr, qgs_parasitic, qgd_parasitic,
+     QG, QD, QS,dvch_qm,vch,F0,qis,qid,etaiv,inv_MclmCV, EOT;
+
+
+real UA_i,UD_i,VSAT1_a,U0_i;
+
+real CIT_i,DVTP0_i,DVTP1_i,K1RSCE_i,NTOX_i,LPE0_i,ETAMOB_i,  mut0, mut1, mut2, mut3, mut4, mut5, mut6, EU_i,
+	VSAT_a, KSATIV_a, MEXP_a, DROUT_i, PDIBL1_a, PDIBL2_a, PVAG_i, ids_tmp;
+
+
+
+
+
+`include "discipline.h"
+
+
+//******Beginning of the model******//
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   //****** Activation function tansig ******//
+   analog function real Tanh;
+						input var_g;
+						real var_g;
+						
+						begin
+								 Tanh = (1.0 - exp(-2.0*var_g))/(1.0 + exp(-2.0*var_g));
+						end
+		 endfunction
+   
+   //****** Activation function logsig ******//
+   analog function real Sigmoid;
+						input var_l;
+						real  var_l;
+						
+						begin
+								 Sigmoid = 1.0 / (1.0 + exp(-1.0 * var_l));
+						end
+   endfunction
+
+`define EXPL_THRESHOLD 80.0
+`define MAX_EXPL 5.540622384e34
+`define MIN_EXPL 1.804851387e-35
+`define N_MINLOG 1.0e-38
+`define LN_N_MINLOG -87.498233534
+
+// Clamped exponential
+`define lexp(x) ((x > `EXPL_THRESHOLD) ? `MAX_EXPL * (1.0 + x - `EXPL_THRESHOLD) : (x < -`EXPL_THRESHOLD) ? `MIN_EXPL : exp(x))
+
+// Clamped logarithm
+`define lln(x) ((x > `N_MINLOG) ? ln(x) : `LN_N_MINLOG)
+
+// Hyperbolic smoothing
+`define hypsmooth(x, c) (0.5 * (x + sqrt(x * x + 4.0 * c * c)))
+
+// Smoothing with a minimum value
+`define smoothminx(x, x0, deltax) (0.5 * (x + x0 + sqrt((x - x0) * (x - x0) + 0.25 * deltax * deltax)))
+
+// Smoothing with a maximum value
+`define smoothmaxx(x, x0, deltax) (0.5 * (x + x0 - sqrt((x - x0) * (x - x0) + 0.25 * deltax * deltax)) + 0.25 * deltax)
+
+// Smoothing with a maximum value
+`define smoothmaxx2(x, x0, deltax) (0.5 * (x + x0 - sqrt((x - x0) * (x - x0) + 0.25 * deltax * deltax)))
+
+//Gamma function
+`define gammafunc(x) (0.0385 * exp(-4.6 * (x-1)) + 7.5893e-7 * pow(2*x - 3, 8) + 6.9583e-5 * pow(2*(x-1), 6) - 6.583e-4 * pow(2*(x-1), 5) + 0.0065 * pow(2*(x-1), 4) - 0.026 * pow(2*(x-1), 3) + 0.1371 * pow(2*(x-1), 2) - 0.194 * 2*(x-1) + 0.959)
+
+// Binning equations
+`define binning(param_i, r_term, l_term, n_term, p_term, w_term, wl_term) \
+begin \
+    param_i = r_term + Inv_L * l_term + Inv_NFIN * n_term + Inv_LNFIN * p_term + Inv_W * w_term + Inv_WL * wl_term; \
+end
+
+
+
+
+
+   //****the calculation starts****//
+   analog
+		  begin
+			Lg = L + XL;
+	   //****** input normalizations ******//
+	 		//tgaa_nor = ((TGAA - tgaamin) / (tgaamax - tgaamin)) * (netmax-netmin) + netmin;
+	 		//w_nor    = ((WGAA - wgaamin) / (wgaamax - wgaamin)) * (netmax-netmin) + netmin;
+			tgaa_nor = 1.0;
+	 		w_nor    = ((WGAA - wgaamin) / (wgaamax - wgaamin)) * (netmax-netmin) + netmin;//###########1111
+			tgaa_nor =1;	 			//###########1111
+	 		l_nor    = ((L - lgaamin) / (lgaamax - lgaamin)) * (netmax-netmin) + netmin;//###########1111
+	   //****** calculation starts NN1 SCE Model******//
+	   //***1st layer***//
+      neuronsce1_1_in  = nnscew1_1_1*w_nor +nnscew1_1_2*l_nor +nnsceb1_1;
+   	  neuronsce1_2_in  = nnscew1_2_1*w_nor +nnscew1_2_2*l_nor +nnsceb1_2;
+	   	neuronsce1_1_out =Sigmoid(neuronsce1_1_in);
+      neuronsce1_2_out =Sigmoid(neuronsce1_2_in);
+	   //***2nd layer***//
+      neuronsce2_1_in  = nnscew2_1_1*neuronsce1_1_out + nnscew2_1_2*neuronsce1_2_out + nnsceb2_1;
+   	  neuronsce2_2_in  = nnscew2_2_1*neuronsce1_1_out + nnscew2_2_2*neuronsce1_2_out + nnsceb2_2;
+	   	neuronsce2_1_out =Sigmoid(neuronsce2_1_in);
+      neuronsce2_2_out =Sigmoid(neuronsce2_2_in);
+	   //***Output layer***//
+      neuronsce3_1_in  = nnscew3_1_1*neuronsce2_1_out + nnscew3_1_2*neuronsce2_2_out + nnsceb3_1;
+   	  neuronsce3_2_in  = nnscew3_2_1*neuronsce2_1_out + nnscew3_2_2*neuronsce2_2_out + nnsceb3_2;
+      neuronsce3_3_in  = nnscew3_3_1*neuronsce2_1_out + nnscew3_3_2*neuronsce2_2_out + nnsceb3_3;
+   	  neuronsce3_4_in  = nnscew3_4_1*neuronsce2_1_out + nnscew3_4_2*neuronsce2_2_out + nnsceb3_4;
+      neuronsce3_5_in  = nnscew3_5_1*neuronsce2_1_out + nnscew3_5_2*neuronsce2_2_out + nnsceb3_5;
+	   	neuronsce3_1_out =Sigmoid(neuronsce3_1_in);
+      neuronsce3_2_out =Sigmoid(neuronsce3_2_in);
+	   	neuronsce3_3_out =Sigmoid(neuronsce3_3_in);
+      neuronsce3_4_out =Sigmoid(neuronsce3_4_in);			
+	   	neuronsce3_5_out =Sigmoid(neuronsce3_5_in);
+			
+			sce_output1 = 5 * neuronsce3_1_out;	
+			sce_output2 = 5 * neuronsce3_2_out;	
+			sce_output3 = 5 * neuronsce3_3_out;	
+			sce_output4 = 5 * neuronsce3_4_out;	
+			sce_output5 = 5 * neuronsce3_5_out;	
+	   //****** calculation ends NN1 SCE Model******//
+
+	   //****** calculation starts NN2 CLM Verlocity Saturation Model******//
+	   //***1st layer***//
+      neuronclm1_1_in  = nnclmw1_1_1*w_nor +nnclmw1_1_2*l_nor +nnclmb1_1;
+   	  neuronclm1_2_in  = nnclmw1_2_1*w_nor +nnclmw1_2_2*l_nor +nnclmb1_2;
+      neuronclm1_3_in  = nnclmw1_3_1*w_nor +nnclmw1_3_2*l_nor +nnclmb1_3;
+   	  neuronclm1_4_in  = nnclmw1_4_1*w_nor +nnclmw1_4_2*l_nor +nnclmb1_4;
+	   	neuronclm1_1_out =Sigmoid(neuronclm1_1_in);
+      neuronclm1_2_out =Sigmoid(neuronclm1_2_in);
+	   	neuronclm1_3_out =Sigmoid(neuronclm1_3_in);
+      neuronclm1_4_out =Sigmoid(neuronclm1_4_in);
+	   //***2nd layer***//
+      neuronclm2_1_in  = nnclmw2_1_1*neuronclm1_1_out + nnclmw2_1_2*neuronclm1_2_out + nnclmw2_1_3*neuronclm1_3_out + nnclmw2_1_4*neuronclm1_4_out + nnclmb2_1;
+   	  neuronclm2_2_in  = nnclmw2_2_1*neuronclm1_1_out + nnclmw2_2_2*neuronclm1_2_out + nnclmw2_2_3*neuronclm1_3_out + nnclmw2_2_4*neuronclm1_4_out + nnclmb2_2;
+      neuronclm2_3_in  = nnclmw2_3_1*neuronclm1_1_out + nnclmw2_3_2*neuronclm1_2_out + nnclmw2_3_3*neuronclm1_3_out + nnclmw2_3_4*neuronclm1_4_out + nnclmb2_3;
+   	  neuronclm2_4_in  = nnclmw2_4_1*neuronclm1_1_out + nnclmw2_4_2*neuronclm1_2_out + nnclmw2_4_3*neuronclm1_3_out + nnclmw2_4_4*neuronclm1_4_out + nnclmb2_4;
+	   	neuronclm2_1_out =Sigmoid(neuronclm2_1_in);
+      neuronclm2_2_out =Sigmoid(neuronclm2_2_in);
+	   	neuronclm2_3_out =Sigmoid(neuronclm2_3_in);
+      neuronclm2_4_out =Sigmoid(neuronclm2_4_in);
+	   //***Output layer***//
+      neuronclm3_1_in  = nnclmw3_1_1*neuronclm2_1_out + nnclmw3_1_2*neuronclm2_2_out + nnclmw3_1_3*neuronclm2_3_out + nnclmw3_1_4*neuronclm2_4_out + nnclmb3_1;
+      neuronclm3_2_in  = nnclmw3_2_1*neuronclm2_1_out + nnclmw3_2_2*neuronclm2_2_out + nnclmw3_2_3*neuronclm2_3_out + nnclmw3_2_4*neuronclm2_4_out + nnclmb3_2;
+      neuronclm3_3_in  = nnclmw3_3_1*neuronclm2_1_out + nnclmw3_3_2*neuronclm2_2_out + nnclmw3_3_3*neuronclm2_3_out + nnclmw3_3_4*neuronclm2_4_out + nnclmb3_3;
+      neuronclm3_4_in  = nnclmw3_4_1*neuronclm2_1_out + nnclmw3_4_2*neuronclm2_2_out + nnclmw3_4_3*neuronclm2_3_out + nnclmw3_4_4*neuronclm2_4_out + nnclmb3_4;
+      neuronclm3_5_in  = nnclmw3_5_1*neuronclm2_1_out + nnclmw3_5_2*neuronclm2_2_out + nnclmw3_5_3*neuronclm2_3_out + nnclmw3_5_4*neuronclm2_4_out + nnclmb3_5;
+      neuronclm3_6_in  = nnclmw3_6_1*neuronclm2_1_out + nnclmw3_6_2*neuronclm2_2_out + nnclmw3_6_3*neuronclm2_3_out + nnclmw3_6_4*neuronclm2_4_out + nnclmb3_6;
+      neuronclm3_7_in  = nnclmw3_7_1*neuronclm2_1_out + nnclmw3_7_2*neuronclm2_2_out + nnclmw3_7_3*neuronclm2_3_out + nnclmw3_7_4*neuronclm2_4_out + nnclmb3_7;
+      neuronclm3_8_in  = nnclmw3_8_1*neuronclm2_1_out + nnclmw3_8_2*neuronclm2_2_out + nnclmw3_8_3*neuronclm2_3_out + nnclmw3_8_4*neuronclm2_4_out + nnclmb3_8;
+      neuronclm3_9_in  = nnclmw3_9_1*neuronclm2_1_out + nnclmw3_9_2*neuronclm2_2_out + nnclmw3_9_3*neuronclm2_3_out + nnclmw3_9_4*neuronclm2_4_out + nnclmb3_9;
+      neuronclm3_10_in  = nnclmw3_10_1*neuronclm2_1_out + nnclmw3_10_2*neuronclm2_2_out + nnclmw3_10_3*neuronclm2_3_out + nnclmw3_10_4*neuronclm2_4_out + nnclmb3_10;
+      neuronclm3_11_in  = nnclmw3_11_1*neuronclm2_1_out + nnclmw3_11_2*neuronclm2_2_out + nnclmw3_11_3*neuronclm2_3_out + nnclmw3_11_4*neuronclm2_4_out + nnclmb3_11;
+      neuronclm3_12_in  = nnclmw3_12_1*neuronclm2_1_out + nnclmw3_12_2*neuronclm2_2_out + nnclmw3_12_3*neuronclm2_3_out + nnclmw3_12_4*neuronclm2_4_out + nnclmb3_12;
+      neuronclm3_13_in  = nnclmw3_13_1*neuronclm2_1_out + nnclmw3_13_2*neuronclm2_2_out + nnclmw3_13_3*neuronclm2_3_out + nnclmw3_13_4*neuronclm2_4_out + nnclmb3_13;
+	   	neuronclm3_1_out =Sigmoid(neuronclm3_1_in);
+      neuronclm3_2_out =Sigmoid(neuronclm3_2_in);
+	   	neuronclm3_3_out =Sigmoid(neuronclm3_3_in);
+      neuronclm3_4_out =Sigmoid(neuronclm3_4_in);			
+	   	neuronclm3_5_out =Sigmoid(neuronclm3_5_in);
+	   	neuronclm3_6_out =Sigmoid(neuronclm3_6_in);
+      neuronclm3_7_out =Sigmoid(neuronclm3_7_in);
+	   	neuronclm3_8_out =Sigmoid(neuronclm3_8_in);
+      neuronclm3_9_out =Sigmoid(neuronclm3_9_in);			
+	   	neuronclm3_10_out =Sigmoid(neuronclm3_10_in);
+	   	neuronclm3_11_out =Sigmoid(neuronclm3_11_in);
+      neuronclm3_12_out =Sigmoid(neuronclm3_12_in);
+	   	neuronclm3_13_out =Sigmoid(neuronclm3_13_in);
+			
+			clm_output1 = 5 * neuronclm3_1_out;	
+			clm_output2 = 5 * neuronclm3_2_out;	
+			clm_output3 = 5 * neuronclm3_3_out;	
+			clm_output4 = 5 * neuronclm3_4_out;	
+			clm_output5 = 5 * neuronclm3_5_out;	
+			clm_output6 = 5 * neuronclm3_6_out;	
+			clm_output7 = 5 * neuronclm3_7_out;	
+			clm_output8 = 5 * neuronclm3_8_out;	
+			clm_output9 = 5 * neuronclm3_9_out;	
+			clm_output10 = 5 * neuronclm3_10_out;	
+			clm_output11 = 5 * neuronclm3_11_out;	
+			clm_output12 = 5 * neuronclm3_12_out;	
+			clm_output13 = 5 * neuronclm3_13_out;	
+	   //****** calculation ends NN2 CLM Verlocity Saturation Model******//
+
+	   //****** calculation starts NN3 Quantum Model******//
+	   //***1st layer***//
+			neuronqua1_1_in = nnquaw1_1_1*l_nor + nnquaw1_1_2*w_nor + nnquab1_1;
+			neuronqua1_2_in = nnquaw1_2_1*l_nor + nnquaw1_2_2*w_nor + nnquab1_2;
+			neuronqua1_3_in = nnquaw1_3_1*l_nor + nnquaw1_3_2*w_nor + nnquab1_3;
+			neuronqua1_1_out = Sigmoid(neuronqua1_1_in);
+			neuronqua1_2_out = Sigmoid(neuronqua1_2_in);
+			neuronqua1_3_out = Sigmoid(neuronqua1_3_in);
+	   //***2nd layer***//
+			neuronqua2_1_in = nnquaw2_1_1*neuronqua1_1_out + nnquaw2_1_2*neuronqua1_2_out + nnquaw2_1_3*neuronqua1_3_out + nnquab2_1;
+			neuronqua2_2_in = nnquaw2_2_1*neuronqua1_1_out + nnquaw2_2_2*neuronqua1_2_out + nnquaw2_2_3*neuronqua1_3_out + nnquab2_2;
+			neuronqua2_3_in = nnquaw2_3_1*neuronqua1_1_out + nnquaw2_3_2*neuronqua1_2_out + nnquaw2_3_3*neuronqua1_3_out + nnquab2_3;
+			neuronqua2_1_out = Sigmoid(neuronqua2_1_in);
+			neuronqua2_2_out = Sigmoid(neuronqua2_2_in);
+			neuronqua2_3_out = Sigmoid(neuronqua2_3_in);
+	   //***Output layer***//
+			neuronqua3_1_in = nnquaw3_1_1*neuronqua2_1_out + nnquaw3_1_2*neuronqua2_2_out + nnquaw3_1_3*neuronqua2_3_out + nnquaw3_1_4*neuronqua2_4_out + nnquab3_1;
+			neuronqua3_2_in = nnquaw3_2_1*neuronqua2_1_out + nnquaw3_2_2*neuronqua2_2_out + nnquaw3_2_3*neuronqua2_3_out + nnquaw3_2_4*neuronqua2_4_out + nnquab3_2;
+			neuronqua3_3_in = nnquaw3_3_1*neuronqua2_1_out + nnquaw3_3_2*neuronqua2_2_out + nnquaw3_3_3*neuronqua2_3_out + nnquaw3_3_4*neuronqua2_4_out + nnquab3_3;
+			neuronqua3_4_in = nnquaw3_4_1*neuronqua2_1_out + nnquaw3_4_2*neuronqua2_2_out + nnquaw3_4_3*neuronqua2_3_out + nnquaw3_4_4*neuronqua2_4_out + nnquab3_4;
+			neuronqua3_5_in = nnquaw3_5_1*neuronqua2_1_out + nnquaw3_5_2*neuronqua2_2_out + nnquaw3_5_3*neuronqua2_3_out + nnquaw3_5_4*neuronqua2_4_out + nnquab3_5;
+			neuronqua3_6_in = nnquaw3_6_1*neuronqua2_1_out + nnquaw3_6_2*neuronqua2_2_out + nnquaw3_6_3*neuronqua2_3_out + nnquaw3_6_4*neuronqua2_4_out + nnquab3_6;
+			neuronqua3_7_in = nnquaw3_7_1*neuronqua2_1_out + nnquaw3_7_2*neuronqua2_2_out + nnquaw3_7_3*neuronqua2_3_out + nnquaw3_7_4*neuronqua2_4_out + nnquab3_7;
+			neuronqua3_1_out = Sigmoid(neuronqua3_1_in);
+			neuronqua3_2_out = Sigmoid(neuronqua3_2_in);
+			neuronqua3_3_out = Sigmoid(neuronqua3_3_in);
+			neuronqua3_4_out = Sigmoid(neuronqua3_4_in);
+			neuronqua3_5_out = Sigmoid(neuronqua3_5_in);
+			neuronqua3_6_out = Sigmoid(neuronqua3_6_in);
+			neuronqua3_7_out = Sigmoid(neuronqua3_7_in);
+
+
+			qua_output1 = 5 * neuronqua3_1_out;	
+			qua_output2 = 5 * neuronqua3_2_out;	
+			qua_output3 = 5 * neuronqua3_3_out;	
+			gidl_output4 = 5 * neuronqua3_4_out;	
+			gidl_output5 = 5 * neuronqua3_5_out;	
+			gidl_output6 = 5 * neuronqua3_6_out;	
+			gidl_output7 = 5 * neuronqua3_7_out;	
+	   //****** calculation ends NN3 Quantum Model******//
+
+	   //****** calculation starts NN4 Mobility Model******//
+	   //***1st layer***//
+			neuronmob1_1_in = nnmobw1_1_1*tgaa_nor + nnmobw1_1_2*w_nor + nnmobw1_1_3*l_nor + nnmobb1_1;
+			neuronmob1_2_in = nnmobw1_2_1*tgaa_nor + nnmobw1_2_2*w_nor + nnmobw1_2_3*l_nor + nnmobb1_2;
+			neuronmob1_1_out = Sigmoid(neuronmob1_1_in);
+			neuronmob1_2_out = Sigmoid(neuronmob1_2_in);
+	   //***2nd layer***//
+			neuronmob2_1_in = nnmobw2_1_1*neuronmob1_1_out + nnmobw2_1_2*neuronmob1_2_out + nnmobb2_1;
+			neuronmob2_2_in = nnmobw2_2_1*neuronmob1_1_out + nnmobw2_2_2*neuronmob1_2_out + nnmobb2_2;
+			neuronmob2_1_out = Sigmoid(neuronmob2_1_in);
+			neuronmob2_2_out = Sigmoid(neuronmob2_2_in);
+	   //***Output layer***//
+			neuronmob3_1_in = nnmobw3_1_1*neuronmob2_1_out + nnmobw3_1_2*neuronmob2_2_out + nnmobb3_1;
+			neuronmob3_2_in = nnmobw3_2_1*neuronmob2_1_out + nnmobw3_2_2*neuronmob2_2_out + nnmobb3_2;
+			neuronmob3_3_in = nnmobw3_3_1*neuronmob2_1_out + nnmobw3_3_2*neuronmob2_2_out + nnmobb3_3;
+			neuronmob3_4_in = nnmobw3_4_1*neuronmob2_1_out + nnmobw3_4_2*neuronmob2_2_out + nnmobb3_4;
+			neuronmob3_5_in = nnmobw3_5_1*neuronmob2_1_out + nnmobw3_5_2*neuronmob2_2_out + nnmobb3_5;
+			neuronmob3_1_out = Sigmoid(neuronmob3_1_in);
+			neuronmob3_2_out = Sigmoid(neuronmob3_2_in);
+			neuronmob3_3_out = Sigmoid(neuronmob3_3_in);
+			neuronmob3_4_out = Sigmoid(neuronmob3_4_in);
+			neuronmob3_5_out = Sigmoid(neuronmob3_5_in);
+
+			mob_output1 = 5 * neuronmob3_1_out;	
+			mob_output2 = 5 * neuronmob3_2_out;	
+			mob_output3 = 5 * neuronmob3_3_out;	
+			mob_output4 = 5 * neuronmob3_4_out;	
+			mob_output5 = 5 * neuronmob3_5_out;	
+	   //****** calculation ends NN4 Mobility Model******//
+
+	   //****** calculation starts NN5 CV Model******//
+	   //***1st layer***//
+			neuroncv1_1_in = nncvw1_1_1*tgaa_nor + nncvw1_1_2*w_nor + nncvw1_1_3*l_nor + nncvb1_1;
+			neuroncv1_2_in = nncvw1_2_1*tgaa_nor + nncvw1_2_2*w_nor + nncvw1_2_3*l_nor + nncvb1_2;
+			neuroncv1_3_in = nncvw1_3_1*tgaa_nor + nncvw1_3_2*w_nor + nncvw1_3_3*l_nor + nncvb1_3;
+			neuroncv1_4_in = nncvw1_4_1*tgaa_nor + nncvw1_4_2*w_nor + nncvw1_4_3*l_nor + nncvb1_4;
+			neuroncv1_1_out = Sigmoid(neuroncv1_1_in);
+			neuroncv1_2_out = Sigmoid(neuroncv1_2_in);
+			neuroncv1_3_out = Sigmoid(neuroncv1_3_in);
+			neuroncv1_4_out = Sigmoid(neuroncv1_4_in);
+	   //***2nd layer***//
+			neuroncv2_1_in = nncvw2_1_1*neuroncv1_1_out + nncvw2_1_2*neuroncv1_2_out + nncvw2_1_3*neuroncv1_3_out + nncvw2_1_4*neuroncv1_4_out + nncvb2_1;
+			neuroncv2_2_in = nncvw2_2_1*neuroncv1_1_out + nncvw2_2_2*neuroncv1_2_out + nncvw2_2_3*neuroncv1_3_out + nncvw2_2_4*neuroncv1_4_out + nncvb2_2;
+			neuroncv2_3_in = nncvw2_3_1*neuroncv1_1_out + nncvw2_3_2*neuroncv1_2_out + nncvw2_3_3*neuroncv1_3_out + nncvw2_3_4*neuroncv1_4_out + nncvb2_3;
+			neuroncv2_4_in = nncvw2_4_1*neuroncv1_1_out + nncvw2_4_2*neuroncv1_2_out + nncvw2_4_3*neuroncv1_3_out + nncvw2_4_4*neuroncv1_4_out + nncvb2_4;
+			neuroncv2_1_out = Sigmoid(neuroncv2_1_in);
+			neuroncv2_2_out = Sigmoid(neuroncv2_2_in);
+			neuroncv2_3_out = Sigmoid(neuroncv2_3_in);
+			neuroncv2_4_out = Sigmoid(neuroncv2_4_in);
+	   //***Output layer***//
+			neuroncv3_1_in = nncvw3_1_1*neuroncv2_1_out + nncvw3_1_2*neuroncv2_2_out + nncvw3_1_3*neuroncv2_3_out + nncvw3_1_4*neuroncv2_4_out + nncvb3_1;
+			neuroncv3_2_in = nncvw3_2_1*neuroncv2_1_out + nncvw3_2_2*neuroncv2_2_out + nncvw3_2_3*neuroncv2_3_out + nncvw3_2_4*neuroncv2_4_out + nncvb3_2;
+			neuroncv3_3_in = nncvw3_3_1*neuroncv2_1_out + nncvw3_3_2*neuroncv2_2_out + nncvw3_3_3*neuroncv2_3_out + nncvw3_3_4*neuroncv2_4_out + nncvb3_3;
+			neuroncv3_4_in = nncvw3_4_1*neuroncv2_1_out + nncvw3_4_2*neuroncv2_2_out + nncvw3_4_3*neuroncv2_3_out + nncvw3_4_4*neuroncv2_4_out + nncvb3_4;
+			neuroncv3_5_in = nncvw3_5_1*neuroncv2_1_out + nncvw3_5_2*neuroncv2_2_out + nncvw3_5_3*neuroncv2_3_out + nncvw3_5_4*neuroncv2_4_out + nncvb3_5;
+			neuroncv3_6_in = nncvw3_6_1*neuroncv2_1_out + nncvw3_6_2*neuroncv2_2_out + nncvw3_6_3*neuroncv2_3_out + nncvw3_6_4*neuroncv2_4_out + nncvb3_6;
+			neuroncv3_7_in = nncvw3_7_1*neuroncv2_1_out + nncvw3_7_2*neuroncv2_2_out + nncvw3_7_3*neuroncv2_3_out + nncvw3_7_4*neuroncv2_4_out + nncvb3_7;
+			neuroncv3_8_in = nncvw3_8_1*neuroncv2_1_out + nncvw3_8_2*neuroncv2_2_out + nncvw3_8_3*neuroncv2_3_out + nncvw3_8_4*neuroncv2_4_out + nncvb3_8;
+			neuroncv3_9_in = nncvw3_9_1*neuroncv2_1_out + nncvw3_9_2*neuroncv2_2_out + nncvw3_9_3*neuroncv2_3_out + nncvw3_9_4*neuroncv2_4_out + nncvb3_9;
+			neuroncv3_10_in = nncvw3_10_1*neuroncv2_1_out + nncvw3_10_2*neuroncv2_2_out + nncvw3_10_3*neuroncv2_3_out + nncvw3_10_4*neuroncv2_4_out + nncvb3_10;
+			neuroncv3_11_in = nncvw3_11_1*neuroncv2_1_out + nncvw3_11_2*neuroncv2_2_out + nncvw3_11_3*neuroncv2_3_out + nncvw3_11_4*neuroncv2_4_out + nncvb3_11;
+			neuroncv3_12_in = nncvw3_12_1*neuroncv2_1_out + nncvw3_12_2*neuroncv2_2_out + nncvw3_12_3*neuroncv2_3_out + nncvw3_12_4*neuroncv2_4_out + nncvb3_12;
+			neuroncv3_13_in = nncvw3_13_1*neuroncv2_1_out + nncvw3_13_2*neuroncv2_2_out + nncvw3_13_3*neuroncv2_3_out + nncvw3_13_4*neuroncv2_4_out + nncvb3_13;
+			neuroncv3_14_in = nncvw3_14_1*neuroncv2_1_out + nncvw3_14_2*neuroncv2_2_out + nncvw3_14_3*neuroncv2_3_out + nncvw3_14_4*neuroncv2_4_out + nncvb3_14;
+			neuroncv3_15_in = nncvw3_15_1*neuroncv2_1_out + nncvw3_15_2*neuroncv2_2_out + nncvw3_15_3*neuroncv2_3_out + nncvw3_15_4*neuroncv2_4_out + nncvb3_15;
+			neuroncv3_1_out = Sigmoid(neuroncv3_1_in);
+			neuroncv3_2_out = Sigmoid(neuroncv3_2_in);
+			neuroncv3_3_out = Sigmoid(neuroncv3_3_in);
+			neuroncv3_4_out = Sigmoid(neuroncv3_4_in);
+			neuroncv3_5_out = Sigmoid(neuroncv3_5_in);
+			neuroncv3_6_out = Sigmoid(neuroncv3_6_in);
+			neuroncv3_7_out = Sigmoid(neuroncv3_7_in);
+			neuroncv3_8_out = Sigmoid(neuroncv3_8_in);
+			neuroncv3_9_out = Sigmoid(neuroncv3_9_in);
+			neuroncv3_10_out = Sigmoid(neuroncv3_10_in);
+			neuroncv3_11_out = Sigmoid(neuroncv3_11_in);
+			neuroncv3_12_out = Sigmoid(neuroncv3_12_in);
+			neuroncv3_13_out = Sigmoid(neuroncv3_13_in);
+			neuroncv3_14_out = Sigmoid(neuroncv3_14_in);
+			neuroncv3_15_out = Sigmoid(neuroncv3_15_in);
+
+			cv_output1 = 5 * neuroncv3_1_out;	
+			cv_output2 = 5 * neuroncv3_2_out;	
+			cv_output3 = 5 * neuroncv3_3_out;	
+			cv_output4 = 5 * neuroncv3_4_out;	
+			cv_output5 = 5 * neuroncv3_5_out;	
+			cv_output6 = 5 * neuroncv3_6_out;	
+			cv_output7 = 5 * neuroncv3_7_out;	
+			cv_output8 = 5 * neuroncv3_8_out;	
+			cv_output9 = 5 * neuroncv3_9_out;	
+			cv_output10 = 5 * neuroncv3_10_out;	
+			cv_output11 = 5 * neuroncv3_11_out;	
+			cv_output12 = 5 * neuroncv3_12_out;	
+			cv_output13 = 5 * neuroncv3_13_out;	
+			cv_output14 = 5 * neuroncv3_14_out;	
+			cv_output15 = 5 * neuroncv3_15_out;	
+			
+
+//$strobe("cv_output15=",cv_output15);
+	   //****** calculation ends NN5 CV Model******//
+			
+
+
+	   //****** calculation starts Physics Model******//
+		 vgs = type * V(G, S);
+	   vds = type * V(D, S);
+
+	   //****** Mode choice ******//
+	   if (vds >= 0.0)
+	     begin 
+				 mode = 1.0;
+				 vds = vds;
+				 vgs = vgs;
+			 end
+	   else
+			 begin
+				 mode = -1.0;
+				 vds = -vds;
+				 vgs = vgs + vds;
+	   	 end
+		//************************************ Binning ****************************************************//
+		//WGAA = WGAA + DeltaWGAA;
+		//TGAA = TGAA + DeltaTGAA;
+		Inv_L      = 1.0e-6 / Lg;
+		Inv_NFIN   = 1.0 / NFIN;
+		Inv_LNFIN  = 1.0e-6 / (Lg * NFIN);
+		Inv_W      = 1.0e-6 / WGAA;
+		Inv_WL     = 1.0e-12 / (WGAA * Lg);
+
+		//************************************  Nanosheet G Start ****************************************************//
+    WGAAeff = WGAA; // Assuming WGAA is already defined
+    Weff1 = 2 * (WGAAeff + TGAA);
+    Ach1 = WGAAeff * TGAA;
+    Weff_UFCM = Weff1;
+    Ach = Ach1;
+
+    if (NGAA > 1) begin
+        Weff2 = 2 * (WGAAeff + TGAA);
+        Ach2 = WGAAeff * TGAA;
+        Weff_UFCM = Weff1 + Weff2;
+        Ach = Ach1 + Ach2;
+    end
+
+    if (NGAA > 2) begin
+        Weff3 = 2 * (WGAAeff + TGAA);
+        Ach3 = WGAAeff * TGAA;
+        Weff_UFCM = Weff1 + Weff2 + Weff3;
+        Ach = Ach1 + Ach2 + Ach3;
+    end
+
+    if (NGAA > 3) begin
+        Weff4 = 2 * (WGAAeff + TGAA);
+        Ach4 = WGAAeff * TGAA;
+        Weff_UFCM = Weff1 + Weff2 + Weff3 + Weff4;
+        Ach = Ach1 + Ach2 + Ach3 + Ach4;
+    end
+
+    if (NGAA > 4) begin
+        Weff5 = 2 * (WGAAeff + TGAA);
+        Ach5 = WGAAeff * TGAA;
+        Weff_UFCM = Weff1 + Weff2 + Weff3 + Weff4 + Weff5;
+        Ach = Ach1 + Ach2 + Ach3 + Ach4 + Ach5;
+    end
+
+    if (NGAA > 5) begin
+        Weff6 = 2 * (WGAAeff + TGAA);
+        Ach6 = WGAAeff * TGAA;
+        Weff_UFCM = Weff1 + Weff2 + Weff3 + Weff4 + Weff5 + Weff6;
+        Ach = Ach1 + Ach2 + Ach3 + Ach4 + Ach5 + Ach6;
+    end
+
+    WeffB = WGAA;
+
+         Weff_UFCM = 2 * (WGAA + DeltaWGAA + TGAA + DeltaTGAA) * NGAA;        //###########1111
+         Ach = (WGAA + DeltaWGAA) * (TGAA + DeltaWGAA) * NGAA;                    //###########1111
+         EOT = EOT_0*cv_output14;
+    Cins = Weff_UFCM * EPSROX * EPS0 / EOT;
+		//************************************  Nanosheet G End ****************************************************//
+
+		//************************************  Geometric scaling for Toxeff / charge centroid Tcen ****************************************************//
+    MTcen = 1.0 + AQMTCEN * `lexp(-(2.0 * Ach / Weff_UFCM) / BQMTCEN);
+    Tcen0 = (2.0 * Ach / Weff_UFCM) * MTcen;
+
+    // Dimension scaling
+    T0 = TOXG * TOXG;
+    Weff0 = Weff_UFCM;
+    WeffCV0 = Weff_UFCM;
+ 
+
+		//************************************   Mobility degradation for GAA Starts ****************************************************//
+
+		// NN4-5 ETAMOB_i
+		ETAMOB_i = mob_output5;
+
+		// NN4-1 UA_i
+		UA_i = mob_output1;
+
+		// NN4-2 EU_i
+		EU_i = mob_output2;
+
+
+		U0_i = U0 * mob_output3;
+
+		// NN4-4 UD_i
+		UD_i = mob_output4; 
+		
+		Vtm = KboQ * DevTemp;
+		nVtm = Vtm;
+		Nc = NC0SUB;
+		epssub = EPSRSUB * EPS0;
+		rc = 2.0 * Cins / (Weff_UFCM * Weff_UFCM * epssub / Ach);
+		cox = Cins / Weff_UFCM;
+		qbs = q * NBODY * Ach / Cins;
+		Qdep_ov_Cins = -q * NBODY * Ach / Cins;
+		qdep = Qdep_ov_Cins / nVtm;
+
+		vth_fixed_factor_SI = `lln(Cins * nVtm / (q * Nc * 2.0 * Ach));
+		vth_fixed_factor_Sub = `lln((qdep * rc) * (qdep * rc) / ((`lexp(qdep * rc) - qdep * rc - 1.0))) + vth_fixed_factor_SI;
+		q0 = 10.0 * nVtm / rc + 2.0 * qbs;
+		//************************************   Mobility degradation for GAA Ends ****************************************************//
+
+		//************************************   Short Channel Effect Starts ****************************************************//
+		scl = sqrt((epssub * Ach / Cins) * (1.0 + Ach * Cins / (2.0 * epssub * Weff_UFCM * Weff_UFCM)));
+
+		Eg = BG0SUB;
+		ni = NI0SUB * `lexp(BG0SUB / (2.0 * KboQ * 300.15) - Eg / (2.0 * Vtm));
+		phib = Vtm * `lln(NBODY / ni);
+
+		vbi = Vtm * `lln(NBODY * NSD / (ni * ni));
+		// NN1-1 
+		tmp = sce_output1 * Lg / scl + 1.0e-6;
+		Theta_SCE = 0.5 / (cosh(tmp) - 1.0);
+		// NN1-1 
+		tmp = sce_output1 * Lg / scl + 1.0e-6;
+		Theta_SW = 0.5 / (cosh(tmp) - 1.0);
+		// NN1-1 
+		tmp = sce_output1 * Lg / scl + 1.0e-6;
+		Theta_DIBL = 0.5 / (cosh(tmp) - 1.0);
+
+		Theta_RSCE = sqrt(1.0 + LPE0_i / Lg) - 1.0;
+
+		ThetaSS = `hypsmooth((1.0 - 1.0e-6), 1.0e-3);
+
+		phist = 0.4 + phib + PHIN_i;
+		T1 = 2.0 * (Cins / Weff_UFCM) / (rc + 2.0);
+		vdsx = sqrt(vds * vds + 0.01) - 0.1;
+		// NN1-4:CDSC_i  NN1-5:CDSCD_i 
+		cdsc = Theta_SW * (sce_output4 + sce_output5 * vdsx);  
+		nVtm = Vtm * ThetaSS * (1.0 + (CIT_i + cdsc) / T1);
+
+		//Quantum mechanical Vth correction
+		kT = Vtm * q;
+		T0 = HBAR * pi / (2.0 * Ach / Weff_UFCM);
+		E0 = T0 * T0 / (2.0 * mx);
+		E0prime = T0 * T0 / (2.0 * mxprime);
+		E1 = 4.0 * E0;
+		E1prime = 4.0 * E0prime;
+		T1 = gprime * mdprime / (gfactor * md);
+		gam0 = 1.0 + T1 * exp((E0 - E0prime) / kT);
+		gam1 = gam0 + `lexp((E0 - E1) / kT) + T1 * `lexp((E0 - E1prime) / kT);
+		T2 = -Vtm * `lln(gfactor * md / (pi * HBAR * HBAR * Nc) * kT / (2.0 * Ach / Weff_UFCM) * gam1);
+		// NN3-1:QMFACTOR_i  
+		dvch_qm = qua_output1 * (E0 / q + T2);
+
+		// NN1-2:DVT0_i  
+		dvth_vtroll = -sce_output2 * Theta_SCE * (vbi - phist); 
+		// NN1-3:ETA0_i  
+		dvth_dibl = -sce_output3 * Theta_DIBL * vdsx + (DVTP0_i * pow(vdsx + 0.01, DVTP1_i));
+		dvth_rsce = K1RSCE_i * Theta_RSCE * sqrt(phist);
+		dvth_all = dvth_vtroll + dvth_dibl + dvth_rsce + DVTSHIFT;
+
+		deltaPhi = PHIG - EASUB;
+		vgsfb = vgs - deltaPhi;
+		vgsfbeff = vgsfb - dvth_all;
+		//************************************   Short Channel Effect Ends ****************************************************//
+
+		//************************************   Core model calculation at S ****************************************************//
+		vch = dvch_qm;
+		T4 = pow(-qdep, (2.0 / 3));
+
+		T0 = -qdep + vth_fixed_factor_Sub + QMFACTORCVfinal * T4;
+		T1 = -qdep + vth_fixed_factor_SI;
+
+		T2 = (vgsfbeff - vch) / nVtm;
+		F0 = -T2 + T1;
+		T3 = 0.5 * (T2 - T0);
+		qm = `lexp(T3);
+
+		T7 = ln(1.0 + qm);
+		qm = 2.0 * (1.0 - sqrt(1.0 + T7 * T7));
+		T8 = (qm * ALPHA_UFCM + qdep) * rc;
+		T4 = T8 / (exp(T8) - T8 - 1.0);
+		T5 = T8 * T4;
+		qm_ln = ln(-(qm + qdep));
+		e0 = F0 - qm + `lln(-qm) + `lln(T5) + QMFACTORCVfinal * exp((2.0 / 3) * qm_ln);
+		e1 = -1.0 + 1.0 / qm + (2.0 / T8 - T4 - 1.0) * rc - 2 / 3 * QMFACTORCVfinal * exp(-(1.0 / 3) * qm_ln);
+		e2 = -1.0 / (qm * qm) - (2.0 / 9.0) * QMFACTORCVfinal * exp(-(4.0 / 3) * qm_ln);
+		qm = qm - (e0 / e1) * (1.0 + (e0 * e2) / (2.0 * e1 * e1));
+		T8 = (qm * ALPHA_UFCM + qdep) * rc;
+		T4 = T8 / (`lexp(T8) - T8 - 1.0);
+		T5 = T8 * T4;
+		qm_ln = ln(-(qm + qdep));
+		e0 = F0 - qm + `lln(-qm) + `lln(T5) + QMFACTORCVfinal * exp((2.0 / 3) * qm_ln);
+		e1 = -1.0 + 1.0 / qm + (2.0 / T8 - T4 - 1.0) * rc - (2.0 / 3) * QMFACTORCVfinal * exp(-(1.0 / 3) * qm_ln);
+		e2 = -1.0 / (qm * qm) - (2.0 / 9.0) * QMFACTORCVfinal * exp(-(4.0 / 3) * qm_ln);
+		qm = qm - (e0 / e1) * (1.0 + (e0 * e2) / (2.0 * e1 * e1));
+
+		qis = -qm * nVtm;
+
+
+		///   D-to-S saturation voltage
+		eta_mu = 0.5 * ETAMOB_i;
+		//eta_mu_cv = 0.5;
+		// NN5-1  
+		eta_mu_cv = 0.5 * cv_output1;
+		EeffFactor = 1.0e-8 / (epsratio * EOT);
+		Eeffs = EeffFactor * (qbs + eta_mu * qis);
+		qb0 = 1.0e-2 / cox;
+		T2 = pow((0.5 * (1.0 + qis / qb0)), UCS_t);
+		T3 = pow(Eeffs, EU_i);
+		T3 = UA_i * T3 + UD_i / T2;
+		Dmobs = 1.0 + T3;
+		Dmobs = `smoothminx(Dmobs, 1.0, DMOBCLAMP);
+		Dmobs = Dmobs / U0MULT;
+		VSAT_a = VSAT;
+		// NN2-6
+		VSAT_a = VSAT_a * clm_output6;
+		Esat = 2.0 * VSAT_a / U0_i * Dmobs;
+		EsatL = Esat * Lg;
+		KSATIV_a = KSATIV;
+		// NN2-7
+		KSATIV_a = KSATIV_a * clm_output7;
+		T6 = KSATIV_a * (qis + 2.0 * Vtm);
+		Vdsat = EsatL * T6 / (EsatL + T6);
+		Vdsat = `hypsmooth((Vdsat - 1.0e-3), 1.0e-5) + 1.0e-3;
+		MEXP_a = MEXP;
+		// NN2-8
+		MEXP_a = MEXP_a * clm_output8;
+		T7 = pow(((vds / Vdsat) + 1e-6), MEXP_a);
+		T8 = pow((1.0 + T7), (1 / MEXP_a));
+		Vdseff = min((vds / T8), vds);
+
+		//************************************   Core model calculation at D ****************************************************//
+		vch = Vdseff + dvch_qm;
+		T2 = pow((-qdep), (2.0 / 3));
+
+		T0 = -qdep + vth_fixed_factor_Sub + QMFACTORCVfinal * T2;
+		T1 = -qdep + vth_fixed_factor_SI;
+
+		T2 = (vgsfbeff - vch) / nVtm;
+		F0 = -T2 + T1;
+		T3 = (T2 - T0) * 0.5;
+		qm = `lexp(T3);
+
+		T7 = ln(1.0 + qm);
+		qm = 2.0 * (1.0 - sqrt(1.0 + T7 * T7));
+		T8 = (qm * ALPHA_UFCM + qdep) * rc;
+		T4 = T8 / (`lexp(T8) - T8 - 1.0);
+		T5 = T8 * T4;
+		qm_ln = ln(-(qm + qdep));
+		e0 = F0 - qm + `lln(-qm) + `lln(T5) + QMFACTORCVfinal * exp((2.0 / 3) * qm_ln);
+		e1 = -1.0 + (1.0 / qm) + (2.0 / T8 - T4 - 1.0) * rc - (2.0 / 3) * QMFACTORCVfinal * exp(-(1.0 / 3) * qm_ln);
+		e2 = -1.0 / (qm * qm) - (2.0 / 9.0) * QMFACTORCVfinal * exp(-(4.0 / 3) * qm_ln);
+		qm = qm - (e0 / e1) * (1.0 + (e0 * e2) / (2.0 * e1 * e1));
+		T8 = (qm * ALPHA_UFCM + qdep) * rc;
+		T4 = T8 / (`lexp(T8) - T8 - 1.0);
+		T5 = T8 * T4;
+		qm_ln = ln(-(qm + qdep));
+		e0 = F0 - qm + `lln(-qm) + `lln(T5) + QMFACTORCVfinal * exp((2.0 / 3) * qm_ln);
+		e1 = -1.0 + (1.0 / qm) + (2.0 / T8 - T4 - 1.0) * rc - (2.0 / 3) * QMFACTORCVfinal * exp(-(1.0 / 3) * qm_ln);
+		e2 = -1.0 / (qm * qm) - (2.0 / 9.0) * QMFACTORCVfinal * exp(-(4.0 / 3) * qm_ln);
+		qm = qm - (e0 / e1) * (1.0 + (e0 * e2) / (2.0 * e1 * e1));
+
+		qid = -qm * nVtm;
+
+
+		//************************************   Quasi-static I-V model ****************************************************//
+		qia = 0.5 * (qis + qid);
+		dqi = qis - qid;
+		etaiv = q0 / (q0 + qia);
+		ids0_ov_dqi = qia + (2.0 - etaiv) * nVtm;
+		ids0 = ids0_ov_dqi * dqi;
+
+		//************************************   Channel length modulation ****************************************************//
+		Leff = Lg;
+		LeffCV = Lg;
+
+		DROUT_i = DROUT;
+		// NN2-9
+		DROUT_i = DROUT_i * clm_output9;  
+		tmp = DROUT_i * Leff / scl + 1.0e-6;
+
+		PDIBL1_a = PDIBL1;
+		// NN2-10
+		PDIBL1_a = PDIBL1_a * clm_output10;  
+		PDIBL2_a = PDIBL2;
+		// NN2-11
+		PDIBL2_a = PDIBL2_a * clm_output11;  
+
+		DIBLfactor = PDIBL1_a * exp(-tmp) + PDIBL2_a;
+
+		PVAG_i = PVAG;
+		// NN2-12
+		PVAG_i = PVAG_i * clm_output12;  
+		PVAGfactor = 1.0 + PVAG_i * qia / EsatL;
+		diffVds = vds - Vdseff;
+		Vgst2Vtm = qia + 2.0 * Vtm;
+		T1 = Vgst2Vtm;
+		T3 = T1 / (Vdsat + T1);
+		VaDIBL = T1 / DIBLfactor * T3 * PVAGfactor;
+		Moc = 1.0 + diffVds / VaDIBL;
+		// NN2-1:PCLM_i 		NN2-5:PCLMG
+		T1 = clm_output1 + clm_output5 * qia; 
+		Mclm = 1.0 + T1 * `lln(1.0 + (vds - Vdseff) / T1 / (Vdsat + EsatL));
+		Moc = Moc * Mclm;
+
+		//************************************   Toxeff model for quantum mechanical effects ****************************************************//
+		T4 = qia / QM0;
+		T5 = 1.0 + pow(T4, PQM);
+		Tcen = Tcen0 / T5;
+		// NN3-2  NN3-3 
+		//coxeff = 1.0 / (1.0 / (cox * EOT / (TOXP * qua_output2)) + Tcen * QMTCENCV_i * qua_output3 / epssub);
+		coxeff = 1.0 / (1.0 / (cox * EOT / (TOXP * qua_output2)) + Tcen * qua_output3 / epssub);
+
+		// D current
+		cox = Cins / Weff_UFCM;
+		beta = U0_i * cox * Weff_UFCM / Lg;
+
+
+		//************************************   Mobility degradation ****************************************************//
+		qia2 = 0.5 * (qis + qid);
+		Eeffm = EeffFactor * (qbs + eta_mu * qia2);
+		T2 = pow(0.5 * (1.0 + qia2 / qb0), UCS_t);
+		T0 = pow(Eeffm, EU_i);
+		T3 = UA_i * T0 + UD_i / T2;
+		Dmob = 1.0 + T3;
+		Dmob = `smoothminx(Dmob, 1.0, DMOBCLAMP);
+		Dmob = Dmob / U0MULT;
+		ueff = U0_i / Dmob; 
+
+		//************************************   Mobility degradation for C-V ****************************************************//
+		Eeffm_cv = EeffFactor * (qbs + eta_mu_cv * qia2);
+		T3 = UA_i * pow(Eeffm_cv, EU_i) + UD_i / T2;
+		Dmob_cv = 1.0 + T3;
+		Dmob_cv = `smoothminx(Dmob_cv, 1.0, DMOBCLAMP);
+		Dmob_cv = Dmob_cv / U0MULT;
+
+		//************************************   Current degradation due to velocity saturation ****************************************************//
+		VSAT1_a = VSAT1;		
+		// NN2-13
+		VSAT1_a = VSAT1_a * clm_output13;
+		Esat1 = 2.0 * VSAT1_a / ueff;
+		Esat1L = Esat1 * Lg;
+		// NN2-2: PSAT_i
+		T0 = `lexp(clm_output2 * `lln(dqi / Esat1L)); 
+		T1 = 1.0 / clm_output2; 
+		// NN2-3: DELTAVSAT_i
+		Ta = 1.0 + `lexp(T1 * `lln(clm_output3));  
+		Dvsat = (1.0 + `lexp(T1 * `lln(clm_output3 + T0))) / Ta; 
+		// NN2-4: PTWG_a
+		Dvsat = Dvsat + 0.5 * clm_output4 * qia * dqi * dqi;
+
+		//************************************   Non-saturation effect ****************************************************//
+		T0 = A1_t + A2_t / (qia + 2.0 * nVtm);
+		T1 = T0 * dqi * dqi;
+		T2 = T1 + 1.0 - 0.001;
+		T3 = -1.0 + 0.5 * (T2 + sqrt(T2 * T2 + 0.004));
+		Nsat = 0.5 * (1.0 + sqrt(1.0 + T3));
+		Dvsat = Dvsat * Nsat;
+		Dvsat = `smoothminx(Dvsat, 1.0, DVSATCLAMP);
+
+		//************************************   Velocity saturation for C-V ****************************************************//
+
+		// NN5-2: PTWG_a
+		EsatCV = 2.0 * VSATCV_t * cv_output2 * Dmob_cv / U0_i; 
+		EsatCVL = EsatCV * LeffCV;
+		// NN5-3: PSATCV_i
+		T0 = pow((dqi / EsatCVL), cv_output3);
+		T1 = 1.0 / cv_output3;
+		// NN5-4: DELTAVSATCV_i
+		Ta = 1.0 + pow(cv_output4, T1);
+		DvsatCV = (1.0 + pow((cv_output4 + T0), T1)) / Ta;
+		// NN5-5: PCLMCV_i
+		MclmCV = 1.0 + cv_output5 * `lln(1.0 + (vds - Vdseff) / cv_output5 / (Vdsat + EsatCVL));
+
+
+
+
+		//************************************  GIDL ****************************************************//
+		T0 = epsratio * EOT;
+		T1 = (-(vgs - vds)) / T0;
+		T1 = `hypsmooth(T1, 1.0e-2);
+		// NN3-4: BGIDL_i
+		T2 = 10 * pow(10.0, 8.0) * gidl_output4 / (T1 + 1.0e-3);
+		T3 = pow(T1, 1);
+		// NN3-4: AGIDL_i
+		T6 = 6.05 * pow(10.0, -12.0) * Weff0 * T3 * `lexp(-T2) * vds * 4 * gidl_output5;
+		igidl = T6;
+		//igidl_tmp1 = T2;
+		//igidl_tmp2 = T3;
+
+
+
+		ids = NF * beta * ids0 * Moc / (Dmob * Dvsat) + igidl;
+		
+		ids_tmp = beta * ids0 * Moc / (Dmob * Dvsat);
+
+		//************************************   Quasi-static C-V model ****************************************************//
+		T11 = (2.0 * qia + nVtm) / DvsatCV;
+		qg = qia + dqi * dqi / (6.0 * T11);
+		qd = -0.5 * (qia - (dqi / 6.0) * (1.0 - (dqi / T11) * (1.0 + dqi / (5.0 * T11))));
+
+		//  CLM in qg and qd
+		inv_MclmCV = 1.0 / MclmCV;
+		qg = inv_MclmCV * qg + (MclmCV - 1.0) * qid;
+		qd = inv_MclmCV * inv_MclmCV * qd + 0.5 * (MclmCV - inv_MclmCV) * qid;
+		//$strobe("qg=",qg);
+		//$strobe("qd=",qd);
+		qs = -qg - qd;
+		T6 = WeffCV0 * LeffCV * coxeff;
+		qg = T6 * qg;
+		qd = T6 * qd;
+		qs = T6 * qs;
+
+		//  Bias-dependent overlap capacitances
+		CGSO_i = 0.3 * TFIN * cox * cv_output10;
+		CGDO_i = 0.3 * TFIN * cox * cv_output13;
+
+		T1 = WeffCV0 * devsign;
+		T2 = devsign * vgs;
+		T0 = T2 - vfbsdcv + DELTA_1;
+		vgs_overlap = 0.5 * (T0 - sqrt(T0 * T0 + 4.0 * DELTA_1));
+		qgs_ov = T1 * (CGSL_i * cv_output8 * (T2 - vfbsdcv - vgs_overlap - 0.5 * cv_output9 * (sqrt(1.0 - 4.0 * vgs_overlap / cv_output9) - 1.0)) + CGSO_i * T2);
+
+		T2 = devsign * (vgs - vds);
+		T0 = T2 - vfbsdcv + DELTA_1;
+		vgd_overlap = 0.5 * (T0 - sqrt(T0 * T0 + 4.0 * DELTA_1));
+		qgd_ov = T1 * (CGSL_i * cv_output11 * (T2 - vfbsdcv - vgd_overlap - 0.5 * cv_output12 * (sqrt(1.0 - 4.0 * vgd_overlap / cv_output12) - 1.0)) + CGDO_i * T2);
+
+		T1 = WeffCV0;
+		// NN5-6: CFS_i
+		qgs_fr = T1 * CFS_i * cv_output6 * vgs;
+		// NN5-7: CFD_i
+		qgd_fr = T1 * CFD_i * cv_output7 * (vgs - vds);
+
+		qgs_parasitic = qgs_ov + qgs_fr;
+		qgd_parasitic = qgd_ov + qgd_fr;
+
+		QG = type * (devsign * qg + qgs_parasitic + qgd_parasitic);
+		QD = type * (devsign * qd - qgd_parasitic);
+		QS = type * (devsign * qs - qgs_parasitic);
+
+    GM = ddx(ids, V(G));
+    GDS = ddx(ids, V(D));
+
+    CGG = ddx(QG, V(G));
+    CGD = ddx(QG, V(D));
+    CGS = ddx(QG, V(S));
+    CDG = ddx(QD, V(G));
+    CDD = ddx(QD, V(D));
+    CDS = ddx(QD, V(S));
+    CSG = ddx(QS, V(G));
+    CSD = ddx(QS, V(D));
+    CSS = ddx(QS, V(S));
+
+
+
+
+//****** dc current ******//
+	   if (mode > 0.0)
+	      I(D, S) <+ type * ids;
+	   else
+	      I(D, S) <+ -type * ids;
+
+	   //****charging current******//
+	   //I(G, S)   <+ ddt(QG);
+	   //I(D, S)  <+ ddt(QD); 
+
+		tmp1_pku = 		sce_output1;
+		tmp2_pku = 		sce_output2;
+		tmp3_pku = 		sce_output3;
+		tmp4_pku = 		sce_output4;
+		tmp5_pku = 		sce_output5;
+
+
+
+//`include "discipline.h"
+
+
+//******Beginning of the model******//
+
+
+NBODY_CV = 5.0e21;             //###########1111
+NSD_CV = 1.0e26;				//###########1111
+PHIG_CV = 4.37;                 //###########1111
+CFS_i_CV = 1e-10;               //###########1111
+CFD_i_CV = 1e-10;              //###########1111
+
+
+
+
+
+
+   //****the calculation starts****//
+
+			Lg = L + XL;
+	   //****** input normalizations ******//
+	 		//tgaa_nor = ((TGAA - tgaamin) / (tgaamax - tgaamin)) * (netmax-netmin) + netmin;
+	 		//w_nor    = ((WGAA - wgaamin) / (wgaamax - wgaamin)) * (netmax-netmin) + netmin;
+	 		w_nor    = ((WGAA - wgaamin) / (wgaamax - wgaamin)) * (netmax-netmin) + netmin;//###########1111
+			tgaa_nor =-1;	 			//###########1111
+	 		l_nor    = ((L - lgaamin) / (lgaamax - lgaamin)) * (netmax-netmin) + netmin;//###########1111
+
+
+
+
+	   //****** calculation starts NN1 SCE Model******//
+	   //***1st layer***//
+      neuronsce1_1_in  = nnscew1_1_1_cap*w_nor +nnscew1_1_2_cap*l_nor +nnsceb1_1_cap;
+   	  neuronsce1_2_in  = nnscew1_2_1_cap*w_nor +nnscew1_2_2_cap*l_nor +nnsceb1_2_cap;
+	   	neuronsce1_1_out =Sigmoid(neuronsce1_1_in);
+      neuronsce1_2_out =Sigmoid(neuronsce1_2_in);
+	   //***2nd layer***//
+      neuronsce2_1_in  = nnscew2_1_1_cap*neuronsce1_1_out + nnscew2_1_2_cap*neuronsce1_2_out + nnsceb2_1_cap;
+   	  neuronsce2_2_in  = nnscew2_2_1_cap*neuronsce1_1_out + nnscew2_2_2_cap*neuronsce1_2_out + nnsceb2_2_cap;
+	   	neuronsce2_1_out =Sigmoid(neuronsce2_1_in);
+      neuronsce2_2_out =Sigmoid(neuronsce2_2_in);
+	   //***Output layer***//
+      neuronsce3_1_in  = nnscew3_1_1_cap*neuronsce2_1_out + nnscew3_1_2_cap*neuronsce2_2_out + nnsceb3_1_cap;
+   	  neuronsce3_2_in  = nnscew3_2_1_cap*neuronsce2_1_out + nnscew3_2_2_cap*neuronsce2_2_out + nnsceb3_2_cap;
+      neuronsce3_3_in  = nnscew3_3_1_cap*neuronsce2_1_out + nnscew3_3_2_cap*neuronsce2_2_out + nnsceb3_3_cap;
+   	  neuronsce3_4_in  = nnscew3_4_1_cap*neuronsce2_1_out + nnscew3_4_2_cap*neuronsce2_2_out + nnsceb3_4_cap;
+      neuronsce3_5_in  = nnscew3_5_1_cap*neuronsce2_1_out + nnscew3_5_2_cap*neuronsce2_2_out + nnsceb3_5_cap;
+	   	neuronsce3_1_out =Sigmoid(neuronsce3_1_in);
+      neuronsce3_2_out =Sigmoid(neuronsce3_2_in);
+	   	neuronsce3_3_out =Sigmoid(neuronsce3_3_in);
+      neuronsce3_4_out =Sigmoid(neuronsce3_4_in);			
+	   	neuronsce3_5_out =Sigmoid(neuronsce3_5_in);
+			
+			sce_output1 = 5 * neuronsce3_1_out;	
+			sce_output2 = 5 * neuronsce3_2_out;	
+			sce_output3 = 5 * neuronsce3_3_out;	
+			sce_output4 = 5 * neuronsce3_4_out;	
+			sce_output5 = 5 * neuronsce3_5_out;	
+	   //****** calculation ends NN1 SCE Model******//
+
+	   //****** calculation starts NN2 CLM Verlocity Saturation Model******//
+	   //***1st layer***//
+      neuronclm1_1_in  = nnclmw1_1_1_cap*w_nor +nnclmw1_1_2_cap*l_nor +nnclmb1_1_cap;
+   	  neuronclm1_2_in  = nnclmw1_2_1_cap*w_nor +nnclmw1_2_2_cap*l_nor +nnclmb1_2_cap;
+      neuronclm1_3_in  = nnclmw1_3_1_cap*w_nor +nnclmw1_3_2_cap*l_nor +nnclmb1_3_cap;
+   	  neuronclm1_4_in  = nnclmw1_4_1_cap*w_nor +nnclmw1_4_2_cap*l_nor +nnclmb1_4_cap;
+	   	neuronclm1_1_out =Sigmoid(neuronclm1_1_in);
+      neuronclm1_2_out =Sigmoid(neuronclm1_2_in);
+	   	neuronclm1_3_out =Sigmoid(neuronclm1_3_in);
+      neuronclm1_4_out =Sigmoid(neuronclm1_4_in);
+	   //***2nd layer***//
+      neuronclm2_1_in  = nnclmw2_1_1_cap*neuronclm1_1_out + nnclmw2_1_2_cap*neuronclm1_2_out + nnclmw2_1_3_cap*neuronclm1_3_out + nnclmw2_1_4_cap*neuronclm1_4_out + nnclmb2_1_cap;
+   	  neuronclm2_2_in  = nnclmw2_2_1_cap*neuronclm1_1_out + nnclmw2_2_2_cap*neuronclm1_2_out + nnclmw2_2_3_cap*neuronclm1_3_out + nnclmw2_2_4_cap*neuronclm1_4_out + nnclmb2_2_cap;
+      neuronclm2_3_in  = nnclmw2_3_1_cap*neuronclm1_1_out + nnclmw2_3_2_cap*neuronclm1_2_out + nnclmw2_3_3_cap*neuronclm1_3_out + nnclmw2_3_4_cap*neuronclm1_4_out + nnclmb2_3_cap;
+   	  neuronclm2_4_in  = nnclmw2_4_1_cap*neuronclm1_1_out + nnclmw2_4_2_cap*neuronclm1_2_out + nnclmw2_4_3_cap*neuronclm1_3_out + nnclmw2_4_4_cap*neuronclm1_4_out + nnclmb2_4_cap;
+	   	neuronclm2_1_out =Sigmoid(neuronclm2_1_in);
+      neuronclm2_2_out =Sigmoid(neuronclm2_2_in);
+	   	neuronclm2_3_out =Sigmoid(neuronclm2_3_in);
+      neuronclm2_4_out =Sigmoid(neuronclm2_4_in);
+	   //***Output layer***//
+      neuronclm3_1_in  = nnclmw3_1_1_cap*neuronclm2_1_out + nnclmw3_1_2_cap*neuronclm2_2_out + nnclmw3_1_3_cap*neuronclm2_3_out + nnclmw3_1_4_cap*neuronclm2_4_out + nnclmb3_1_cap;
+      neuronclm3_2_in  = nnclmw3_2_1_cap*neuronclm2_1_out + nnclmw3_2_2_cap*neuronclm2_2_out + nnclmw3_2_3_cap*neuronclm2_3_out + nnclmw3_2_4_cap*neuronclm2_4_out + nnclmb3_2_cap;
+      neuronclm3_3_in  = nnclmw3_3_1_cap*neuronclm2_1_out + nnclmw3_3_2_cap*neuronclm2_2_out + nnclmw3_3_3_cap*neuronclm2_3_out + nnclmw3_3_4_cap*neuronclm2_4_out + nnclmb3_3_cap;
+      neuronclm3_4_in  = nnclmw3_4_1_cap*neuronclm2_1_out + nnclmw3_4_2_cap*neuronclm2_2_out + nnclmw3_4_3_cap*neuronclm2_3_out + nnclmw3_4_4_cap*neuronclm2_4_out + nnclmb3_4_cap;
+      neuronclm3_5_in  = nnclmw3_5_1_cap*neuronclm2_1_out + nnclmw3_5_2_cap*neuronclm2_2_out + nnclmw3_5_3_cap*neuronclm2_3_out + nnclmw3_5_4_cap*neuronclm2_4_out + nnclmb3_5_cap;
+      neuronclm3_6_in  = nnclmw3_6_1_cap*neuronclm2_1_out + nnclmw3_6_2_cap*neuronclm2_2_out + nnclmw3_6_3_cap*neuronclm2_3_out + nnclmw3_6_4_cap*neuronclm2_4_out + nnclmb3_6_cap;
+      neuronclm3_7_in  = nnclmw3_7_1_cap*neuronclm2_1_out + nnclmw3_7_2_cap*neuronclm2_2_out + nnclmw3_7_3_cap*neuronclm2_3_out + nnclmw3_7_4_cap*neuronclm2_4_out + nnclmb3_7_cap;
+      neuronclm3_8_in  = nnclmw3_8_1_cap*neuronclm2_1_out + nnclmw3_8_2_cap*neuronclm2_2_out + nnclmw3_8_3_cap*neuronclm2_3_out + nnclmw3_8_4_cap*neuronclm2_4_out + nnclmb3_8_cap;
+      neuronclm3_9_in  = nnclmw3_9_1_cap*neuronclm2_1_out + nnclmw3_9_2_cap*neuronclm2_2_out + nnclmw3_9_3_cap*neuronclm2_3_out + nnclmw3_9_4_cap*neuronclm2_4_out + nnclmb3_9_cap;
+      neuronclm3_10_in  = nnclmw3_10_1_cap*neuronclm2_1_out + nnclmw3_10_2_cap*neuronclm2_2_out + nnclmw3_10_3_cap*neuronclm2_3_out + nnclmw3_10_4_cap*neuronclm2_4_out + nnclmb3_10_cap;
+      neuronclm3_11_in  = nnclmw3_11_1_cap*neuronclm2_1_out + nnclmw3_11_2_cap*neuronclm2_2_out + nnclmw3_11_3_cap*neuronclm2_3_out + nnclmw3_11_4_cap*neuronclm2_4_out + nnclmb3_11_cap;
+      neuronclm3_12_in  = nnclmw3_12_1_cap*neuronclm2_1_out + nnclmw3_12_2_cap*neuronclm2_2_out + nnclmw3_12_3_cap*neuronclm2_3_out + nnclmw3_12_4_cap*neuronclm2_4_out + nnclmb3_12_cap;
+      neuronclm3_13_in  = nnclmw3_13_1_cap*neuronclm2_1_out + nnclmw3_13_2_cap*neuronclm2_2_out + nnclmw3_13_3_cap*neuronclm2_3_out + nnclmw3_13_4_cap*neuronclm2_4_out + nnclmb3_13_cap;
+	   	neuronclm3_1_out =Sigmoid(neuronclm3_1_in);
+      neuronclm3_2_out =Sigmoid(neuronclm3_2_in);
+	   	neuronclm3_3_out =Sigmoid(neuronclm3_3_in);
+      neuronclm3_4_out =Sigmoid(neuronclm3_4_in);			
+	   	neuronclm3_5_out =Sigmoid(neuronclm3_5_in);
+	   	neuronclm3_6_out =Sigmoid(neuronclm3_6_in);
+      neuronclm3_7_out =Sigmoid(neuronclm3_7_in);
+	   	neuronclm3_8_out =Sigmoid(neuronclm3_8_in);
+      neuronclm3_9_out =Sigmoid(neuronclm3_9_in);			
+	   	neuronclm3_10_out =Sigmoid(neuronclm3_10_in);
+	   	neuronclm3_11_out =Sigmoid(neuronclm3_11_in);
+      neuronclm3_12_out =Sigmoid(neuronclm3_12_in);
+	   	neuronclm3_13_out =Sigmoid(neuronclm3_13_in);
+			
+			clm_output1 = 5 * neuronclm3_1_out;	
+			clm_output2 = 5 * neuronclm3_2_out;	
+			clm_output3 = 5 * neuronclm3_3_out;	
+			clm_output4 = 5 * neuronclm3_4_out;	
+			clm_output5 = 5 * neuronclm3_5_out;	
+			clm_output6 = 5 * neuronclm3_6_out;	
+			clm_output7 = 5 * neuronclm3_7_out;	
+			clm_output8 = 5 * neuronclm3_8_out;	
+			clm_output9 = 5 * neuronclm3_9_out;	
+			clm_output10 = 5 * neuronclm3_10_out;	
+			clm_output11 = 5 * neuronclm3_11_out;	
+			clm_output12 = 5 * neuronclm3_12_out;	
+			clm_output13 = 5 * neuronclm3_13_out;	
+	   //****** calculation ends NN2 CLM Verlocity Saturation Model******//
+
+	   //****** calculation starts NN3 Quantum Model******//
+	   //***1st layer***//
+			neuronqua1_1_in = nnquaw1_1_1_cap*l_nor + nnquaw1_1_2_cap*w_nor + nnquab1_1_cap;
+			neuronqua1_2_in = nnquaw1_2_1_cap*l_nor + nnquaw1_2_2_cap*w_nor + nnquab1_2_cap;
+			neuronqua1_3_in = nnquaw1_3_1_cap*l_nor + nnquaw1_3_2_cap*w_nor + nnquab1_3_cap;
+			neuronqua1_1_out = Sigmoid(neuronqua1_1_in);
+			neuronqua1_2_out = Sigmoid(neuronqua1_2_in);
+			neuronqua1_3_out = Sigmoid(neuronqua1_3_in);
+	   //***2nd layer***//
+			neuronqua2_1_in = nnquaw2_1_1_cap*neuronqua1_1_out + nnquaw2_1_2_cap*neuronqua1_2_out + nnquaw2_1_3_cap*neuronqua1_3_out + nnquab2_1_cap;
+			neuronqua2_2_in = nnquaw2_2_1_cap*neuronqua1_1_out + nnquaw2_2_2_cap*neuronqua1_2_out + nnquaw2_2_3_cap*neuronqua1_3_out + nnquab2_2_cap;
+			neuronqua2_3_in = nnquaw2_3_1_cap*neuronqua1_1_out + nnquaw2_3_2_cap*neuronqua1_2_out + nnquaw2_3_3_cap*neuronqua1_3_out + nnquab2_3_cap;
+			neuronqua2_1_out = Sigmoid(neuronqua2_1_in);
+			neuronqua2_2_out = Sigmoid(neuronqua2_2_in);
+			neuronqua2_3_out = Sigmoid(neuronqua2_3_in);
+	   //***Output layer***//
+			neuronqua3_1_in = nnquaw3_1_1_cap*neuronqua2_1_out + nnquaw3_1_2_cap*neuronqua2_2_out + nnquaw3_1_3_cap*neuronqua2_3_out + nnquab3_1_cap;
+			neuronqua3_2_in = nnquaw3_2_1_cap*neuronqua2_1_out + nnquaw3_2_2_cap*neuronqua2_2_out + nnquaw3_2_3_cap*neuronqua2_3_out + nnquab3_2_cap;
+			neuronqua3_3_in = nnquaw3_3_1_cap*neuronqua2_1_out + nnquaw3_3_2_cap*neuronqua2_2_out + nnquaw3_3_3_cap*neuronqua2_3_out + nnquab3_3_cap;
+			neuronqua3_1_out = Sigmoid(neuronqua3_1_in);
+			neuronqua3_2_out = Sigmoid(neuronqua3_2_in);
+			neuronqua3_3_out = Sigmoid(neuronqua3_3_in);
+
+			qua_output1 = 5 * neuronqua3_1_out;
+			qua_output2 = 5 * neuronqua3_2_out;
+			qua_output3 = 5 * neuronqua3_3_out;
+	   //****** calculation ends NN3 Quantum Model******//
+
+	   //****** calculation starts NN4 Mobility Model******//
+	   //***1st layer***//
+			neuronmob1_1_in = nnmobw1_1_1_cap*tgaa_nor + nnmobw1_1_2_cap*w_nor + nnmobw1_1_3_cap*l_nor + nnmobb1_1_cap;
+			neuronmob1_2_in = nnmobw1_2_1_cap*tgaa_nor + nnmobw1_2_2_cap*w_nor + nnmobw1_2_3_cap*l_nor + nnmobb1_2_cap;
+			neuronmob1_1_out = Sigmoid(neuronmob1_1_in);
+			neuronmob1_2_out = Sigmoid(neuronmob1_2_in);
+	   //***2nd layer***//
+			neuronmob2_1_in = nnmobw2_1_1_cap*neuronmob1_1_out + nnmobw2_1_2_cap*neuronmob1_2_out + nnmobb2_1_cap;
+			neuronmob2_2_in = nnmobw2_2_1_cap*neuronmob1_1_out + nnmobw2_2_2_cap*neuronmob1_2_out + nnmobb2_2_cap;
+			neuronmob2_1_out = Sigmoid(neuronmob2_1_in);
+			neuronmob2_2_out = Sigmoid(neuronmob2_2_in);
+	   //***Output layer***//
+			neuronmob3_1_in = nnmobw3_1_1_cap*neuronmob2_1_out + nnmobw3_1_2_cap*neuronmob2_2_out + nnmobb3_1_cap;
+			neuronmob3_2_in = nnmobw3_2_1_cap*neuronmob2_1_out + nnmobw3_2_2_cap*neuronmob2_2_out + nnmobb3_2_cap;
+			neuronmob3_3_in = nnmobw3_3_1_cap*neuronmob2_1_out + nnmobw3_3_2_cap*neuronmob2_2_out + nnmobb3_3_cap;
+			neuronmob3_4_in = nnmobw3_4_1_cap*neuronmob2_1_out + nnmobw3_4_2_cap*neuronmob2_2_out + nnmobb3_4_cap;
+			neuronmob3_5_in = nnmobw3_5_1_cap*neuronmob2_1_out + nnmobw3_5_2_cap*neuronmob2_2_out + nnmobb3_5_cap;
+			neuronmob3_1_out = Sigmoid(neuronmob3_1_in);
+			neuronmob3_2_out = Sigmoid(neuronmob3_2_in);
+			neuronmob3_3_out = Sigmoid(neuronmob3_3_in);
+			neuronmob3_4_out = Sigmoid(neuronmob3_4_in);
+			neuronmob3_5_out = Sigmoid(neuronmob3_5_in);
+
+			mob_output1 = 5 * neuronmob3_1_out;	
+			mob_output2 = 5 * neuronmob3_2_out;	
+			mob_output3 = 5 * neuronmob3_3_out;	
+			mob_output4 = 5 * neuronmob3_4_out;	
+			mob_output5 = 5 * neuronmob3_5_out;	
+	   //****** calculation ends NN4 Mobility Model******//
+
+	   //****** calculation starts NN5 CV Model******//
+	   //***1st layer***//
+			neuroncv1_1_in = nncvw1_1_1_cap*tgaa_nor + nncvw1_1_2_cap*w_nor + nncvw1_1_3_cap*l_nor + nncvb1_1_cap;
+			neuroncv1_2_in = nncvw1_2_1_cap*tgaa_nor + nncvw1_2_2_cap*w_nor + nncvw1_2_3_cap*l_nor + nncvb1_2_cap;
+			neuroncv1_3_in = nncvw1_3_1_cap*tgaa_nor + nncvw1_3_2_cap*w_nor + nncvw1_3_3_cap*l_nor + nncvb1_3_cap;
+			neuroncv1_4_in = nncvw1_4_1_cap*tgaa_nor + nncvw1_4_2_cap*w_nor + nncvw1_4_3_cap*l_nor + nncvb1_4_cap;
+			neuroncv1_1_out = Sigmoid(neuroncv1_1_in);
+			neuroncv1_2_out = Sigmoid(neuroncv1_2_in);
+			neuroncv1_3_out = Sigmoid(neuroncv1_3_in);
+			neuroncv1_4_out = Sigmoid(neuroncv1_4_in);
+	   //***2nd layer***//
+			neuroncv2_1_in = nncvw2_1_1_cap*neuroncv1_1_out + nncvw2_1_2_cap*neuroncv1_2_out + nncvw2_1_3_cap*neuroncv1_3_out + nncvw2_1_4_cap*neuroncv1_4_out + nncvb2_1_cap;
+			neuroncv2_2_in = nncvw2_2_1_cap*neuroncv1_1_out + nncvw2_2_2_cap*neuroncv1_2_out + nncvw2_2_3_cap*neuroncv1_3_out + nncvw2_2_4_cap*neuroncv1_4_out + nncvb2_2_cap;
+			neuroncv2_3_in = nncvw2_3_1_cap*neuroncv1_1_out + nncvw2_3_2_cap*neuroncv1_2_out + nncvw2_3_3_cap*neuroncv1_3_out + nncvw2_3_4_cap*neuroncv1_4_out + nncvb2_3_cap;
+			neuroncv2_4_in = nncvw2_4_1_cap*neuroncv1_1_out + nncvw2_4_2_cap*neuroncv1_2_out + nncvw2_4_3_cap*neuroncv1_3_out + nncvw2_4_4_cap*neuroncv1_4_out + nncvb2_4_cap;
+			neuroncv2_1_out = Sigmoid(neuroncv2_1_in);
+			neuroncv2_2_out = Sigmoid(neuroncv2_2_in);
+			neuroncv2_3_out = Sigmoid(neuroncv2_3_in);
+			neuroncv2_4_out = Sigmoid(neuroncv2_4_in);
+	   //***Output layer***//
+			neuroncv3_1_in = nncvw3_1_1_cap*neuroncv2_1_out + nncvw3_1_2_cap*neuroncv2_2_out + nncvw3_1_3_cap*neuroncv2_3_out + nncvw3_1_4_cap*neuroncv2_4_out + nncvb3_1_cap;
+			neuroncv3_2_in = nncvw3_2_1_cap*neuroncv2_1_out + nncvw3_2_2_cap*neuroncv2_2_out + nncvw3_2_3_cap*neuroncv2_3_out + nncvw3_2_4_cap*neuroncv2_4_out + nncvb3_2_cap;
+			neuroncv3_3_in = nncvw3_3_1_cap*neuroncv2_1_out + nncvw3_3_2_cap*neuroncv2_2_out + nncvw3_3_3_cap*neuroncv2_3_out + nncvw3_3_4_cap*neuroncv2_4_out + nncvb3_3_cap;
+			neuroncv3_4_in = nncvw3_4_1_cap*neuroncv2_1_out + nncvw3_4_2_cap*neuroncv2_2_out + nncvw3_4_3_cap*neuroncv2_3_out + nncvw3_4_4_cap*neuroncv2_4_out + nncvb3_4_cap;
+			neuroncv3_5_in = nncvw3_5_1_cap*neuroncv2_1_out + nncvw3_5_2_cap*neuroncv2_2_out + nncvw3_5_3_cap*neuroncv2_3_out + nncvw3_5_4_cap*neuroncv2_4_out + nncvb3_5_cap;
+			neuroncv3_6_in = nncvw3_6_1_cap*neuroncv2_1_out + nncvw3_6_2_cap*neuroncv2_2_out + nncvw3_6_3_cap*neuroncv2_3_out + nncvw3_6_4_cap*neuroncv2_4_out + nncvb3_6_cap;
+			neuroncv3_7_in = nncvw3_7_1_cap*neuroncv2_1_out + nncvw3_7_2_cap*neuroncv2_2_out + nncvw3_7_3_cap*neuroncv2_3_out + nncvw3_7_4_cap*neuroncv2_4_out + nncvb3_7_cap;
+			neuroncv3_8_in = nncvw3_8_1_cap*neuroncv2_1_out + nncvw3_8_2_cap*neuroncv2_2_out + nncvw3_8_3_cap*neuroncv2_3_out + nncvw3_8_4_cap*neuroncv2_4_out + nncvb3_8_cap;
+			neuroncv3_9_in = nncvw3_9_1_cap*neuroncv2_1_out + nncvw3_9_2_cap*neuroncv2_2_out + nncvw3_9_3_cap*neuroncv2_3_out + nncvw3_9_4_cap*neuroncv2_4_out + nncvb3_9_cap;
+			neuroncv3_10_in = nncvw3_10_1_cap*neuroncv2_1_out + nncvw3_10_2_cap*neuroncv2_2_out + nncvw3_10_3_cap*neuroncv2_3_out + nncvw3_10_4_cap*neuroncv2_4_out + nncvb3_10_cap;
+			neuroncv3_11_in = nncvw3_11_1_cap*neuroncv2_1_out + nncvw3_11_2_cap*neuroncv2_2_out + nncvw3_11_3_cap*neuroncv2_3_out + nncvw3_11_4_cap*neuroncv2_4_out + nncvb3_11_cap;
+			neuroncv3_12_in = nncvw3_12_1_cap*neuroncv2_1_out + nncvw3_12_2_cap*neuroncv2_2_out + nncvw3_12_3_cap*neuroncv2_3_out + nncvw3_12_4_cap*neuroncv2_4_out + nncvb3_12_cap;
+			neuroncv3_13_in = nncvw3_13_1_cap*neuroncv2_1_out + nncvw3_13_2_cap*neuroncv2_2_out + nncvw3_13_3_cap*neuroncv2_3_out + nncvw3_13_4_cap*neuroncv2_4_out + nncvb3_13_cap;
+			neuroncv3_14_in = nncvw3_14_1_cap*neuroncv2_1_out + nncvw3_14_2_cap*neuroncv2_2_out + nncvw3_14_3_cap*neuroncv2_3_out + nncvw3_14_4_cap*neuroncv2_4_out + nncvb3_14_cap;
+			neuroncv3_15_in = nncvw3_15_1_cap*neuroncv2_1_out + nncvw3_15_2_cap*neuroncv2_2_out + nncvw3_15_3_cap*neuroncv2_3_out + nncvw3_15_4_cap*neuroncv2_4_out + nncvb3_15_cap;
+			neuroncv3_1_out = Sigmoid(neuroncv3_1_in);
+			neuroncv3_2_out = Sigmoid(neuroncv3_2_in);
+			neuroncv3_3_out = Sigmoid(neuroncv3_3_in);
+			neuroncv3_4_out = Sigmoid(neuroncv3_4_in);
+			neuroncv3_5_out = Sigmoid(neuroncv3_5_in);
+			neuroncv3_6_out = Sigmoid(neuroncv3_6_in);
+			neuroncv3_7_out = Sigmoid(neuroncv3_7_in);
+			neuroncv3_8_out = Sigmoid(neuroncv3_8_in);
+			neuroncv3_9_out = Sigmoid(neuroncv3_9_in);
+			neuroncv3_10_out = Sigmoid(neuroncv3_10_in);
+			neuroncv3_11_out = Sigmoid(neuroncv3_11_in);
+			neuroncv3_12_out = Sigmoid(neuroncv3_12_in);
+			neuroncv3_13_out = Sigmoid(neuroncv3_13_in);
+			neuroncv3_14_out = Sigmoid(neuroncv3_14_in);
+			neuroncv3_15_out = Sigmoid(neuroncv3_15_in);
+
+			cv_output1 = 5 * neuroncv3_1_out;	
+			cv_output2 = 5 * neuroncv3_2_out;	
+			cv_output3 = 5 * neuroncv3_3_out;	
+			cv_output4 = 5 * neuroncv3_4_out;	
+			cv_output5 = 5 * neuroncv3_5_out;	
+			cv_output6 = 5 * neuroncv3_6_out;	
+			cv_output7 = 5 * neuroncv3_7_out;	
+			cv_output8 = 5 * neuroncv3_8_out;	
+			cv_output9 = 5 * neuroncv3_9_out;	
+			cv_output10 = 5 * neuroncv3_10_out;	
+			cv_output11 = 5 * neuroncv3_11_out;	
+			cv_output12 = 5 * neuroncv3_12_out;	
+			cv_output13 = 5 * neuroncv3_13_out;	
+			cv_output14 = 5 * neuroncv3_14_out;	
+			cv_output15 = 5 * neuroncv3_15_out;	
+			
+	   //****** calculation ends NN5 CV Model******//
+			
+
+
+	   //****** calculation starts Physics Model******//
+		 vgs = type * V(G, S);
+	   vds = type * V(D, S);
+
+	   //****** Mode choice ******//
+	   if (vds >= 0.0)
+	     begin 
+				 mode = 1.0;
+				 vds = vds;
+				 vgs = vgs;
+			 end
+	   else
+			 begin
+				 mode = -1.0;
+				 vds = -vds;
+				 vgs = vgs + vds;
+	   	 end
+		//************************************ Binning ****************************************************//
+		//WGAA = WGAA + DeltaWGAA;
+		//TGAA = TGAA + DeltaTGAA;
+		Inv_L      = 1.0e-6 / Lg;
+		Inv_NFIN   = 1.0 / NFIN;
+		Inv_LNFIN  = 1.0e-6 / (Lg * NFIN);
+		Inv_W      = 1.0e-6 / WGAA;
+		Inv_WL     = 1.0e-12 / (WGAA * Lg);
+
+		//************************************  Nanosheet G Start ****************************************************//
+    WGAAeff = WGAA; // Assuming WGAA is already defined
+    Weff1 = 2 * (WGAAeff + TGAA);
+    Ach1 = WGAAeff * TGAA;
+    Weff_UFCM = Weff1;
+    Ach = Ach1;
+
+    if (NGAA > 1) begin
+        Weff2 = 2 * (WGAAeff + TGAA);
+        Ach2 = WGAAeff * TGAA;
+        Weff_UFCM = Weff1 + Weff2;
+        Ach = Ach1 + Ach2;
+    end
+
+    if (NGAA > 2) begin
+        Weff3 = 2 * (WGAAeff + TGAA);
+        Ach3 = WGAAeff * TGAA;
+        Weff_UFCM = Weff1 + Weff2 + Weff3;
+        Ach = Ach1 + Ach2 + Ach3;
+    end
+
+    if (NGAA > 3) begin
+        Weff4 = 2 * (WGAAeff + TGAA);
+        Ach4 = WGAAeff * TGAA;
+        Weff_UFCM = Weff1 + Weff2 + Weff3 + Weff4;
+        Ach = Ach1 + Ach2 + Ach3 + Ach4;
+    end
+
+    if (NGAA > 4) begin
+        Weff5 = 2 * (WGAAeff + TGAA);
+        Ach5 = WGAAeff * TGAA;
+        Weff_UFCM = Weff1 + Weff2 + Weff3 + Weff4 + Weff5;
+        Ach = Ach1 + Ach2 + Ach3 + Ach4 + Ach5;
+    end
+
+    if (NGAA > 5) begin
+        Weff6 = 2 * (WGAAeff + TGAA);
+        Ach6 = WGAAeff * TGAA;
+        Weff_UFCM = Weff1 + Weff2 + Weff3 + Weff4 + Weff5 + Weff6;
+        Ach = Ach1 + Ach2 + Ach3 + Ach4 + Ach5 + Ach6;
+    end
+
+    WeffB = WGAA;
+
+         Weff_UFCM = 2 * (WGAA + DeltaWGAA + TGAA + DeltaTGAA) * NGAA;        //###########1111
+         Ach = (WGAA + DeltaWGAA) * (TGAA + DeltaWGAA) * NGAA;                    //###########1111
+         EOT = EOT_0*cv_output14;
+    Cins = Weff_UFCM * EPSROX * EPS0 / EOT;
+		//************************************  Nanosheet G End ****************************************************//
+
+		//************************************  Geometric scaling for Toxeff / charge centroid Tcen ****************************************************//
+    MTcen = 1.0 + AQMTCEN * `lexp(-(2.0 * Ach / Weff_UFCM) / BQMTCEN);
+    Tcen0 = (2.0 * Ach / Weff_UFCM) * MTcen;
+
+
+		//************************************   Mobility degradation for GAA Starts ****************************************************//
+		// NN4-5 ETAMOB_i
+		ETAMOB_i = mob_output5;
+
+		// NN4-1 UA_i
+		UA_i = mob_output1;
+
+		// NN4-2 EU_i
+		EU_i = mob_output2;
+
+		U0_i = U0 * mob_output3;
+
+		// NN4-4 UD_i
+		UD_i = mob_output4; 
+		
+		Vtm = KboQ * DevTemp;
+		nVtm = Vtm;
+		Nc = NC0SUB;
+		epssub = EPSRSUB * EPS0;
+		rc = 2.0 * Cins / (Weff_UFCM * Weff_UFCM * epssub / Ach);
+		cox = Cins / Weff_UFCM;
+		qbs = q * NBODY_CV * Ach / Cins;
+		Qdep_ov_Cins = -q * NBODY_CV * Ach / Cins;
+		qdep = Qdep_ov_Cins / nVtm;
+
+		vth_fixed_factor_SI = `lln(Cins * nVtm / (q * Nc * 2.0 * Ach));
+		vth_fixed_factor_Sub = `lln((qdep * rc) * (qdep * rc) / ((`lexp(qdep * rc) - qdep * rc - 1.0))) + vth_fixed_factor_SI;
+		q0 = 10.0 * nVtm / rc + 2.0 * qbs;
+		//************************************   Mobility degradation for GAA Ends ****************************************************//
+
+		//************************************   Short Channel Effect Starts ****************************************************//
+		scl = sqrt((epssub * Ach / Cins) * (1.0 + Ach * Cins / (2.0 * epssub * Weff_UFCM * Weff_UFCM)));
+
+		Eg = BG0SUB;
+		ni = NI0SUB * `lexp(BG0SUB / (2.0 * KboQ * 300.15) - Eg / (2.0 * Vtm));
+		phib = Vtm * `lln(NBODY_CV / ni);
+
+		vbi = Vtm * `lln(NBODY_CV * NSD_CV / (ni * ni));
+		// NN1-1 
+		tmp = sce_output1 * Lg / scl + 1.0e-6;
+		Theta_SCE = 0.5 / (cosh(tmp) - 1.0);
+		// NN1-1 
+		tmp = sce_output1 * Lg / scl + 1.0e-6;
+		Theta_SW = 0.5 / (cosh(tmp) - 1.0);
+		// NN1-1 
+		tmp = sce_output1 * Lg / scl + 1.0e-6;
+		Theta_DIBL = 0.5 / (cosh(tmp) - 1.0);
+
+		Theta_RSCE = sqrt(1.0 + LPE0_i / Lg) - 1.0;
+
+		ThetaSS = `hypsmooth((1.0 - 1.0e-6), 1.0e-3);
+
+		phist = 0.4 + phib + PHIN_i;
+		T1 = 2.0 * (Cins / Weff_UFCM) / (rc + 2.0);
+		vdsx = sqrt(vds * vds + 0.01) - 0.1;
+		// NN1-4:CDSC_i  NN1-5:CDSCD_i 
+		cdsc = Theta_SW * (sce_output4 + sce_output5 * vdsx);  
+		nVtm = Vtm * ThetaSS * (1.0 + (CIT_i + cdsc) / T1);
+
+		//Quantum mechanical Vth correction
+		kT = Vtm * q;
+		T0 = HBAR * pi / (2.0 * Ach / Weff_UFCM);
+		E0 = T0 * T0 / (2.0 * mx);
+		E0prime = T0 * T0 / (2.0 * mxprime);
+		E1 = 4.0 * E0;
+		E1prime = 4.0 * E0prime;
+		T1 = gprime * mdprime / (gfactor * md);
+		gam0 = 1.0 + T1 * exp((E0 - E0prime) / kT);
+		gam1 = gam0 + `lexp((E0 - E1) / kT) + T1 * `lexp((E0 - E1prime) / kT);
+		T2 = -Vtm * `lln(gfactor * md / (pi * HBAR * HBAR * Nc) * kT / (2.0 * Ach / Weff_UFCM) * gam1);
+		// NN3-1:QMFACTOR_i  
+		dvch_qm = qua_output1 * (E0 / q + T2);
+
+		// NN1-2:DVT0_i  
+		dvth_vtroll = -sce_output2 * Theta_SCE * (vbi - phist); 
+		// NN1-3:ETA0_i  
+		dvth_dibl = -sce_output3 * Theta_DIBL * vdsx + (DVTP0_i * pow(vdsx + 0.01, DVTP1_i));
+		dvth_rsce = K1RSCE_i * Theta_RSCE * sqrt(phist);
+		dvth_all = dvth_vtroll + dvth_dibl + dvth_rsce + DVTSHIFT;
+
+		deltaPhi = PHIG_CV - EASUB;
+		vgsfb = vgs - deltaPhi;
+		vgsfbeff = vgsfb - dvth_all;
+		//************************************   Short Channel Effect Ends ****************************************************//
+
+		//************************************   Core model calculation at S ****************************************************//
+		vch = dvch_qm;
+		T4 = pow(-qdep, (2.0 / 3));
+
+		T0 = -qdep + vth_fixed_factor_Sub + QMFACTORCVfinal * T4;
+		T1 = -qdep + vth_fixed_factor_SI;
+
+		T2 = (vgsfbeff - vch) / nVtm;
+		F0 = -T2 + T1;
+		T3 = 0.5 * (T2 - T0);
+		qm = `lexp(T3);
+
+		T7 = ln(1.0 + qm);
+		qm = 2.0 * (1.0 - sqrt(1.0 + T7 * T7));
+		T8 = (qm * ALPHA_UFCM + qdep) * rc;
+		T4 = T8 / (exp(T8) - T8 - 1.0);
+		T5 = T8 * T4;
+		qm_ln = ln(-(qm + qdep));
+		e0 = F0 - qm + `lln(-qm) + `lln(T5) + QMFACTORCVfinal * exp((2.0 / 3) * qm_ln);
+		e1 = -1.0 + 1.0 / qm + (2.0 / T8 - T4 - 1.0) * rc - 2 / 3 * QMFACTORCVfinal * exp(-(1.0 / 3) * qm_ln);
+		e2 = -1.0 / (qm * qm) - (2.0 / 9.0) * QMFACTORCVfinal * exp(-(4.0 / 3) * qm_ln);
+		qm = qm - (e0 / e1) * (1.0 + (e0 * e2) / (2.0 * e1 * e1));
+		T8 = (qm * ALPHA_UFCM + qdep) * rc;
+		T4 = T8 / (`lexp(T8) - T8 - 1.0);
+		T5 = T8 * T4;
+		qm_ln = ln(-(qm + qdep));
+		e0 = F0 - qm + `lln(-qm) + `lln(T5) + QMFACTORCVfinal * exp((2.0 / 3) * qm_ln);
+		e1 = -1.0 + 1.0 / qm + (2.0 / T8 - T4 - 1.0) * rc - (2.0 / 3) * QMFACTORCVfinal * exp(-(1.0 / 3) * qm_ln);
+		e2 = -1.0 / (qm * qm) - (2.0 / 9.0) * QMFACTORCVfinal * exp(-(4.0 / 3) * qm_ln);
+		qm = qm - (e0 / e1) * (1.0 + (e0 * e2) / (2.0 * e1 * e1));
+
+		qis = -qm * nVtm;
+
+	
+
+		///   D-to-S saturation voltage
+		eta_mu = 0.5 * ETAMOB_i;
+		//eta_mu_cv = 0.5;
+		// NN5-1  
+		eta_mu_cv = 0.5 * cv_output1;
+		EeffFactor = 1.0e-8 / (epsratio * EOT);
+		Eeffs = EeffFactor * (qbs + eta_mu * qis);
+		qb0 = 1.0e-2 / cox;
+		T2 = pow((0.5 * (1.0 + qis / qb0)), UCS_t);
+		T3 = pow(Eeffs, EU_i);
+		T3 = UA_i * T3 + UD_i / T2;
+		Dmobs = 1.0 + T3;
+		Dmobs = `smoothminx(Dmobs, 1.0, DMOBCLAMP);
+		Dmobs = Dmobs / U0MULT;
+		VSAT_a = VSAT;
+		// NN2-6
+		VSAT_a = VSAT_a * clm_output6;
+		Esat = 2.0 * VSAT_a / U0_i * Dmobs;
+		EsatL = Esat * Lg;
+		KSATIV_a = KSATIV;
+		// NN2-7
+		KSATIV_a = KSATIV_a * clm_output7;
+		T6 = KSATIV_a * (qis + 2.0 * Vtm);
+		Vdsat = EsatL * T6 / (EsatL + T6);
+		Vdsat = `hypsmooth((Vdsat - 1.0e-3), 1.0e-5) + 1.0e-3;
+		MEXP_a = MEXP;
+		// NN2-8
+		MEXP_a = MEXP_a * clm_output8;
+		T7 = pow(((vds / Vdsat) + 1e-6), MEXP_a);
+		T8 = pow((1.0 + T7), (1 / MEXP_a));
+		Vdseff = min((vds / T8), vds);
+
+		//************************************   Core model calculation at D ****************************************************//
+		vch = Vdseff + dvch_qm;
+		T2 = pow((-qdep), (2.0 / 3));
+
+		T0 = -qdep + vth_fixed_factor_Sub + QMFACTORCVfinal * T2;
+		T1 = -qdep + vth_fixed_factor_SI;
+
+		T2 = (vgsfbeff - vch) / nVtm;
+		F0 = -T2 + T1;
+		T3 = (T2 - T0) * 0.5;
+		qm = `lexp(T3);
+
+		T7 = ln(1.0 + qm);
+		qm = 2.0 * (1.0 - sqrt(1.0 + T7 * T7));
+		T8 = (qm * ALPHA_UFCM + qdep) * rc;
+		T4 = T8 / (`lexp(T8) - T8 - 1.0);
+		T5 = T8 * T4;
+		qm_ln = ln(-(qm + qdep));
+		e0 = F0 - qm + `lln(-qm) + `lln(T5) + QMFACTORCVfinal * exp((2.0 / 3) * qm_ln);
+		e1 = -1.0 + (1.0 / qm) + (2.0 / T8 - T4 - 1.0) * rc - (2.0 / 3) * QMFACTORCVfinal * exp(-(1.0 / 3) * qm_ln);
+		e2 = -1.0 / (qm * qm) - (2.0 / 9.0) * QMFACTORCVfinal * exp(-(4.0 / 3) * qm_ln);
+		qm = qm - (e0 / e1) * (1.0 + (e0 * e2) / (2.0 * e1 * e1));
+		T8 = (qm * ALPHA_UFCM + qdep) * rc;
+		T4 = T8 / (`lexp(T8) - T8 - 1.0);
+		T5 = T8 * T4;
+		qm_ln = ln(-(qm + qdep));
+		e0 = F0 - qm + `lln(-qm) + `lln(T5) + QMFACTORCVfinal * exp((2.0 / 3) * qm_ln);
+		e1 = -1.0 + (1.0 / qm) + (2.0 / T8 - T4 - 1.0) * rc - (2.0 / 3) * QMFACTORCVfinal * exp(-(1.0 / 3) * qm_ln);
+		e2 = -1.0 / (qm * qm) - (2.0 / 9.0) * QMFACTORCVfinal * exp(-(4.0 / 3) * qm_ln);
+		qm = qm - (e0 / e1) * (1.0 + (e0 * e2) / (2.0 * e1 * e1));
+
+		qid = -qm * nVtm;
+
+	
+
+		//************************************   Quasi-static I-V model ****************************************************//
+		qia = 0.5 * (qis + qid);
+		dqi = qis - qid;
+		etaiv = q0 / (q0 + qia);
+		ids0_ov_dqi = qia + (2.0 - etaiv) * nVtm;
+		ids0 = ids0_ov_dqi * dqi;
+
+		//************************************   Channel length modulation ****************************************************//
+		Leff = Lg;
+		LeffCV = Lg;
+
+		DROUT_i = DROUT;
+		// NN2-9
+		DROUT_i = DROUT_i * clm_output9;  
+		tmp = DROUT_i * Leff / scl + 1.0e-6;
+
+		PDIBL1_a = PDIBL1;
+		// NN2-10
+		PDIBL1_a = PDIBL1_a * clm_output10;  
+		PDIBL2_a = PDIBL2;
+		// NN2-11
+		PDIBL2_a = PDIBL2_a * clm_output11;  
+
+		DIBLfactor = PDIBL1_a * exp(-tmp) + PDIBL2_a;
+
+		PVAG_i = PVAG;
+		// NN2-12
+		PVAG_i = PVAG_i * clm_output12;  
+		PVAGfactor = 1.0 + PVAG_i * qia / EsatL;
+		diffVds = vds - Vdseff;
+		Vgst2Vtm = qia + 2.0 * Vtm;
+		T1 = Vgst2Vtm;
+		T3 = T1 / (Vdsat + T1);
+		VaDIBL = T1 / DIBLfactor * T3 * PVAGfactor;
+		Moc = 1.0 + diffVds / VaDIBL;
+		// NN2-1:PCLM_i 		NN2-5:PCLMG
+		T1 = clm_output1 + clm_output5 * qia; 
+		Mclm = 1.0 + T1 * `lln(1.0 + (vds - Vdseff) / T1 / (Vdsat + EsatL));
+		Moc = Moc * Mclm;
+
+		//************************************   Toxeff model for quantum mechanical effects ****************************************************//
+		T4 = qia / QM0;
+		T5 = 1.0 + pow(T4, PQM);
+		Tcen = Tcen0 / T5;
+		// NN3-2  NN3-3 
+		//coxeff = 1.0 / (1.0 / (cox * EOT / (TOXP * qua_output2)) + Tcen * QMTCENCV_i * qua_output3 / epssub);
+		coxeff = 1.0 / (1.0 / (cox * EOT / (TOXP * qua_output2)) + Tcen * qua_output3 / epssub);
+
+		// D current
+		cox = Cins / Weff_UFCM;
+		beta = U0_i * cox * Weff_UFCM / Lg;
+
+
+		//************************************   Mobility degradation ****************************************************//
+		qia2 = 0.5 * (qis + qid);
+		Eeffm = EeffFactor * (qbs + eta_mu * qia2);
+		T2 = pow(0.5 * (1.0 + qia2 / qb0), UCS_t);
+		T0 = pow(Eeffm, EU_i);
+		T3 = UA_i * T0 + UD_i / T2;
+		Dmob = 1.0 + T3;
+		Dmob = `smoothminx(Dmob, 1.0, DMOBCLAMP);
+		Dmob = Dmob / U0MULT;
+		ueff = U0_i / Dmob; 
+
+		//************************************   Mobility degradation for C-V ****************************************************//
+		Eeffm_cv = EeffFactor * (qbs + eta_mu_cv * qia2);
+		T3 = UA_i * pow(Eeffm_cv, EU_i) + UD_i / T2;
+		Dmob_cv = 1.0 + T3;
+		Dmob_cv = `smoothminx(Dmob_cv, 1.0, DMOBCLAMP);
+		Dmob_cv = Dmob_cv / U0MULT;
+
+		//************************************   Current degradation due to velocity saturation ****************************************************//
+		VSAT1_a = VSAT1;		
+		// NN2-13
+		VSAT1_a = VSAT1_a * clm_output13;
+		Esat1 = 2.0 * VSAT1_a / ueff;
+		Esat1L = Esat1 * Lg;
+		// NN2-2: PSAT_i
+		T0 = `lexp(clm_output2 * `lln(dqi / Esat1L)); 
+		T1 = 1.0 / clm_output2; 
+		// NN2-3: DELTAVSAT_i
+		Ta = 1.0 + `lexp(T1 * `lln(clm_output3));  
+		Dvsat = (1.0 + `lexp(T1 * `lln(clm_output3 + T0))) / Ta; 
+		// NN2-4: PTWG_a
+		Dvsat = Dvsat + 0.5 * clm_output4 * qia * dqi * dqi;
+
+		//************************************   Non-saturation effect ****************************************************//
+		T0 = A1_t + A2_t / (qia + 2.0 * nVtm);
+		T1 = T0 * dqi * dqi;
+		T2 = T1 + 1.0 - 0.001;
+		T3 = -1.0 + 0.5 * (T2 + sqrt(T2 * T2 + 0.004));
+		Nsat = 0.5 * (1.0 + sqrt(1.0 + T3));
+		Dvsat = Dvsat * Nsat;
+		Dvsat = `smoothminx(Dvsat, 1.0, DVSATCLAMP);
+
+		//************************************   Velocity saturation for C-V ****************************************************//
+
+		// NN5-2: PTWG_a
+		EsatCV = 2.0 * VSATCV_t * cv_output2 * Dmob_cv / U0_i; 
+		EsatCVL = EsatCV * LeffCV;
+		// NN5-3: PSATCV_i
+		T0 = pow((dqi / EsatCVL), cv_output3);
+		T1 = 1.0 / cv_output3;
+		// NN5-4: DELTAVSATCV_i
+		Ta = 1.0 + pow(cv_output4, T1);
+		DvsatCV = (1.0 + pow((cv_output4 + T0), T1)) / Ta;
+		// NN5-5: PCLMCV_i
+		MclmCV = 1.0 + cv_output5 * `lln(1.0 + (vds - Vdseff) / cv_output5 / (Vdsat + EsatCVL));
+
+
+
+
+		//************************************  GIDL ****************************************************//
+		T0 = epsratio * EOT;
+		T1 = (-(vgs - vds)) / T0;
+		T1 = `hypsmooth(T1, 1.0e-2);
+		// NN3-4: BGIDL_i
+		T2 = 10 * pow(10.0, 8.0) * gidl_output4 / (T1 + 1.0e-3);
+		T3 = pow(T1, 1);
+		// NN3-4: AGIDL_i
+		T6 = 6.05 * pow(10.0, -12.0) * Weff0 * T3 * `lexp(-T2) * vds * 4 * gidl_output5;
+		igidl = T6;
+		//igidl_tmp1 = T2;
+		//igidl_tmp2 = T3;
+
+
+
+		ids = beta * ids0 * Moc / (Dmob * Dvsat) + igidl;
+        //ids = beta * ids0 * Moc / (Dmob * Dvsat);           //############1111
+		ids_tmp = beta * ids0 * Moc / (Dmob * Dvsat);
+
+		//************************************   Quasi-static C-V model ****************************************************//
+		T11 = (2.0 * qia + nVtm) / DvsatCV;
+		qg = qia + dqi * dqi / (6.0 * T11);
+		qd = -0.5 * (qia - (dqi / 6.0) * (1.0 - (dqi / T11) * (1.0 + dqi / (5.0 * T11))));
+
+		//  CLM in qg and qd
+		inv_MclmCV = 1.0 / MclmCV;
+		qg = inv_MclmCV * qg + (MclmCV - 1.0) * qid;
+		qd = inv_MclmCV * inv_MclmCV * qd + 0.5 * (MclmCV - inv_MclmCV) * qid;
+		//$strobe("qg=",qg);
+		//$strobe("qd=",qd);
+		qs = -qg - qd;
+		T6 = NF * WeffCV0 * LeffCV * coxeff;
+		qg = T6 * qg;
+		qd = T6 * qd;
+		qs = T6 * qs;
+
+		//  Bias-dependent overlap capacitances
+		CGSO_i = 0.3 * WGAA * cox * cv_output10;            //##########11111
+		CGDO_i = 0.3 * WGAA * cox * cv_output13;            //##########11111
+
+		T1 = WeffCV0 * devsign;
+		T2 = devsign * vgs;
+		T0 = T2 - vfbsdcv + DELTA_1;
+		vgs_overlap = 0.5 * (T0 - sqrt(T0 * T0 + 4.0 * DELTA_1));
+		qgs_ov = T1 * (CGSL_i * cv_output8 * (T2 - vfbsdcv - vgs_overlap - 0.5 * cv_output9 * (sqrt(1.0 - 4.0 * vgs_overlap / cv_output9) - 1.0)) + CGSO_i * T2);
+
+		T2 = devsign * (vgs - vds);
+		T0 = T2 - vfbsdcv + DELTA_1;
+		vgd_overlap = 0.5 * (T0 - sqrt(T0 * T0 + 4.0 * DELTA_1));
+		qgd_ov = T1 * (CGSL_i * cv_output11 * (T2 - vfbsdcv - vgd_overlap - 0.5 * cv_output12 * (sqrt(1.0 - 4.0 * vgd_overlap / cv_output12) - 1.0)) + CGDO_i * T2);
+
+		T1 = WeffCV0;
+		// NN5-6: CFS_i_CV
+		qgs_fr = T1 * CFS_i_CV * cv_output6 * vgs;
+		// NN5-7: CFD_i
+		qgd_fr = T1 * CFD_i_CV * cv_output6 * (vgs - vds);    //#########1111
+
+		qgs_parasitic = qgs_ov + qgs_fr;
+		qgd_parasitic = qgd_ov + qgd_fr;
+
+		QG = type * (devsign * qg + qgs_parasitic + qgd_parasitic);
+		QG = QG * 0.5;//#########1111
+		QD = type * (devsign * qd - qgd_parasitic);
+		QD = QD * 0.5;//#########1111
+		QS = type * (devsign * qs - qgs_parasitic);
+		QS = QS * 0.5;//#########1111
+
+    GM = ddx(ids, V(G));
+    GDS = ddx(ids, V(D));
+
+    CGG = ddx(QG, V(G));
+    CGD = ddx(QG, V(D));
+    CGS = ddx(QG, V(S));
+    CDG = ddx(QD, V(G));
+    CDD = ddx(QD, V(D));
+    CDS = ddx(QD, V(S));
+    CSG = ddx(QS, V(G));
+    CSD = ddx(QS, V(D));
+    CSS = ddx(QS, V(S));
+
+
+
+
+//****** dc current ******//
+	   //if (mode > 0.0)
+	   //   I(D, S) <+ type * ids;
+	   //else
+	   //   I(D, S) <+ -type * ids;
+
+	   //****charging current******//
+	   I(G, S)   <+ ddt(QG);
+	   I(D, S)  <+ ddt(QD);
+
+
+
+
+			end
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+endmodule

@@ -59,7 +59,7 @@
 *
 *******************************************************************************
 
-.model sg13g2_hv_nmos_psp psp103va             type          =  +1
+.model sg13g2_hv_nmos_psp pspnqs103va             type          =  +1
 + level         =  103.60                      tr            =  27.0                        dta           =  0.0
 + swgeo         =  1.0                         swigate       =  1.0                         swimpact      =  1.0
 + swgidl        =  0.0                         swjuncap      =  3.0                         swjunasym     =  0.0
@@ -342,7 +342,7 @@
 *
 *******************************************************************************
 
-.model sg13g2_hv_pmos_psp psp103va             type          =  -1
+.model sg13g2_hv_pmos_psp pspnqs103va             type          =  -1
 + level         =  103.60                      tr            =  27.0                        dta           =  0.0
 + swgeo         =  1.0                         swigate       =  1.0                         swimpact      =  1.0
 + swgidl        =  1.0                         swjuncap      =  3.0                         swjunasym     =  0.0

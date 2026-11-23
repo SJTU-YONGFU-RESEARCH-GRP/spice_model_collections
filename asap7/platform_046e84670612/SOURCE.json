@@ -1,0 +1,310 @@
+{
+  "pdk_ids": [
+    "asap7"
+  ],
+  "source_key": "PDK-ORIGINALS",
+  "source_subdirectory": "kits/asap/asap7/import-b544723648b2/native/models",
+  "tree_sha256": "046e84670612028c93e0630635e1199760e7915adfc890edc80a2b53d4e1e10e",
+  "profiles": [
+    {
+      "release_id": "c0c7a0c5cb6c799db3290e40d3154044d6c6c300f939618cd012be3a7a185601",
+      "release_version": "import-b544723648b2",
+      "pdk_id": "asap7",
+      "model_directory": "hspice",
+      "profile": {
+        "engine": "hspice",
+        "corner": "tt",
+        "loads": [
+          {
+            "path": "7nm_TT_160803.pm",
+            "directive": "include"
+          }
+        ],
+        "dialect": "spice",
+        "cwd": ".",
+        "include_base": "file",
+        "geometry": "fin",
+        "devices": [
+          {
+            "name": "nmos_lvt",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "7nm_TT_160803.pm"
+          },
+          {
+            "name": "nmos_rvt",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "7nm_TT_160803.pm"
+          },
+          {
+            "name": "nmos_slvt",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "7nm_TT_160803.pm"
+          },
+          {
+            "name": "nmos_sram",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "7nm_TT_160803.pm"
+          },
+          {
+            "name": "pmos_lvt",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "7nm_TT_160803.pm"
+          },
+          {
+            "name": "pmos_rvt",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "7nm_TT_160803.pm"
+          },
+          {
+            "name": "pmos_slvt",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "7nm_TT_160803.pm"
+          },
+          {
+            "name": "pmos_sram",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "7nm_TT_160803.pm"
+          }
+        ],
+        "entry_evidence": {
+          "source_id": "ASAP7-AGILE",
+          "path": "7nm_TT_160803.pm",
+          "source_section": null
+        }
+      }
+    },
+    {
+      "release_id": "c0c7a0c5cb6c799db3290e40d3154044d6c6c300f939618cd012be3a7a185601",
+      "release_version": "import-b544723648b2",
+      "pdk_id": "asap7",
+      "model_directory": "hspice",
+      "profile": {
+        "engine": "hspice",
+        "corner": "ss",
+        "loads": [
+          {
+            "path": "7nm_SS_160803.pm",
+            "directive": "include"
+          }
+        ],
+        "dialect": "spice",
+        "cwd": ".",
+        "include_base": "file",
+        "geometry": "fin",
+        "devices": [
+          {
+            "name": "nmos_lvt",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "7nm_SS_160803.pm"
+          },
+          {
+            "name": "nmos_rvt",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "7nm_SS_160803.pm"
+          },
+          {
+            "name": "nmos_slvt",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "7nm_SS_160803.pm"
+          },
+          {
+            "name": "nmos_sram",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "7nm_SS_160803.pm"
+          },
+          {
+            "name": "pmos_lvt",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "7nm_SS_160803.pm"
+          },
+          {
+            "name": "pmos_rvt",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "7nm_SS_160803.pm"
+          },
+          {
+            "name": "pmos_slvt",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "7nm_SS_160803.pm"
+          },
+          {
+            "name": "pmos_sram",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "7nm_SS_160803.pm"
+          }
+        ],
+        "entry_evidence": {
+          "source_id": "ASAP7-AGILE",
+          "path": "7nm_SS_160803.pm",
+          "source_section": null
+        }
+      }
+    },
+    {
+      "release_id": "c0c7a0c5cb6c799db3290e40d3154044d6c6c300f939618cd012be3a7a185601",
+      "release_version": "import-b544723648b2",
+      "pdk_id": "asap7",
+      "model_directory": "hspice",
+      "profile": {
+        "engine": "hspice",
+        "corner": "ff",
+        "loads": [
+          {
+            "path": "7nm_FF_160803.pm",
+            "directive": "include"
+          }
+        ],
+        "dialect": "spice",
+        "cwd": ".",
+        "include_base": "file",
+        "geometry": "fin",
+        "devices": [
+          {
+            "name": "nmos_lvt",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "7nm_FF_160803.pm"
+          },
+          {
+            "name": "nmos_rvt",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "7nm_FF_160803.pm"
+          },
+          {
+            "name": "nmos_slvt",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "7nm_FF_160803.pm"
+          },
+          {
+            "name": "nmos_sram",
+            "call_kind": "model",
+            "model_type": "nmos",
+            "source_path": "7nm_FF_160803.pm"
+          },
+          {
+            "name": "pmos_lvt",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "7nm_FF_160803.pm"
+          },
+          {
+            "name": "pmos_rvt",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "7nm_FF_160803.pm"
+          },
+          {
+            "name": "pmos_slvt",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "7nm_FF_160803.pm"
+          },
+          {
+            "name": "pmos_sram",
+            "call_kind": "model",
+            "model_type": "pmos",
+            "source_path": "7nm_FF_160803.pm"
+          }
+        ],
+        "entry_evidence": {
+          "source_id": "ASAP7-AGILE",
+          "path": "7nm_FF_160803.pm",
+          "source_section": null
+        }
+      }
+    }
+  ],
+  "dependency_findings": [],
+  "opaque_files": [],
+  "notices": [
+    "private-models/asap7/platform_046e84670612/source_notices/873eff414f79_COPYRIGHT"
+  ],
+  "validation": "not_run",
+  "availability": "models_present",
+  "public_distribution": null,
+  "source_aliases": [],
+  "schema_version": "spice.source.v1",
+  "files": [
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/asap/asap7/import-b544723648b2/native/models/hspice/7nm_FF.pm",
+      "sha256": "c1855f1dac03af2d69676583e06a02f33e5265e5db8f4ff428ba0109a68bb9e2",
+      "size": 40065,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/7nm_FF.pm"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/asap/asap7/import-b544723648b2/native/models/hspice/7nm_FF_160803.pm",
+      "sha256": "c1855f1dac03af2d69676583e06a02f33e5265e5db8f4ff428ba0109a68bb9e2",
+      "size": 40065,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/7nm_FF_160803.pm"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/asap/asap7/import-b544723648b2/native/models/hspice/7nm_SS.pm",
+      "sha256": "868ca319018729a51c1ac3f53277e492ef5090965f88964abf6dff8c158cea3e",
+      "size": 40039,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/7nm_SS.pm"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/asap/asap7/import-b544723648b2/native/models/hspice/7nm_SS_160803.pm",
+      "sha256": "868ca319018729a51c1ac3f53277e492ef5090965f88964abf6dff8c158cea3e",
+      "size": 40039,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/7nm_SS_160803.pm"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/asap/asap7/import-b544723648b2/native/models/hspice/7nm_TT.pm",
+      "sha256": "0012b6006cf9455812fc553647afe251f9ea1b5354f7757cd774ac6c616be66b",
+      "size": 40037,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/7nm_TT.pm"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/asap/asap7/import-b544723648b2/native/models/hspice/7nm_TT_160803.pm",
+      "sha256": "0012b6006cf9455812fc553647afe251f9ea1b5354f7757cd774ac6c616be66b",
+      "size": 40037,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "hspice/7nm_TT_160803.pm"
+    },
+    {
+      "source_key": "PDK-ORIGINALS",
+      "upstream_path": "kits/asap/asap7/import-b544723648b2/native/COPYRIGHT",
+      "sha256": "873eff414f793eecc776c70281a876ee9ae4c07bff903d06e24ff6a7c0aff31b",
+      "size": 943,
+      "mode": "0755",
+      "storage": "git",
+      "local_path": "source_notices/873eff414f79_COPYRIGHT"
+    }
+  ]
+}

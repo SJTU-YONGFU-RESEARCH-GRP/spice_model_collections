@@ -8,10 +8,15 @@ Publicly redistributable source-pinned model snapshots, alongside the existing `
 
 | Collection | Source license | Validation boundary |
 | --- | --- | --- |
+| [asap7](asap7/README.md) | Academic / Apache-2.0 | Level 72 BSIM-CMG (TT, FF, SS) |
+| [freepdk45](freepdk45/README.md) | Apache-2.0 | Level 54 BSIM4.0 (TT, FF, SS, VTH, VTL) |
 | [freepdk15](freepdk15/README.md) | BSD-style; see LICENSE | Source/hashes checked; not run |
 | [freepdk3](freepdk3/README.md) | BSD-style; see LICENSE | Source/hashes checked; not run |
 | [gf180mcu](gf180mcu/README.md) | Apache-2.0 | Typical 3.3/6 V MOS pairs tested |
-| [ihp](ihp/README.md) | Apache-2.0 | PNP tested; MOS/OSDI not compiled |
+| [gt2n](gt2n/README.md) | Academic Research | Georgia Tech 2nm GAAFET Nanosheet BSIM-CMG |
+| [gt3](gt3/README.md) | Academic Research | Georgia Tech 3nm GAAFET BSIM-CMG |
+| [ihp](ihp/README.md) | Apache-2.0 | BiCMOS PSP103 OpenVAF OSDI + PNP |
+| [pkp3](pkp3/README.md) | Academic Research | Peking University 3nm PHIMO-Fusion GAAFET Verilog-A |
 | [sky130](sky130/README.md) | Apache-2.0 | Original whole-kit include defect; core pair tested |
 | [ICS55](ics55/README.md) | Upstream Apache-2.0 release | Availability record only; no transistor SPICE models |
 

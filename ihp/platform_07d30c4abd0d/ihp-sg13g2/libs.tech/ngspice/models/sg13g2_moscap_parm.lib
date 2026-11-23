@@ -38,7 +38,7 @@
 *
 *******************************************************************************
 
-.model sg13g2_moscap_n_psp psp103va             type          =  +1
+.model sg13g2_moscap_n_psp pspnqs103va             type          =  +1
 + level         =  103.60                      tr            =  27.0                        dta           =  0.0
 + swgeo         =  1.0                         swigate       =  1.0                         swimpact      =  1.0
 + swgidl        =  1.0                         swjuncap      =  3.0                         swjunasym     =  0.0
@@ -167,7 +167,7 @@
 + VDS_MAX = 1.6 VDB_MAX = 1.6 VSB_MAX = 1.6
 
 
-.model sg13g2_moscap_p_psp psp103va             type          =  -1
+.model sg13g2_moscap_p_psp pspnqs103va             type          =  -1
 + level         =  103.60                      tr            =  27.0                        dta           =  0.0
 + swgeo         =  1.0                         swigate       =  1.0                         swimpact      =  1.0
 + swgidl        =  1.0                         swjuncap      =  3.0                         swjunasym     =  0.0
