@@ -124,7 +124,8 @@ M1 drain gate source bulk nfet L=15n NFIN=2
 
 ```spice
 * ngspice Usage
-.lib gf180mcu/platform_04576ff934e5/models/cornerMOSlv.lib mos_tt
+.include gf180mcu/ngspice/design.ngspice
+.lib models/public-models/gf180mcu/ngspice/sm141064.ngspice typical
 M1 drain gate source bulk nmos_3p3 L=0.28u W=10u
 ```
 
@@ -227,9 +228,9 @@ M1 (drain gate source bulk) nmos_lvt
 
 ```spice
 * ngspice Usage
-.include sky130/platform_f50871622469/models/parameters/invariant.spice
-.include sky130/platform_f50871622469/cells/nfet_01v8/sky130_fd_pr__nfet_01v8__tt.pm3.spice
-X1 drain gate source bulk nfet_01v8 l=0.15u w=10u
+.include sky130/spice/parameters/invariant.spice
+.include sky130/cells/nfet_01v8/sky130_fd_pr__nfet_01v8__tt.pm3.spice
+X1 drain gate source bulk sky130_fd_pr__nfet_01v8 w=10 l=0.15
 ```
 
 ---
